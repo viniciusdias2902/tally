@@ -100,3 +100,12 @@ enum TipoMedicao {
 
   @@map("tipo_medicao")
 }
+
+enum ModoSessao {
+  timer
+  pomodoro
+  manual
+  check_binario
+
+  @@map("modo_sessao")
+}
