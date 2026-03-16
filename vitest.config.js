@@ -14,7 +14,7 @@ export default defineConfig({
           name: "integracao",
           include: ["backend/tests/integracao/**/*.test.js"],
           globalSetup: "backend/tests/setup-integracao.js",
-          poolOptions: { threads: { singleThread: true } },
+          sequence: { concurrent: false },
         },
       },
     ],
