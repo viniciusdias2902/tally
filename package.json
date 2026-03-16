@@ -11,10 +11,12 @@
     "test": "vitest run",
     "test:unitario": "vitest run --project unitario",
     "test:integracao": "vitest run --project integracao",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "test:cobertura": "vitest run --coverage"
   },
   "devDependencies": {
     "@types/pg": "^8.18.0",
+    "@vitest/coverage-v8": "^4.1.0",
     "nodemon": "^3.1.14",
     "prisma": "^7.5.0",
     "supertest": "^7.2.2",

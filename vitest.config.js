@@ -2,6 +2,17 @@ import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
+    coverage: {
+      provider: "v8",
+      include: ["backend/**/*.js"],
+      exclude: [
+        "backend/generated/**",
+        "backend/tests/**",
+        "backend/**/__tests__/**",
+        "backend/server.js",
+      ],
+      reporter: ["text", "html"],
+    },
     projects: [
       {
         test: {
