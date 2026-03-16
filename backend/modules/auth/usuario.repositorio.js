@@ -1,18 +1,18 @@
-export function createUserRepository(prisma) {
+export function criarUsuarioRepositorio(prisma) {
   return {
-    findByEmail(email) {
+    buscarPorEmail(email) {
       return prisma.usuario.findUnique({ where: { email } });
     },
 
-    create({ email, nome, senhaHash }) {
+    criar({ email, nome, senhaHash }) {
       return prisma.usuario.create({ data: { email, nome, senhaHash } });
     },
 
-    updateRefreshToken(id, refreshToken) {
+    atualizarRefreshToken(id, refreshToken) {
       return prisma.usuario.update({ where: { id }, data: { refreshToken } });
     },
 
-    findById(id) {
+    buscarPorId(id) {
       return prisma.usuario.findUnique({ where: { id } });
     },
   };
