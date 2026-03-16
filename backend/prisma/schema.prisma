@@ -16,6 +16,8 @@ model Usuario {
   id           String   @id @default(uuid()) @db.Uuid
   email        String   @unique @db.VarChar(255)
   nome         String   @db.VarChar(100)
+  senhaHash    String   @map("senha_hash") @db.VarChar(255)
+  refreshToken String?  @map("refresh_token") @db.VarChar(500)
   criadoEm     DateTime @default(now()) @map("criado_em") @db.Timestamptz
   atualizadoEm DateTime @updatedAt @map("atualizado_em") @db.Timestamptz
 
