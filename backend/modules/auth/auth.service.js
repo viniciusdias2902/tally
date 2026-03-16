@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { AppError } from "../../lib/AppError.js";
 
 const SALT_ROUNDS = 12;
 
@@ -25,7 +26,7 @@ export function createAuthService(userRepository) {
   return {
     async register({ email, nome, senha }) {
       const existing = await userRepository.findByEmail(email);
-      if (existing) throw new Error("EMAIL_ALREADY_EXISTS");
+      if (existing) throw new AppError("EMAIL_ALREADY_EXISTS", 409);
 
       const senhaHash = await bcrypt.hash(senha, SALT_ROUNDS);
       const user = await userRepository.create({ email, nome, senhaHash });
@@ -39,10 +40,10 @@ export function createAuthService(userRepository) {
 
     async login({ email, senha }) {
       const user = await userRepository.findByEmail(email);
-      if (!user) throw new Error("INVALID_CREDENTIALS");
+      if (!user) throw new AppError("INVALID_CREDENTIALS", 401);
 
       const match = await bcrypt.compare(senha, user.senhaHash);
-      if (!match) throw new Error("INVALID_CREDENTIALS");
+      if (!match) throw new AppError("INVALID_CREDENTIALS", 401);
 
       const accessToken = generateAccessToken(user.id);
       const refreshToken = generateRefreshToken(user.id);
@@ -56,12 +57,12 @@ export function createAuthService(userRepository) {
       try {
         payload = jwt.verify(token, JWT_SECRET);
       } catch {
-        throw new Error("INVALID_REFRESH_TOKEN");
+        throw new AppError("INVALID_REFRESH_TOKEN", 401);
       }
 
       const user = await userRepository.findById(payload.sub);
       if (!user || user.refreshToken !== token) {
-        throw new Error("INVALID_REFRESH_TOKEN");
+        throw new AppError("INVALID_REFRESH_TOKEN", 401);
       }
 
       const accessToken = generateAccessToken(user.id);
