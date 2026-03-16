@@ -1,0 +1,1 @@
+- [feedback_portugues.md](feedback_portugues.md) — Código em português, termos técnicos consagrados em inglês
