@@ -1,3 +1,4 @@
+import "dotenv/config";
 import express from "express";
 import prisma from "./lib/prisma.js";
 import { autenticar } from "./middlewares/autenticar.js";
