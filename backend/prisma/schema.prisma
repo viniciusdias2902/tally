@@ -60,3 +60,23 @@ model Categoria {
   @@unique([atividadeId, nome], map: "idx_categorias_nome_unico")
   @@map("categorias")
 }
+
+model Sessao {
+  id              String     @id @default(uuid()) @db.Uuid
+  atividadeId     String     @map("atividade_id") @db.Uuid
+  categoriaId     String?    @map("categoria_id") @db.Uuid
+  iniciadoEm      DateTime   @map("iniciado_em") @db.Timestamptz
+  duracaoSegundos Int        @default(0) @map("duracao_segundos")
+  modo            ModoSessao
+  ciclosPomodoro  Int?       @map("ciclos_pomodoro")
+  observacoes     String?    @db.Text
+  criadoEm        DateTime   @default(now()) @map("criado_em") @db.Timestamptz
+
+  atividade Atividade  @relation(fields: [atividadeId], references: [id], onDelete: Cascade)
+  categoria Categoria? @relation(fields: [categoriaId], references: [id], onDelete: SetNull)
+
+  @@index([atividadeId, iniciadoEm(sort: Desc)], map: "idx_sessoes_atividade_inicio")
+  @@index([categoriaId, iniciadoEm(sort: Desc)], map: "idx_sessoes_categoria_inicio")
+  @@index([iniciadoEm(sort: Desc)], map: "idx_sessoes_inicio")
+  @@map("sessoes")
+}
