@@ -1,3 +1,4 @@
+import crypto from "node:crypto";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { ErroApp } from "../../lib/ErroApp.js";
@@ -18,7 +19,7 @@ export function criarAuthServico(usuarioRepositorio) {
   }
 
   function gerarRefreshToken(usuarioId) {
-    return jwt.sign({ sub: usuarioId }, JWT_SECRET, {
+    return jwt.sign({ sub: usuarioId, jti: crypto.randomUUID() }, JWT_SECRET, {
       expiresIn: JWT_REFRESH_TOKEN_EXPIRES_IN,
     });
   }
