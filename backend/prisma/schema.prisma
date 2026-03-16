@@ -23,3 +23,22 @@ model Usuario {
 
   @@map("usuarios")
 }
+
+model Atividade {
+  id           String      @id @default(uuid()) @db.Uuid
+  usuarioId    String      @map("usuario_id") @db.Uuid
+  nome         String      @db.VarChar(100)
+  tipoMedicao  TipoMedicao @map("tipo_medicao")
+  arquivada    Boolean     @default(false)
+  criadoEm     DateTime    @default(now()) @map("criado_em") @db.Timestamptz
+  atualizadoEm DateTime    @updatedAt @map("atualizado_em") @db.Timestamptz
+
+  usuario        Usuario         @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  categorias     Categoria[]
+  sessoes        Sessao[]
+  configPomodoro ConfigPomodoro?
+
+  @@index([usuarioId])
+  @@unique([usuarioId, nome], map: "idx_atividades_nome_unico")
+  @@map("atividades")
+}
