@@ -93,3 +93,10 @@ model ConfigPomodoro {
 
   @@map("config_pomodoro")
 }
+
+enum TipoMedicao {
+  cronometrada
+  binaria
+
+  @@map("tipo_medicao")
+}
