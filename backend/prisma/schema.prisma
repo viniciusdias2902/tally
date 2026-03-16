@@ -80,3 +80,16 @@ model Sessao {
   @@index([iniciadoEm(sort: Desc)], map: "idx_sessoes_inicio")
   @@map("sessoes")
 }
+
+model ConfigPomodoro {
+  id                String @id @default(uuid()) @db.Uuid
+  atividadeId       String @unique @map("atividade_id") @db.Uuid
+  minutosFoco       Int    @default(25) @map("minutos_foco")
+  minutosPausaCurta Int    @default(5) @map("minutos_pausa_curta")
+  minutosPausaLonga Int    @default(15) @map("minutos_pausa_longa")
+  ciclosAntesLonga  Int    @default(4) @map("ciclos_antes_longa")
+
+  atividade Atividade @relation(fields: [atividadeId], references: [id], onDelete: Cascade)
+
+  @@map("config_pomodoro")
+}
