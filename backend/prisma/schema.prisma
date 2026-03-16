@@ -42,3 +42,21 @@ model Atividade {
   @@unique([usuarioId, nome], map: "idx_atividades_nome_unico")
   @@map("atividades")
 }
+
+model Categoria {
+  id           String   @id @default(uuid()) @db.Uuid
+  atividadeId  String   @map("atividade_id") @db.Uuid
+  nome         String   @db.VarChar(100)
+  cor          String   @default("#6366F1") @db.VarChar(7)
+  ordem        Int      @default(0)
+  arquivada    Boolean  @default(false)
+  criadoEm     DateTime @default(now()) @map("criado_em") @db.Timestamptz
+  atualizadoEm DateTime @updatedAt @map("atualizado_em") @db.Timestamptz
+
+  atividade Atividade @relation(fields: [atividadeId], references: [id], onDelete: Cascade)
+  sessoes   Sessao[]
+
+  @@index([atividadeId])
+  @@unique([atividadeId, nome], map: "idx_categorias_nome_unico")
+  @@map("categorias")
+}
