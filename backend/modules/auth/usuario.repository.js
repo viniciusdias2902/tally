@@ -1,4 +1,4 @@
-export function criarUsuarioRepositorio(prisma) {
+export function criarUsuarioRepository(prisma) {
   return {
     buscarPorEmail(email) {
       return prisma.usuario.findUnique({ where: { email } });

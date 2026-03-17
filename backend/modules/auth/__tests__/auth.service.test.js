@@ -1,7 +1,7 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
-import { criarAuthServico } from "../auth.servico.js";
+import { criarAuthService } from "../auth.service.js";
 import { ErroApp } from "../../../lib/ErroApp.js";
 
 const JWT_SECRET = "segredo-teste";
@@ -17,7 +17,7 @@ function criarRepositorioMock() {
   };
 }
 
-describe("auth.servico", () => {
+describe("auth.service", () => {
   let repositorio;
   let servico;
 
@@ -27,7 +27,7 @@ describe("auth.servico", () => {
     process.env.JWT_REFRESH_TOKEN_EXPIRES_IN = JWT_REFRESH_TOKEN_EXPIRES_IN;
 
     repositorio = criarRepositorioMock();
-    servico = criarAuthServico(repositorio);
+    servico = criarAuthService(repositorio);
   });
 
   describe("registrar", () => {

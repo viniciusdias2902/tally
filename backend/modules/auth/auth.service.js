@@ -5,7 +5,7 @@ import { ErroApp } from "../../lib/ErroApp.js";
 
 const RODADAS_SALT = 12;
 
-export function criarAuthServico(usuarioRepositorio) {
+export function criarAuthService(usuarioRepository) {
   const {
     JWT_SECRET,
     JWT_ACCESS_TOKEN_EXPIRES_IN,
@@ -26,21 +26,21 @@ export function criarAuthServico(usuarioRepositorio) {
 
   return {
     async registrar({ email, nome, senha }) {
-      const existente = await usuarioRepositorio.buscarPorEmail(email);
+      const existente = await usuarioRepository.buscarPorEmail(email);
       if (existente) throw new ErroApp("EMAIL_JA_EXISTE", 409);
 
       const senhaHash = await bcrypt.hash(senha, RODADAS_SALT);
-      const usuario = await usuarioRepositorio.criar({ email, nome, senhaHash });
+      const usuario = await usuarioRepository.criar({ email, nome, senhaHash });
 
       const accessToken = gerarAccessToken(usuario.id);
       const refreshToken = gerarRefreshToken(usuario.id);
-      await usuarioRepositorio.atualizarRefreshToken(usuario.id, refreshToken);
+      await usuarioRepository.atualizarRefreshToken(usuario.id, refreshToken);
 
       return { accessToken, refreshToken };
     },
 
     async login({ email, senha }) {
-      const usuario = await usuarioRepositorio.buscarPorEmail(email);
+      const usuario = await usuarioRepository.buscarPorEmail(email);
       if (!usuario) throw new ErroApp("CREDENCIAIS_INVALIDAS", 401);
 
       const corresponde = await bcrypt.compare(senha, usuario.senhaHash);
@@ -48,7 +48,7 @@ export function criarAuthServico(usuarioRepositorio) {
 
       const accessToken = gerarAccessToken(usuario.id);
       const refreshToken = gerarRefreshToken(usuario.id);
-      await usuarioRepositorio.atualizarRefreshToken(usuario.id, refreshToken);
+      await usuarioRepository.atualizarRefreshToken(usuario.id, refreshToken);
 
       return { accessToken, refreshToken };
     },
@@ -61,20 +61,20 @@ export function criarAuthServico(usuarioRepositorio) {
         throw new ErroApp("REFRESH_TOKEN_INVALIDO", 401);
       }
 
-      const usuario = await usuarioRepositorio.buscarPorId(payload.sub);
+      const usuario = await usuarioRepository.buscarPorId(payload.sub);
       if (!usuario || usuario.refreshToken !== token) {
         throw new ErroApp("REFRESH_TOKEN_INVALIDO", 401);
       }
 
       const accessToken = gerarAccessToken(usuario.id);
       const refreshToken = gerarRefreshToken(usuario.id);
-      await usuarioRepositorio.atualizarRefreshToken(usuario.id, refreshToken);
+      await usuarioRepository.atualizarRefreshToken(usuario.id, refreshToken);
 
       return { accessToken, refreshToken };
     },
 
     async logout(usuarioId) {
-      await usuarioRepositorio.atualizarRefreshToken(usuarioId, null);
+      await usuarioRepository.atualizarRefreshToken(usuarioId, null);
     },
   };
 }

@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { criarUsuarioRepositorio } from "../usuario.repositorio.js";
+import { criarUsuarioRepository } from "../usuario.repository.js";
 
 function criarPrismaMock() {
   return {
@@ -11,13 +11,13 @@ function criarPrismaMock() {
   };
 }
 
-describe("usuario.repositorio", () => {
+describe("usuario.repository", () => {
   let prisma;
   let repositorio;
 
   beforeEach(() => {
     prisma = criarPrismaMock();
-    repositorio = criarUsuarioRepositorio(prisma);
+    repositorio = criarUsuarioRepository(prisma);
   });
 
   describe("buscarPorEmail", () => {
