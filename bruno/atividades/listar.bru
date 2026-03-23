@@ -1,0 +1,19 @@
+meta {
+  name: Listar Atividades
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/atividades
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+params:query {
+  ~incluirArquivadas: true
+}
