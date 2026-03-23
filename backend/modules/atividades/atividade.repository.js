@@ -35,5 +35,12 @@ export function criarAtividadeRepository(prisma) {
         .count({ where: { atividadeId: id } })
         .then((total) => total > 0);
     },
+
+    arquivarCategorias(atividadeId) {
+      return prisma.categoria.updateMany({
+        where: { atividadeId },
+        data: { arquivada: true },
+      });
+    },
   };
 }
