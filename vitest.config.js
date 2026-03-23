@@ -28,6 +28,7 @@ export default defineConfig({
           env: {
             DATABASE_URL: "postgresql://tally:tally_secret@localhost:5432/tally_db_teste?schema=public",
             JWT_SECRET: "segredo-teste",
+            JWT_REFRESH_SECRET: "segredo-refresh-teste",
             JWT_ACCESS_TOKEN_EXPIRES_IN: "15m",
             JWT_REFRESH_TOKEN_EXPIRES_IN: "7d",
             JWT_REFRESH_TOKEN_MAX_EXPIRES_IN: "30d",
