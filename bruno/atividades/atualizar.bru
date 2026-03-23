@@ -1,0 +1,21 @@
+meta {
+  name: Atualizar Atividade
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{baseUrl}}/atividades/{{atividadeId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "nome": "Estudos Atualizado"
+  }
+}

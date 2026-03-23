@@ -1,0 +1,15 @@
+meta {
+  name: Deletar Atividade
+  type: http
+  seq: 6
+}
+
+delete {
+  url: {{baseUrl}}/atividades/{{atividadeId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

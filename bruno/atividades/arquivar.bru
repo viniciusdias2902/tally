@@ -1,0 +1,15 @@
+meta {
+  name: Arquivar Atividade
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/atividades/{{atividadeId}}/arquivar
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
