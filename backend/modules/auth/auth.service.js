@@ -8,6 +8,7 @@ const RODADAS_SALT = 12;
 export function criarAuthService(usuarioRepository) {
   const {
     JWT_SECRET,
+    JWT_REFRESH_SECRET,
     JWT_ACCESS_TOKEN_EXPIRES_IN,
     JWT_REFRESH_TOKEN_EXPIRES_IN,
   } = process.env;
@@ -19,7 +20,7 @@ export function criarAuthService(usuarioRepository) {
   }
 
   function gerarRefreshToken(usuarioId) {
-    return jwt.sign({ sub: usuarioId, jti: crypto.randomUUID() }, JWT_SECRET, {
+    return jwt.sign({ sub: usuarioId, jti: crypto.randomUUID() }, JWT_REFRESH_SECRET, {
       expiresIn: JWT_REFRESH_TOKEN_EXPIRES_IN,
     });
   }
@@ -56,7 +57,7 @@ export function criarAuthService(usuarioRepository) {
     async refresh(token) {
       let payload;
       try {
-        payload = jwt.verify(token, JWT_SECRET);
+        payload = jwt.verify(token, JWT_REFRESH_SECRET);
       } catch {
         throw new ErroApp("REFRESH_TOKEN_INVALIDO", 401);
       }
