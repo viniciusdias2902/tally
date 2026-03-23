@@ -14,7 +14,11 @@ export function validar(schema) {
           erros.push({ campo, caminho: erro.path, mensagem: erro.message });
         }
       } else {
-        req[campo] = resultado.data;
+        Object.defineProperty(req, campo, {
+          value: resultado.data,
+          writable: true,
+          configurable: true,
+        });
       }
     }
 
