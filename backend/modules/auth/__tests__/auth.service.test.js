@@ -5,6 +5,7 @@ import { criarAuthService } from "../auth.service.js";
 import { ErroApp } from "../../../lib/ErroApp.js";
 
 const JWT_SECRET = "segredo-teste";
+const JWT_REFRESH_SECRET = "segredo-refresh-teste";
 const JWT_ACCESS_TOKEN_EXPIRES_IN = "15m";
 const JWT_REFRESH_TOKEN_EXPIRES_IN = "7d";
 
@@ -23,6 +24,7 @@ describe("auth.service", () => {
 
   beforeEach(() => {
     process.env.JWT_SECRET = JWT_SECRET;
+    process.env.JWT_REFRESH_SECRET = JWT_REFRESH_SECRET;
     process.env.JWT_ACCESS_TOKEN_EXPIRES_IN = JWT_ACCESS_TOKEN_EXPIRES_IN;
     process.env.JWT_REFRESH_TOKEN_EXPIRES_IN = JWT_REFRESH_TOKEN_EXPIRES_IN;
 
@@ -133,7 +135,7 @@ describe("auth.service", () => {
 
   describe("refresh", () => {
     it("deve retornar novos tokens com refreshToken válido", async () => {
-      const tokenValido = jwt.sign({ sub: "1" }, JWT_SECRET, { expiresIn: "7d" });
+      const tokenValido = jwt.sign({ sub: "1" }, JWT_REFRESH_SECRET, { expiresIn: "7d" });
       repositorio.buscarPorId.mockResolvedValue({ id: "1", refreshToken: tokenValido });
       repositorio.atualizarRefreshToken.mockResolvedValue(null);
 
@@ -148,7 +150,7 @@ describe("auth.service", () => {
     });
 
     it("deve lançar ErroApp 401 com token expirado", async () => {
-      const tokenExpirado = jwt.sign({ sub: "1" }, JWT_SECRET, { expiresIn: "0s" });
+      const tokenExpirado = jwt.sign({ sub: "1" }, JWT_REFRESH_SECRET, { expiresIn: "0s" });
 
       await expect(
         servico.refresh(tokenExpirado)
@@ -162,7 +164,7 @@ describe("auth.service", () => {
     });
 
     it("deve lançar ErroApp 401 se token não corresponde ao salvo", async () => {
-      const token = jwt.sign({ sub: "1" }, JWT_SECRET, { expiresIn: "7d" });
+      const token = jwt.sign({ sub: "1" }, JWT_REFRESH_SECRET, { expiresIn: "7d" });
       repositorio.buscarPorId.mockResolvedValue({ id: "1", refreshToken: "outro-token" });
 
       await expect(
@@ -171,7 +173,7 @@ describe("auth.service", () => {
     });
 
     it("deve lançar ErroApp 401 se usuario não existe", async () => {
-      const token = jwt.sign({ sub: "1" }, JWT_SECRET, { expiresIn: "7d" });
+      const token = jwt.sign({ sub: "1" }, JWT_REFRESH_SECRET, { expiresIn: "7d" });
       repositorio.buscarPorId.mockResolvedValue(null);
 
       await expect(
