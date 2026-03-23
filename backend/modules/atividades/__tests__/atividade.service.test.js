@@ -138,6 +138,14 @@ describe("atividade.service", () => {
         codigoStatus: 409,
       });
     });
+
+    it("deve relançar erros desconhecidos", async () => {
+      const erroDesconhecido = new Error("falha inesperada");
+      repositorio.buscarPorId.mockResolvedValue(atividadeBase);
+      repositorio.atualizar.mockRejectedValue(erroDesconhecido);
+
+      await expect(servico.atualizar("a1", "u1", { nome: "Leitura" })).rejects.toThrow("falha inesperada");
+    });
   });
 
   describe("arquivar", () => {
