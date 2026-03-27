@@ -18,3 +18,6 @@ export function criarCategoriaRepository(prisma) {
       return prisma.categoria.findUnique({ where: { id } });
     },
 
+    atualizar(id, dados) {
+      return prisma.categoria.update({ where: { id }, data: dados });
+    },
