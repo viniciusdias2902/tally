@@ -13,3 +13,8 @@ export function criarCategoriaRepository(prisma) {
         orderBy: { ordem: "asc" },
       });
     },
+
+    buscarPorId(id) {
+      return prisma.categoria.findUnique({ where: { id } });
+    },
+
