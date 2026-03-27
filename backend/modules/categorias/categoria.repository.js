@@ -4,3 +4,12 @@ export function criarCategoriaRepository(prisma) {
       return prisma.categoria.create({ data: { atividadeId, nome, cor, ordem } });
     },
 
+    listarPorAtividade(atividadeId, { incluirArquivadas = false } = {}) {
+      return prisma.categoria.findMany({
+        where: {
+          atividadeId,
+          ...(incluirArquivadas ? {} : { arquivada: false }),
+        },
+        orderBy: { ordem: "asc" },
+      });
+    },
