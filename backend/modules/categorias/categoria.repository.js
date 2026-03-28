@@ -39,6 +39,10 @@ export function criarCategoriaRepository(prisma) {
         .then((total) => total > 0);
     },
 
+    contarPorAtividade(atividadeId) {
+      return prisma.categoria.count({ where: { atividadeId } });
+    },
+
 
   };
 }
