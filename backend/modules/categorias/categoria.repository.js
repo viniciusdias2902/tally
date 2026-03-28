@@ -34,3 +34,5 @@ export function criarCategoriaRepository(prisma) {
       return prisma.categoria.delete({ where: { id } });
     },
 
+  };
+}
