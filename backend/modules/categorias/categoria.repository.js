@@ -29,3 +29,8 @@ export function criarCategoriaRepository(prisma) {
     desarquivar(id) {
       return prisma.categoria.update({ where: { id }, data: { arquivada: false } });
     },
+
+    deletar(id) {
+      return prisma.categoria.delete({ where: { id } });
+    },
+
