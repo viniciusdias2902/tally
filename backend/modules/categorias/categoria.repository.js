@@ -21,3 +21,7 @@ export function criarCategoriaRepository(prisma) {
     atualizar(id, dados) {
       return prisma.categoria.update({ where: { id }, data: dados });
     },
+
+    arquivar(id) {
+      return prisma.categoria.update({ where: { id }, data: { arquivada: true } });
+    },
