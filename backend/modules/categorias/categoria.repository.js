@@ -34,5 +34,11 @@ export function criarCategoriaRepository(prisma) {
       return prisma.categoria.delete({ where: { id } });
     },
 
+    possuiSessoes(id) {
+      return prisma.sessao.count({ where: { categoriaId: id } })
+        .then((total) => total > 0);
+    },
+
+
   };
 }
