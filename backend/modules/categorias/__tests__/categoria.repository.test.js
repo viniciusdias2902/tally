@@ -74,5 +74,25 @@ describe("categoria.repository", () => {
             expect(resultado).toEqual(categorias);
         });
     });
+
+    describe("buscarPorId", () => {
+        it("deve buscar uma categoria por id", async () => {
+            const categoria = { id: "c1", nome: "Fixação" };
+            prisma.categoria.findUnique.mockResolvedValue(categoria);
+
+            const resultado = await repositorio.buscarPorId("c1");
+
+            expect(prisma.categoria.findUnique).toHaveBeenCalledWith({ where: { id: "c1" } });
+            expect(resultado).toEqual(categoria);
+        });
+        it("deve retornar null quando não encontrar", async () => {
+            prisma.categoria.findUnique.mockResolvedValue(null);
+
+            const resultado = await repositorio.buscarPorId("c1");
+
+            expect(prisma.categoria.findUnique).toHaveBeenCalledWith({ where: { id: "c1" } });
+            expect(resultado).toBeNull();
+        });
+    });
 })
 
