@@ -29,7 +29,7 @@ describe("categoria.repository", () => {
 
     describe("criar", () => {
         it("deve chamar create com os dados corretos", async () => {
-            const dados = { atividadeId: "a1", nome: "Fixação", cor: "#FF0000", ordem: 0 };
+            const dados = { atividadeId: "a1", nome: "Categoria Teste", cor: "#FF0000", ordem: 0 };
             const categoria = { id: "c1", ...dados, arquivada: false };
 
             prisma.categoria.create.mockResolvedValue(categoria);
@@ -66,7 +66,7 @@ describe("categoria.repository", () => {
         });
 
         it("deve retornar as categorias encontradas", async () => {
-            const categorias = [{ id: "c1", nome: "Fixação" }];
+            const categorias = [{ id: "c1", nome: "Categoria Teste" }];
             prisma.categoria.findMany.mockResolvedValue(categorias);
 
             const resultado = await repositorio.listarPorAtividade("a1");
@@ -77,7 +77,7 @@ describe("categoria.repository", () => {
 
     describe("buscarPorId", () => {
         it("deve buscar uma categoria por id", async () => {
-            const categoria = { id: "c1", nome: "Fixação" };
+            const categoria = { id: "c1", nome: "Categoria Teste" };
             prisma.categoria.findUnique.mockResolvedValue(categoria);
 
             const resultado = await repositorio.buscarPorId("c1");
@@ -92,6 +92,18 @@ describe("categoria.repository", () => {
 
             expect(prisma.categoria.findUnique).toHaveBeenCalledWith({ where: { id: "c1" } });
             expect(resultado).toBeNull();
+        });
+    });
+
+    describe("atualizar", () => {
+        it("deve atualizar uma categoria por id", async () => {
+            const categoria = { id: "c1", nome: "Categoria Atualizada" };
+            prisma.categoria.update.mockResolvedValue(categoria);
+
+            const resultado = await repositorio.atualizar("c1", { nome: "Categoria Atualizada" });
+
+            expect(prisma.categoria.update).toHaveBeenCalledWith({ where: { id: "c1" }, data: { nome: "Categoria Atualizada" } });
+            expect(resultado).toEqual(categoria);
         });
     });
 })
