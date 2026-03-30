@@ -17,3 +17,13 @@ function criarPrismaMock() {
         $transaction: vi.fn(),
     };
 }
+
+describe("categoria.repository", () => {
+    let prisma;
+    let repositorio;
+
+    beforeEach(() => {
+        prisma = criarPrismaMock();
+        repositorio = criarCategoriaRepository(prisma);
+    });
+});
