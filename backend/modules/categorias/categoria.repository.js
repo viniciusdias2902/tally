@@ -44,8 +44,12 @@ export function criarCategoriaRepository(prisma) {
     },
 
     atualizarOrdem(updates) {
-      return prisma.$transaction(updates.map(({ id, ordem }) => prisma.categoria.update({ where: { id }, data: { ordem } })))
-    }
+      return prisma.$transaction(
+        updates.map(({ id, ordem }) =>
+          prisma.categoria.update({ where: { id }, data: { ordem } })
+        )
+      );
+    },
 
   };
 }
