@@ -40,5 +40,39 @@ describe("categoria.repository", () => {
             expect(resultado).toEqual(categoria);
         });
     });
+
+    describe("listarPorAtividade", () => {
+        it("deve filtrar por atividadeId e excluir arquivadas por padrão", async () => {
+            prisma.categoria.findMany.mockResolvedValue([]);
+
+            await repositorio.listarPorAtividade("a1");
+
+
+            expect(prisma.categoria.findMany).toHaveBeenCalledWith({
+                where: { atividadeId: "a1", arquivada: false },
+                orderBy: { ordem: "asc" },
+            });
+        });
+
+        it("deve incluir arquivadas quando solicitado", async () => {
+            prisma.categoria.findMany.mockResolvedValue([]);
+
+            await repositorio.listarPorAtividade("a1", { incluirArquivadas: true });
+
+            expect(prisma.categoria.findMany).toHaveBeenCalledWith({
+                where: { atividadeId: "a1" },
+                orderBy: { ordem: "asc" },
+            });
+        });
+
+        it("deve retornar as categorias encontradas", async () => {
+            const categorias = [{ id: "c1", nome: "Fixação" }];
+            prisma.categoria.findMany.mockResolvedValue(categorias);
+
+            const resultado = await repositorio.listarPorAtividade("a1");
+
+            expect(resultado).toEqual(categorias);
+        });
+    });
 })
 
