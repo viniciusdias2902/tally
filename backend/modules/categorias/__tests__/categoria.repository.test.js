@@ -106,5 +106,17 @@ describe("categoria.repository", () => {
             expect(resultado).toEqual(categoria);
         });
     });
+
+    describe("arquivar", () => {
+        it("arquiva uma categoria por id", async () => {
+            const categoria = { id: "c1", arquivada: true };
+            prisma.categoria.update.mockResolvedValue(categoria);
+
+            const resultado = await repositorio.arquivar("c1");
+
+            expect(prisma.categoria.update).toHaveBeenCalledWith({ where: { id: "c1" }, data: { arquivada: true } });
+            expect(resultado).toEqual(categoria);
+        });
+    });
 })
 
