@@ -142,5 +142,24 @@ describe("categoria.repository", () => {
             expect(resultado).toEqual(categoria);
         });
     });
+
+    describe("possuiSessoes", () => {
+        it("retorna true se a categoria tiver sessoes", async () => {
+            prisma.sessao.count.mockResolvedValue(1);
+
+            const resultado = await repositorio.possuiSessoes("c1");
+
+            expect(prisma.sessao.count).toHaveBeenCalledWith({ where: { categoriaId: "c1" } });
+            expect(resultado).toBe(true);
+        });
+        it("retorna false se a categoria não tiver sessoes", async () => {
+            prisma.sessao.count.mockResolvedValue(0);
+
+            const resultado = await repositorio.possuiSessoes("c1");
+
+            expect(prisma.sessao.count).toHaveBeenCalledWith({ where: { categoriaId: "c1" } });
+            expect(resultado).toBe(false);
+        });
+    });
 })
 
