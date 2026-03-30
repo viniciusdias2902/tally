@@ -161,5 +161,16 @@ describe("categoria.repository", () => {
             expect(resultado).toBe(false);
         });
     });
-})
+
+    describe("contaPorAtividade", () => {
+        it("retorna a quantidade de categorias por atividade", async () => {
+            prisma.categoria.count.mockResolvedValue(3);
+
+            const resultado = await repositorio.contarPorAtividade("a1");
+
+            expect(prisma.categoria.count).toHaveBeenCalledWith({ where: { atividadeId: "a1" } });
+            expect(resultado).toBe(3);
+        });
+    });
+});
 
