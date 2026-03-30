@@ -130,5 +130,17 @@ describe("categoria.repository", () => {
             expect(resultado).toEqual(categoria);
         });
     });
+
+    describe("excluir", () => {
+        it("exclui uma categoria por id", async () => {
+            const categoria = { id: "c1" };
+            prisma.categoria.delete.mockResolvedValue(categoria);
+
+            const resultado = await repositorio.deletar("c1");
+
+            expect(prisma.categoria.delete).toHaveBeenCalledWith({ where: { id: "c1" } });
+            expect(resultado).toEqual(categoria);
+        });
+    });
 })
 
