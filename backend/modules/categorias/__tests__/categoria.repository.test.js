@@ -172,5 +172,19 @@ describe("categoria.repository", () => {
             expect(resultado).toBe(3);
         });
     });
+
+    describe("atualizaOrdem", () => {
+        it("atualiza a ordem das categorias", async () => {
+            const categorias = [{ id: "c1", ordem: 1 }, { id: "c2", ordem: 2 }];
+            prisma.categoria.update.mockResolvedValue(categorias);
+            prisma.$transaction.mockResolvedValue(categorias);
+
+            const resultado = await repositorio.atualizarOrdem(categorias);
+
+            expect(prisma.categoria.update).toHaveBeenCalledWith({ where: { id: "c1" }, data: { ordem: 1 } });
+            expect(prisma.categoria.update).toHaveBeenCalledWith({ where: { id: "c2" }, data: { ordem: 2 } });
+            expect(resultado).toEqual(categorias);
+        });
+    });
 });
 
