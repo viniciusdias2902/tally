@@ -12,7 +12,9 @@
     "test:unitario": "vitest run --project unitario",
     "test:integracao": "vitest run --project integracao",
     "test:watch": "vitest",
-    "test:cobertura": "vitest run --coverage"
+    "test:cobertura": "vitest run --coverage",
+    "seed": "node backend/prisma/seed.js",
+    "migrate": "cd backend && npx prisma migrate dev"
   },
   "devDependencies": {
     "@types/pg": "^8.18.0",
