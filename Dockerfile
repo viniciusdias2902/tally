@@ -28,9 +28,9 @@ RUN addgroup -S app && adduser -S app -G app
 COPY --from=build --chown=app:app /app/node_modules ./node_modules
 COPY --from=build --chown=app:app /app/backend ./backend
 COPY --chown=app:app package.json ./
-COPY --chown=app:app docker/entrypoint.sh ./docker/entrypoint.sh
+COPY --chown=app:app docker/prod/entrypoint.sh ./docker/prod/entrypoint.sh
 
-RUN chmod +x ./docker/entrypoint.sh
+RUN chmod +x ./docker/prod/entrypoint.sh
 
 USER app
 
@@ -39,4 +39,4 @@ EXPOSE 3000
 HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
   CMD wget -qO- http://localhost:3000/health || exit 1
 
-ENTRYPOINT ["sh", "./docker/entrypoint.sh"]
+ENTRYPOINT ["sh", "./docker/prod/entrypoint.sh"]
