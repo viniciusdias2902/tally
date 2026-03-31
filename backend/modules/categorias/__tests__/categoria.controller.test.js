@@ -177,4 +177,92 @@ describe("categoria.controller", () => {
       await expect(controller.atualizar(req, res)).rejects.toThrow("CATEGORIA_JA_EXISTE");
     });
   });
+
+  describe("arquivar", () => {
+    it("deve chamar servico.arquivar com id e usuarioId e retornar 204", async () => {
+      servico.arquivar.mockResolvedValue(null);
+      const req = { usuarioId: "u1", params: { id: "c1" } };
+      const res = criarRes();
+
+      await controller.arquivar(req, res);
+
+      expect(servico.arquivar).toHaveBeenCalledWith("c1", "u1");
+      expect(res.statusCode).toBe(204);
+      expect(res.finalizado).toBe(true);
+    });
+
+    it("deve propagar erro do servico", async () => {
+      servico.arquivar.mockRejectedValue(new Error("CATEGORIA_NAO_ENCONTRADA"));
+      const req = { usuarioId: "u1", params: { id: "c1" } };
+      const res = criarRes();
+
+      await expect(controller.arquivar(req, res)).rejects.toThrow("CATEGORIA_NAO_ENCONTRADA");
+    });
+  });
+
+  describe("desarquivar", () => {
+    it("deve chamar servico.desarquivar com id e usuarioId e retornar 204", async () => {
+      servico.desarquivar.mockResolvedValue(null);
+      const req = { usuarioId: "u1", params: { id: "c1" } };
+      const res = criarRes();
+
+      await controller.desarquivar(req, res);
+
+      expect(servico.desarquivar).toHaveBeenCalledWith("c1", "u1");
+      expect(res.statusCode).toBe(204);
+      expect(res.finalizado).toBe(true);
+    });
+
+    it("deve propagar erro do servico", async () => {
+      servico.desarquivar.mockRejectedValue(new Error("CATEGORIA_NAO_ENCONTRADA"));
+      const req = { usuarioId: "u1", params: { id: "c1" } };
+      const res = criarRes();
+
+      await expect(controller.desarquivar(req, res)).rejects.toThrow("CATEGORIA_NAO_ENCONTRADA");
+    });
+  });
+
+  describe("deletar", () => {
+    it("deve chamar servico.deletar com id e usuarioId e retornar 204", async () => {
+      servico.deletar.mockResolvedValue(null);
+      const req = { usuarioId: "u1", params: { id: "c1" } };
+      const res = criarRes();
+
+      await controller.deletar(req, res);
+
+      expect(servico.deletar).toHaveBeenCalledWith("c1", "u1");
+      expect(res.statusCode).toBe(204);
+      expect(res.finalizado).toBe(true);
+    });
+
+    it("deve propagar erro do servico", async () => {
+      servico.deletar.mockRejectedValue(new Error("CATEGORIA_COM_SESSOES"));
+      const req = { usuarioId: "u1", params: { id: "c1" } };
+      const res = criarRes();
+
+      await expect(controller.deletar(req, res)).rejects.toThrow("CATEGORIA_COM_SESSOES");
+    });
+  });
+
+  describe("reordenar", () => {
+    it("deve chamar servico.reordenar com atividadeId, usuarioId e ordenacoes e retornar 204", async () => {
+      const ordenacoes = [
+        { id: "c1", ordem: 2 },
+        { id: "c2", ordem: 0 },
+      ];
+      servico.reordenar.mockResolvedValue(null);
+      const req = {
+        usuarioId: "u1",
+        params: { atividadeId: "a1" },
+        body: { ordenacoes },
+      };
+      const res = criarRes();
+
+      await controller.reordenar(req, res);
+
+      expect(servico.reordenar).toHaveBeenCalledWith("a1", "u1", ordenacoes);
+      expect(res.statusCode).toBe(204);
+      expect(res.finalizado).toBe(true);
+    });
+  });
 });
