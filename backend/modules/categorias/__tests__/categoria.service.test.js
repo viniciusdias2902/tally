@@ -175,4 +175,138 @@ describe("categoria.service", () => {
       });
     });
   });
+
+  describe("atualizar", () => {
+    it("deve atualizar e retornar a categoria", async () => {
+      const atualizada = { ...categoriaBase, nome: "Lazer" };
+      repositorio.buscarPorId.mockResolvedValue(categoriaBase);
+      atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+      repositorio.atualizar.mockResolvedValue(atualizada);
+
+      const resultado = await servico.atualizar("c1", "u1", { nome: "Lazer" });
+
+      expect(repositorio.atualizar).toHaveBeenCalledWith("c1", { nome: "Lazer" });
+      expect(resultado).toEqual(atualizada);
+    });
+  });
+
+  describe("arquivar", () => {
+    it("deve arquivar a categoria", async () => {
+      repositorio.buscarPorId.mockResolvedValue(categoriaBase);
+      atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+      repositorio.arquivar.mockResolvedValue({ ...categoriaBase, arquivada: true });
+
+      await servico.arquivar("c1", "u1");
+
+      expect(repositorio.arquivar).toHaveBeenCalledWith("c1");
+    });
+
+    it("deve lançar ErroApp 404 se a categoria não existe", async () => {
+      repositorio.buscarPorId.mockResolvedValue(null);
+
+      await expect(servico.arquivar("c1", "u1")).rejects.toMatchObject({
+        message: "CATEGORIA_NAO_ENCONTRADA",
+        codigoStatus: 404,
+      });
+    });
+  });
+
+  describe("desarquivar", () => {
+    it("deve desarquivar a categoria", async () => {
+      const categoriaArquivada = { ...categoriaBase, arquivada: true };
+      repositorio.buscarPorId.mockResolvedValue(categoriaArquivada);
+      atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+      repositorio.desarquivar.mockResolvedValue({ ...categoriaArquivada, arquivada: false });
+
+      await servico.desarquivar("c1", "u1");
+
+      expect(repositorio.desarquivar).toHaveBeenCalledWith("c1");
+    });
+
+    it("deve lançar ErroApp 404 se a categoria não existe", async () => {
+      repositorio.buscarPorId.mockResolvedValue(null);
+
+      await expect(servico.desarquivar("c1", "u1")).rejects.toMatchObject({
+        message: "CATEGORIA_NAO_ENCONTRADA",
+        codigoStatus: 404,
+      });
+    });
+  });
+
+  describe("deletar", () => {
+    it("deve deletar a categoria quando não há sessões vinculadas", async () => {
+      repositorio.buscarPorId.mockResolvedValue(categoriaBase);
+      atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+      repositorio.possuiSessoes.mockResolvedValue(false);
+      repositorio.deletar.mockResolvedValue(categoriaBase);
+
+      await servico.deletar("c1", "u1");
+
+      expect(repositorio.deletar).toHaveBeenCalledWith("c1");
+    });
+
+    it("deve lançar ErroApp 409 quando há sessões vinculadas", async () => {
+      repositorio.buscarPorId.mockResolvedValue(categoriaBase);
+      atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+      repositorio.possuiSessoes.mockResolvedValue(true);
+
+      await expect(servico.deletar("c1", "u1")).rejects.toMatchObject({
+        message: "CATEGORIA_COM_SESSOES",
+        codigoStatus: 409,
+      });
+      expect(repositorio.deletar).not.toHaveBeenCalled();
+    });
+
+    it("deve lançar ErroApp 404 se a categoria não existe", async () => {
+      repositorio.buscarPorId.mockResolvedValue(null);
+
+      await expect(servico.deletar("c1", "u1")).rejects.toMatchObject({
+        message: "CATEGORIA_NAO_ENCONTRADA",
+        codigoStatus: 404,
+      });
+    });
+
+    it("deve lançar ErroApp 404 se a atividade pai não pertence ao usuário", async () => {
+      repositorio.buscarPorId.mockResolvedValue(categoriaBase);
+      atividadeServiceMock.buscar.mockRejectedValue(
+        new ErroApp("ATIVIDADE_NAO_ENCONTRADA", 404)
+      );
+
+      await expect(servico.deletar("c1", "u1")).rejects.toMatchObject({
+        message: "ATIVIDADE_NAO_ENCONTRADA",
+        codigoStatus: 404,
+      });
+      expect(repositorio.possuiSessoes).not.toHaveBeenCalled();
+      expect(repositorio.deletar).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("reordenar", () => {
+    it("deve reordenar as categorias da atividade", async () => {
+      const ordenacoes = [
+        { id: "c1", ordem: 2 },
+        { id: "c2", ordem: 0 },
+        { id: "c3", ordem: 1 },
+      ];
+      atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+      repositorio.atualizarOrdem.mockResolvedValue(undefined);
+
+      await servico.reordenar("a1", "u1", ordenacoes);
+
+      expect(atividadeServiceMock.buscar).toHaveBeenCalledWith("a1", "u1");
+      expect(repositorio.atualizarOrdem).toHaveBeenCalledWith(ordenacoes);
+    });
+
+    it("deve lançar ErroApp 404 se a atividade não pertence ao usuário", async () => {
+      atividadeServiceMock.buscar.mockRejectedValue(
+        new ErroApp("ATIVIDADE_NAO_ENCONTRADA", 404)
+      );
+
+      await expect(servico.reordenar("a1", "u1", [])).rejects.toMatchObject({
+        message: "ATIVIDADE_NAO_ENCONTRADA",
+        codigoStatus: 404,
+      });
+      expect(repositorio.atualizarOrdem).not.toHaveBeenCalled();
+    });
+  });
 });
