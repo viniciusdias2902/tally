@@ -22,4 +22,47 @@ export function criarCategoriaService(categoriaRepository, atividadeService) {
         if (erro.code === "P2002") throw new ErroApp("CATEGORIA_JA_EXISTE", 409);
         throw erro;
       }
-    }
+    },
+
+    async listar(atividadeId, usuarioId, opcoes) {
+      await verificarPosseAtividade(atividadeId, usuarioId);
+      return categoriaRepository.listarPorAtividade(atividadeId, opcoes);
+    },
+
+    buscar(id, usuarioId) {
+      return buscarCategoriaDoUsuario(id, usuarioId);
+    },
+
+    async atualizar(id, usuarioId, dados) {
+      await buscarCategoriaDoUsuario(id, usuarioId);
+      try {
+        return await categoriaRepository.atualizar(id, dados);
+      } catch (erro) {
+        if (erro.code === "P2002") throw new ErroApp("CATEGORIA_JA_EXISTE", 409);
+        throw erro;
+      }
+    },
+
+    async arquivar(id, usuarioId) {
+      await buscarCategoriaDoUsuario(id, usuarioId);
+      return categoriaRepository.arquivar(id);
+    },
+
+    async desarquivar(id, usuarioId) {
+      await buscarCategoriaDoUsuario(id, usuarioId);
+      return categoriaRepository.desarquivar(id);
+    },
+
+    async deletar(id, usuarioId) {
+      await buscarCategoriaDoUsuario(id, usuarioId);
+      const temSessoes = await categoriaRepository.possuiSessoes(id);
+      if (temSessoes) throw new ErroApp("CATEGORIA_COM_SESSOES", 409);
+      return categoriaRepository.deletar(id);
+    },
+
+    async reordenar(atividadeId, usuarioId, ordenacoes) {
+      await verificarPosseAtividade(atividadeId, usuarioId);
+      return categoriaRepository.atualizarOrdem(ordenacoes);
+    },
+  };
+}
