@@ -264,5 +264,17 @@ describe("categoria.controller", () => {
       expect(res.statusCode).toBe(204);
       expect(res.finalizado).toBe(true);
     });
+
+    it("deve propagar erro do servico", async () => {
+      servico.reordenar.mockRejectedValue(new Error("ATIVIDADE_NAO_ENCONTRADA"));
+      const req = {
+        usuarioId: "u1",
+        params: { atividadeId: "a1" },
+        body: { ordenacoes: [] },
+      };
+      const res = criarRes();
+
+      await expect(controller.reordenar(req, res)).rejects.toThrow("ATIVIDADE_NAO_ENCONTRADA");
+    });
   });
 });
