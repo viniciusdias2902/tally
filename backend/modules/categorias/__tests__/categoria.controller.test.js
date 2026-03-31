@@ -43,3 +43,48 @@ const categoriaBase = {
   ordem: 0,
   arquivada: false,
 };
+
+describe("categoria.controller", () => {
+  let servico;
+  let controller;
+
+  beforeEach(() => {
+    servico = criarServicoMock();
+    controller = criarCategoriaController(servico);
+  });
+
+  describe("criar", () => {
+    it("deve chamar servico.criar com os dados corretos e retornar 201", async () => {
+      servico.criar.mockResolvedValue(categoriaBase);
+      const req = {
+        usuarioId: "u1",
+        params: { atividadeId: "a1" },
+        body: { nome: "Trabalho", cor: "#FF5733" },
+      };
+      const res = criarRes();
+
+      await controller.criar(req, res);
+
+      expect(servico.criar).toHaveBeenCalledWith({
+        atividadeId: "a1",
+        usuarioId: "u1",
+        nome: "Trabalho",
+        cor: "#FF5733",
+      });
+      expect(res.statusCode).toBe(201);
+      expect(res.corpo).toEqual(categoriaBase);
+    });
+
+    it("deve propagar erro do servico", async () => {
+      servico.criar.mockRejectedValue(new Error("CATEGORIA_JA_EXISTE"));
+      const req = {
+        usuarioId: "u1",
+        params: { atividadeId: "a1" },
+        body: { nome: "Trabalho", cor: "#FF5733" },
+      };
+      const res = criarRes();
+
+      await expect(controller.criar(req, res)).rejects.toThrow("CATEGORIA_JA_EXISTE");
+    });
+  });
+});
