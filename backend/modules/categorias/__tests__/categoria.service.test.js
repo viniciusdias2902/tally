@@ -114,4 +114,65 @@ describe("categoria.service", () => {
       ).rejects.toThrow("falha inesperada");
     });
   });
+
+  describe("listar", () => {
+    it("deve retornar as categorias da atividade", async () => {
+      const categorias = [categoriaBase];
+      atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+      repositorio.listarPorAtividade.mockResolvedValue(categorias);
+
+      const resultado = await servico.listar("a1", "u1", { incluirArquivadas: false });
+
+      expect(atividadeServiceMock.buscar).toHaveBeenCalledWith("a1", "u1");
+      expect(repositorio.listarPorAtividade).toHaveBeenCalledWith("a1", { incluirArquivadas: false });
+      expect(resultado).toEqual(categorias);
+    });
+
+    it("deve lançar ErroApp 404 se a atividade não pertence ao usuário", async () => {
+      atividadeServiceMock.buscar.mockRejectedValue(
+        new ErroApp("ATIVIDADE_NAO_ENCONTRADA", 404)
+      );
+
+      await expect(servico.listar("a1", "u1", {})).rejects.toMatchObject({
+        message: "ATIVIDADE_NAO_ENCONTRADA",
+        codigoStatus: 404,
+      });
+
+      expect(repositorio.listarPorAtividade).not.toHaveBeenCalled();
+    });
+  });
+
+  describe("buscar", () => {
+    it("deve retornar a categoria quando pertence ao usuário", async () => {
+      repositorio.buscarPorId.mockResolvedValue(categoriaBase);
+      atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+
+      const resultado = await servico.buscar("c1", "u1");
+
+      expect(repositorio.buscarPorId).toHaveBeenCalledWith("c1");
+      expect(atividadeServiceMock.buscar).toHaveBeenCalledWith("a1", "u1");
+      expect(resultado).toEqual(categoriaBase);
+    });
+
+    it("deve lançar ErroApp 404 quando a categoria não existe", async () => {
+      repositorio.buscarPorId.mockResolvedValue(null);
+
+      await expect(servico.buscar("inexistente", "u1")).rejects.toMatchObject({
+        message: "CATEGORIA_NAO_ENCONTRADA",
+        codigoStatus: 404,
+      });
+    });
+
+    it("deve lançar ErroApp 404 quando a atividade pai não pertence ao usuário", async () => {
+      repositorio.buscarPorId.mockResolvedValue(categoriaBase);
+      atividadeServiceMock.buscar.mockRejectedValue(
+        new ErroApp("ATIVIDADE_NAO_ENCONTRADA", 404)
+      );
+
+      await expect(servico.buscar("c1", "u1")).rejects.toMatchObject({
+        message: "ATIVIDADE_NAO_ENCONTRADA",
+        codigoStatus: 404,
+      });
+    });
+  });
 });
