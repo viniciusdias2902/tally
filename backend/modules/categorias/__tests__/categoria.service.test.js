@@ -188,6 +188,35 @@ describe("categoria.service", () => {
       expect(repositorio.atualizar).toHaveBeenCalledWith("c1", { nome: "Lazer" });
       expect(resultado).toEqual(atualizada);
     });
+
+    it("deve lançar ErroApp 404 se a categoria não existe", async () => {
+      repositorio.buscarPorId.mockResolvedValue(null);
+
+      await expect(servico.atualizar("c1", "u1", { nome: "Lazer" })).rejects.toMatchObject({
+        message: "CATEGORIA_NAO_ENCONTRADA",
+        codigoStatus: 404,
+      });
+    });
+
+    it("deve lançar ErroApp 409 se o novo nome já existe (P2002)", async () => {
+      repositorio.buscarPorId.mockResolvedValue(categoriaBase);
+      atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+      repositorio.atualizar.mockRejectedValue({ code: "P2002" });
+
+      await expect(servico.atualizar("c1", "u1", { nome: "Lazer" })).rejects.toMatchObject({
+        message: "CATEGORIA_JA_EXISTE",
+        codigoStatus: 409,
+      });
+    });
+
+    it("deve relançar erros desconhecidos", async () => {
+      const erroDesconhecido = new Error("falha inesperada");
+      repositorio.buscarPorId.mockResolvedValue(categoriaBase);
+      atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+      repositorio.atualizar.mockRejectedValue(erroDesconhecido);
+
+      await expect(servico.atualizar("c1", "u1", { nome: "Lazer" })).rejects.toThrow("falha inesperada");
+    });
   });
 
   describe("arquivar", () => {
