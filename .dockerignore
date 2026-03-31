@@ -1,0 +1,17 @@
+node_modules
+
+# Variáveis de ambiente
+.env
+.env.*
+!.env.example
+
+# Testes e cobertura
+coverage
+backend/tests
+
+# Ferramentas de desenvolvimento
+bruno
+docker-compose.yml
+
+# Logs
+*.log
