@@ -1,6 +1,8 @@
 import "dotenv/config";
 import express from "express";
+import swaggerUi from "swagger-ui-express";
 import prisma from "./lib/prisma.js";
+import { swaggerSpec } from "./lib/swagger.js";
 import { autenticar } from "./middlewares/autenticar.js";
 import { tratarErro } from "./middlewares/tratarErro.js";
 import { criarUsuarioRepository } from "./modules/auth/usuario.repository.js";
@@ -25,6 +27,8 @@ const atividadeRoutes = criarAtividadeRoutes(atividadeController);
 const app = express();
 
 app.use(express.json());
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/auth", authRoutes);
 app.use(autenticar);
