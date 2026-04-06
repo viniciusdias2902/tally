@@ -1,0 +1,15 @@
+meta {
+  name: Arquivar Categoria
+  type: http
+  seq: 5
+}
+
+patch {
+  url: {{baseUrl}}/atividades/{{atividadeId}}/categorias/{{categoriaId}}/arquivar
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

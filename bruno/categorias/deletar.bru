@@ -1,0 +1,15 @@
+meta {
+  name: Deletar Categoria
+  type: http
+  seq: 7
+}
+
+delete {
+  url: {{baseUrl}}/atividades/{{atividadeId}}/categorias/{{categoriaId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

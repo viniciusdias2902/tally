@@ -1,0 +1,15 @@
+meta {
+  name: Desarquivar Categoria
+  type: http
+  seq: 6
+}
+
+patch {
+  url: {{baseUrl}}/atividades/{{atividadeId}}/categorias/{{categoriaId}}/desarquivar
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
