@@ -27,6 +27,9 @@ jobs:
     name: Testes de integração
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: postgresql://tally:tally_secret@localhost:5432/tally_db_teste?schema=public
+
     services:
       postgres:
         image: postgres:17-alpine
