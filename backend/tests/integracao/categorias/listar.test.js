@@ -45,8 +45,14 @@ describe("GET /atividades/:atividadeId/categorias", () => {
     expect(res.status).toBe(200);
     expect(res.body).toHaveLength(3);
 
+    // Verifica ordem crescente pelo campo 'ordem'
+    const ordens = res.body.map((c) => c.ordem);
+    expect(ordens).toEqual([0, 1, 2]);
+
+    // A primeira criada deve ter ordem 0
     expect(res.body[0].nome).toBe("Terceira");
     expect(res.body[1].nome).toBe("Primeira");
     expect(res.body[2].nome).toBe("Segunda");
   });
+
 });
