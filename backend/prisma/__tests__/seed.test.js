@@ -49,5 +49,17 @@ describe("seed", () => {
 
       expect(prismaMock.$executeRaw).toHaveBeenCalledOnce();
     });
+
+    it("deve criar um usuário com email e senha hash", async () => {
+      await executarSeed();
+
+      expect(prismaMock.usuario.create).toHaveBeenCalledWith({
+        data: {
+          email: "teste@email.com",
+          nome: "Usuário Teste",
+          senhaHash: "hash_fake",
+        },
+      });
+    });
   });
 });
