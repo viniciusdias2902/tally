@@ -8,7 +8,9 @@ const options = {
       version: "1.0.0",
       description: "API para gerenciamento de atividades e sessões de medição",
     },
-    servers: [{ url: "http://localhost:3000", description: "Desenvolvimento" }],
+    servers: [
+      { url: process.env.API_BASE_URL || "http://localhost:3000", description: process.env.NODE_ENV === "production" ? "Produção" : "Desenvolvimento" },
+    ],
     components: {
       securitySchemes: {
         bearerAuth: {
