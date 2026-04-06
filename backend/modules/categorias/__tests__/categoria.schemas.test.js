@@ -76,4 +76,55 @@ describe("criarCategoriaSchema", () => {
       expect(parse({ atividadeId: "abc" }).success).toBe(false);
     });
   });
+
+  describe("body", () => {
+    const parse = (dados) => criarCategoriaSchema.body.safeParse(dados);
+
+    it("deve aceitar dados válidos com nome e cor", () => {
+      const resultado = parse({ nome: "Trabalho", cor: "#4e33ffff" });
+      expect(resultado.success).toBe(true);
+    });
+
+    it("deve aplicar cor default quando não informada", () => {
+      const resultado = parse({ nome: "Estudos" });
+      expect(resultado.success).toBe(true);
+      expect(resultado.data.cor).toBe("#6366F1");
+    });
+
+    it("deve aceitar cor em letras minúsculas", () => {
+      expect(parse({ nome: "Lazer", cor: "#aabbcc" }).success).toBe(true);
+    });
+
+    it("deve aceitar cor em letras maiúsculas", () => {
+      expect(parse({ nome: "Lazer", cor: "#AABBCC" }).success).toBe(true);
+    });
+
+    it("deve rejeitar nome vazio", () => {
+      expect(parse({ nome: "" }).success).toBe(false);
+    });
+
+    it("deve rejeitar nome com mais de 100 caracteres", () => {
+      expect(parse({ nome: "a".repeat(101) }).success).toBe(false);
+    });
+
+    it("deve rejeitar nome ausente", () => {
+      expect(parse({}).success).toBe(false);
+    });
+
+    it("deve rejeitar cor hexadecimal sem #", () => {
+      expect(parse({ nome: "Saúde", cor: "FF5733" }).success).toBe(false);
+    });
+
+    it("deve rejeitar cor hexadecimal com formato curto (#FFF)", () => {
+      expect(parse({ nome: "Saúde", cor: "#FFF" }).success).toBe(false);
+    });
+
+    it("deve rejeitar cor com caracteres inválidos", () => {
+      expect(parse({ nome: "Saúde", cor: "#GGHHII" }).success).toBe(false);
+    });
+
+    it("deve rejeitar cor com mais de 7 caracteres", () => {
+      expect(parse({ nome: "Saúde", cor: "#FF5733AA" }).success).toBe(false);
+    });
+  });
 });
