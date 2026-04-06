@@ -43,7 +43,7 @@ export const atualizarCategoriaSchema = {
     id: z.uuid(),
   }),
   body: z.object({
-    nome: z.string().min(1).max(1000).optional(),
+    nome: z.string().min(1).max(100).optional(),
     cor: corHex.optional(),
     ordem: z.number().int().min(0).optional(),
   }),
@@ -54,6 +54,6 @@ export const reordenarCategoriasSchema = {
     atividadeId: z.uuid(),
   }),
   body: z.object({
-    ordenacoes: z.array(z.uuid()).min(),
+    ordenacoes: z.array(z.uuid()).min(1),
   }),
 };
