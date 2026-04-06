@@ -59,6 +59,7 @@ describe("PATCH /atividades/:atividadeId/categorias/:id/arquivar e /desarquivar"
     });
 
     it("deve retornar 404 para categoria inexistente", async () => {
+      const uuidInexistente = "00000000-0000-0000-0000-000000000000";
 
       const res = await request(app)
         .patch(`/atividades/${atividadeId}/categorias/${uuidInexistente}/arquivar`)
