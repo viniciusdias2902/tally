@@ -43,3 +43,33 @@ Vinícius Dias · Maria Rita · Pedro Gabryel
 </div>
 
 <p style="text-align: center; color: #6b7280; margin-top: 0;">Total: 172 commits</p>
+
+---
+
+# O que é o Tally?
+
+Uma API REST para **gerenciamento de tempo e produtividade pessoal**.
+
+- **Atividades** — o que você quer medir (Faculdade, Programação, Exercício...)
+- **Categorias** — subdivisões de cada atividade (Cálculo, Álgebra Linear...)
+- **Sessões** — registros de tempo dedicado (timer, pomodoro ou check binário)
+- **Pomodoro** — configurações personalizadas por atividade
+
+> O objetivo é permitir que o usuário acompanhe de forma granular como investe seu tempo.
+
+---
+
+# Stack tecnológica
+
+| Camada         | Tecnologia                          |
+| -------------- | ----------------------------------- |
+| Runtime        | Node.js 22                          |
+| Framework      | Express 5                           |
+| Banco de dados | PostgreSQL 17                       |
+| ORM            | Prisma 7                            |
+| Autenticação   | JWT (access + refresh token)        |
+| Validação      | Zod 4                               |
+| Testes         | Vitest (unitários + integração)     |
+| Documentação   | Swagger / OpenAPI 3.0               |
+| Containerização| Docker (multi-stage) + Docker Compose |
+| CI/CD          | GitHub Actions → deploy via SSH     |
