@@ -73,3 +73,44 @@ Uma API REST para **gerenciamento de tempo e produtividade pessoal**.
 | Documentação   | Swagger / OpenAPI 3.0               |
 | Containerização| Docker (multi-stage) + Docker Compose |
 | CI/CD          | GitHub Actions → deploy via SSH     |
+
+---
+
+# Arquitetura do backend
+
+O projeto segue uma arquitetura em **camadas com injeção de dependência manual**:
+
+```
+Routes → Controller → Service → Repository → Prisma (DB)
+```
+
+- **Routes** — define endpoints e aplica middlewares de validação
+- **Controller** — extrai dados da request e delega ao service
+- **Service** — regras de negócio, validações de domínio
+- **Repository** — acesso ao banco via Prisma
+
+<div class="info">
+
+💡 Cada camada recebe suas dependências via **factory functions** (`criarAuthService(repositorio)`), facilitando os testes com mocks.
+
+</div>
+
+---
+
+# Modelo de dados
+
+| Tabela           | Descrição                                |
+| ---------------- | ---------------------------------------- |
+| `usuarios`       | Cadastro com email, nome e senha hash    |
+| `atividades`     | Atividades do usuário (cronometrada/binária) |
+| `categorias`     | Subdivisões de uma atividade             |
+| `sessoes`        | Registros de tempo (timer, pomodoro, manual, check) |
+| `config_pomodoro`| Configuração personalizada de pomodoro   |
+
+**Relacionamentos:**
+
+- Usuário → N Atividades
+- Atividade → N Categorias
+- Atividade → N Sessões
+- Atividade → 1 ConfigPomodoro (opcional)
+- Categoria → N Sessões
