@@ -81,7 +81,7 @@ describe("criarCategoriaSchema", () => {
     const parse = (dados) => criarCategoriaSchema.body.safeParse(dados);
 
     it("deve aceitar dados válidos com nome e cor", () => {
-      const resultado = parse({ nome: "Trabalho", cor: "#4e33ffff" });
+      const resultado = parse({ nome: "Trabalho", cor: "#FF5733" });
       expect(resultado.success).toBe(true);
     });
 
