@@ -108,6 +108,7 @@ const options = {
   apis: [
     "./backend/modules/auth/auth.routes.js",
     "./backend/modules/atividades/atividade.routes.js",
+    "./backend/modules/categorias/categoria.routes.js",
   ],
 };
 
