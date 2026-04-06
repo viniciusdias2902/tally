@@ -128,3 +128,44 @@ describe("criarCategoriaSchema", () => {
     });
   });
 });
+
+// ---------------------------------------------------------------------------
+// listarCategoriasSchema
+// ---------------------------------------------------------------------------
+describe("listarCategoriasSchema", () => {
+  describe("params", () => {
+    const parse = (dados) => listarCategoriasSchema.params.safeParse(dados);
+
+    it("deve aceitar atividadeId UUID válido", () => {
+      expect(parse({ atividadeId: UUID_VALIDO }).success).toBe(true);
+    });
+
+    it("deve rejeitar atividadeId inválido", () => {
+      expect(parse({ atividadeId: "abc" }).success).toBe(false);
+    });
+  });
+
+  describe("query", () => {
+    const parse = (dados) => listarCategoriasSchema.query.safeParse(dados);
+
+    it("deve aceitar query vazia", () => {
+      expect(parse({}).success).toBe(true);
+    });
+
+    it("deve aceitar incluirArquivadas como 'true'", () => {
+      expect(parse({ incluirArquivadas: "true" }).success).toBe(true);
+    });
+
+    it("deve aceitar incluirArquivadas como 'false'", () => {
+      expect(parse({ incluirArquivadas: "false" }).success).toBe(true);
+    });
+
+    it("deve rejeitar incluirArquivadas com valor inválido", () => {
+      expect(parse({ incluirArquivadas: "sim" }).success).toBe(false);
+    });
+
+    it("deve rejeitar incluirArquivadas com booleano nativo", () => {
+      expect(parse({ incluirArquivadas: true }).success).toBe(false);
+    });
+  });
+});
