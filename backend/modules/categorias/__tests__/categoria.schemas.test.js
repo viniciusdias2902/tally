@@ -203,6 +203,39 @@ describe("atualizarCategoriaSchema", () => {
 
     it("deve aceitar apenas cor", () => {
       expect(parse({ cor: "#AABB11" }).success).toBe(true);
-    })
-    
+    });
+
+    it("deve aceitar apenas ordem", () => {
+      expect(parse({ ordem: 0 }).success).toBe(true);
+    });
+
+    it("deve aceitar todos os campos juntos", () => {
+      const resultado = parse({ nome: "Novo", cor: "#112233", ordem: 3 });
+      expect(resultado.success).toBe(true);
+    });
+
+    it("deve rejeitar nome vazio", () => {
+      expect(parse({ nome: "" }).success).toBe(false);
+    });
+
+    it("deve rejeitar nome com mais de 100 caracteres", () => {
+      expect(parse({ nome: "a".repeat(101) }).success).toBe(false);
+    });
+
+    it("deve rejeitar cor inválida", () => {
+      expect(parse({ cor: "vermelho" }).success).toBe(false);
+    });
+
+    it("deve rejeitar ordem negativa", () => {
+      expect(parse({ ordem: -1 }).success).toBe(false);
+    });
+
+    it("deve rejeitar ordem decimal", () => {
+      expect(parse({ ordem: 1.5 }).success).toBe(false);
+    });
+
+    it("deve rejeitar ordem como string", () => {
+      expect(parse({ ordem: "3" }).success).toBe(false);
+    });
+  });
 });
