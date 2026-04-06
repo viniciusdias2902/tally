@@ -46,5 +46,59 @@ describe("PATCH /atividades/:atividadeId/categorias/:id/arquivar e /desarquivar"
       expect(categoria.arquivada).toBe(true);
     });
 
+    it("deve excluir categoria arquivada da listagem padrão", async () => {
+      await request(app)
+        .patch(`/atividades/${atividadeId}/categorias/${categoriaId}/arquivar`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      const res = await request(app)
+        .get(`/atividades/${atividadeId}/categorias`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      expect(res.body).toHaveLength(0);
+    });
+
+    it("deve retornar 404 para categoria inexistente", async () => {
+
+      const res = await request(app)
+        .patch(`/atividades/${atividadeId}/categorias/${uuidInexistente}/arquivar`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      expect(res.status).toBe(404);
+    });
+  });
+
+  describe("Desarquivar", () => {
+    it("deve desarquivar a categoria e retornar 204", async () => {
+      // Primeiro arquiva
+      await request(app)
+        .patch(`/atividades/${atividadeId}/categorias/${categoriaId}/arquivar`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      // Depois desarquiva
+      const res = await request(app)
+        .patch(`/atividades/${atividadeId}/categorias/${categoriaId}/desarquivar`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      expect(res.status).toBe(204);
+
+      // Verifica que a categoria voltou a ser ativa
+      const resListar = await request(app)
+        .get(`/atividades/${atividadeId}/categorias`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      const categoria = resListar.body.find((c) => c.id === categoriaId);
+      expect(categoria.arquivada).toBe(false);
+    });
+
+    it("deve retornar 404 para categoria inexistente", async () => {
+      const uuidInexistente = "00000000-0000-0000-0000-000000000000";
+
+      const res = await request(app)
+        .patch(`/atividades/${atividadeId}/categorias/${uuidInexistente}/desarquivar`)
+        .set("Authorization", `Bearer ${accessToken}`);
+
+      expect(res.status).toBe(404);
+    });
   });
 });
