@@ -60,3 +60,20 @@ describe("idCategoriaSchema", () => {
     expect(parse({ atividadeId: UUID_VALIDO }).success).toBe(false);
   });
 });
+
+// ---------------------------------------------------------------------------
+// criarCategoriaSchema
+// ---------------------------------------------------------------------------
+describe("criarCategoriaSchema", () => {
+  describe("params", () => {
+    const parse = (dados) => criarCategoriaSchema.params.safeParse(dados);
+
+    it("deve aceitar atividadeId UUID válido", () => {
+      expect(parse({ atividadeId: UUID_VALIDO }).success).toBe(true);
+    });
+
+    it("deve rejeitar atividadeId inválido", () => {
+      expect(parse({ atividadeId: "abc" }).success).toBe(false);
+    });
+  });
+});
