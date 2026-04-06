@@ -13,16 +13,28 @@ import { criarAtividadeRepository } from "./modules/atividades/atividade.reposit
 import { criarAtividadeService } from "./modules/atividades/atividade.service.js";
 import { criarAtividadeController } from "./modules/atividades/atividade.controller.js";
 import { criarAtividadeRoutes } from "./modules/atividades/atividade.routes.js";
+import { criarCategoriaRepository } from "./modules/categorias/categoria.repository.js";
+import { criarCategoriaService } from "./modules/categorias/categoria.service.js";
+import { criarCategoriaController } from "./modules/categorias/categoria.controller.js";
+import { criarCategoriaRoutes } from "./modules/categorias/categoria.routes.js";
 
+// --- Auth ---
 const usuarioRepository = criarUsuarioRepository(prisma);
 const authService = criarAuthService(usuarioRepository);
 const authController = criarAuthController(authService);
 const authRoutes = criarAuthRoutes(authController);
 
+// --- Atividades ---
 const atividadeRepository = criarAtividadeRepository(prisma);
 const atividadeService = criarAtividadeService(atividadeRepository);
 const atividadeController = criarAtividadeController(atividadeService);
 const atividadeRoutes = criarAtividadeRoutes(atividadeController);
+
+// --- Categorias ---
+const categoriaRepository = criarCategoriaRepository(prisma);
+const categoriaService = criarCategoriaService(categoriaRepository);
+const categoriaController = criarCategoriaController(categoriaService);
+const categoriaRoutes = criarCategoriaRoutes(categoriaController);
 
 const app = express();
 
@@ -36,6 +48,7 @@ app.use("/auth", authRoutes);
 app.use(autenticar);
 
 app.use("/atividades", atividadeRoutes);
+app.use("/atividades/:atividadeId/categorias", categoriaRoutes);
 
 app.use(tratarErro);
 
