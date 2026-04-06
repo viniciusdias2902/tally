@@ -235,7 +235,7 @@ describe("atualizarCategoriaSchema", () => {
     });
 
     it("deve rejeitar ordem como string", () => {
-      expect(parse({ ordem: "3" }).success).toBe(false);
+      expect(parse({ ordem: "2" }).success).toBe(false);
     });
   });
 });
