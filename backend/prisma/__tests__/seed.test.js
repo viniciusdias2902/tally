@@ -107,5 +107,14 @@ describe("seed", () => {
       const { data } = prismaMock.categoria.createMany.mock.calls[0][0];
       expect(data).toHaveLength(36);
     });
+
+    it("deve criar configs de pomodoro para 4 atividades", async () => {
+      await executarSeed();
+
+      expect(prismaMock.configPomodoro.createMany).toHaveBeenCalledOnce();
+
+      const { data } = prismaMock.configPomodoro.createMany.mock.calls[0][0];
+      expect(data).toHaveLength(4);
+    });
   });
 });
