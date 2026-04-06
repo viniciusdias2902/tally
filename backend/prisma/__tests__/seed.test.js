@@ -132,4 +132,24 @@ describe("seed", () => {
       expect(prismaMock.$disconnect).toHaveBeenCalledOnce();
     });
   });
+
+  describe("execução com erro", () => {
+    it("deve exibir o erro no console e encerrar com código 1", async () => {
+      const erro = new Error("falha no banco");
+      prismaMock.usuario.create.mockRejectedValue(erro);
+
+      await executarSeed();
+
+      expect(console.error).toHaveBeenCalledWith(erro);
+      expect(process.exit).toHaveBeenCalledWith(1);
+    });
+
+    it("deve desconectar o prisma mesmo em caso de erro", async () => {
+      prismaMock.usuario.create.mockRejectedValue(new Error("falha"));
+
+      await executarSeed();
+
+      expect(prismaMock.$disconnect).toHaveBeenCalledOnce();
+    });
+  });
 });
