@@ -12,24 +12,28 @@
     "test:unitario": "vitest run --project unitario",
     "test:integracao": "vitest run --project integracao",
     "test:watch": "vitest",
-    "test:cobertura": "vitest run --coverage"
+    "test:cobertura": "vitest run --coverage",
+    "seed": "node backend/prisma/seed.js",
+    "migrate": "cd backend && npx prisma migrate dev"
   },
   "devDependencies": {
     "@types/pg": "^8.18.0",
     "@vitest/coverage-v8": "^4.1.0",
     "nodemon": "^3.1.14",
-    "prisma": "^7.6.0",
+    "prisma": "^7.5.0",
     "supertest": "^7.2.2",
     "vitest": "^4.1.0"
   },
   "dependencies": {
     "@prisma/adapter-pg": "^7.5.0",
-    "@prisma/client": "^7.6.0",
+    "@prisma/client": "^7.5.0",
     "bcrypt": "^6.0.0",
     "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "jsonwebtoken": "^9.0.3",
     "pg": "^8.20.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "zod": "^4.3.6"
   }
 }
