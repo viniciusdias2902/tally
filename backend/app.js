@@ -32,7 +32,7 @@ const atividadeRoutes = criarAtividadeRoutes(atividadeController);
 
 // --- Categorias ---
 const categoriaRepository = criarCategoriaRepository(prisma);
-const categoriaService = criarCategoriaService(categoriaRepository);
+const categoriaService = criarCategoriaService(categoriaRepository, atividadeService);
 const categoriaController = criarCategoriaController(categoriaService);
 const categoriaRoutes = criarCategoriaRoutes(categoriaController);
 
