@@ -177,3 +177,64 @@ npm run test:cobertura    # gera relatório de cobertura
 ⚠️ Os testes de integração usam um banco dedicado (`tally_db_teste`) para não afetar dados de desenvolvimento.
 
 </div>
+
+---
+
+# CI/CD — GitHub Actions
+
+O pipeline roda automaticamente a cada push na `main`:
+
+```
+Push na main
+    ├── Job: Testes unitários ──────────┐
+    │     npm ci → prisma generate → vitest  │
+    ├── Job: Testes de integração ──────┤── (paralelo)
+    │     npm ci → prisma generate → vitest  │
+    │     + PostgreSQL como service     │
+    └───────────────────────────────────┘
+                    │ ambos passaram
+                    ▼
+            Job: Deploy na VPS
+              SSH → git pull → docker compose build → up
+
+```
+
+---
+
+# Deploy — Infraestrutura
+
+<div style="display: flex; gap: 40px;">
+<div style="flex: 1;">
+
+**VPS (viniciusdias.tech)**
+
+- Docker Compose em produção
+- Containers: `tally-api` + `tally-postgres`
+- Nginx do host faz reverse proxy
+- HTTPS via Let's Encrypt (Certbot)
+
+</div>
+<div style="flex: 1;">
+
+**Acesso público**
+
+- API: `https://viniciusdias.tech/tally/api`
+- Docs: `https://viniciusdias.tech/tally/api/api-docs`
+- Health: `https://viniciusdias.tech/tally/api/health`
+
+</div>
+</div>
+
+<div class="info">
+
+💡 A imagem Docker usa **multi-stage build**, roda com **usuário sem privilégios** e tem **healthcheck** configurado.
+
+</div>
+
+---
+
+<!-- _class: lead -->
+
+# Obrigado!
+
+### Dúvidas?
