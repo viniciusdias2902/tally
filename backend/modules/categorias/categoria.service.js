@@ -2,7 +2,9 @@ import { ErroApp } from "../../lib/ErroApp.js";
 
 export function criarCategoriaService(categoriaRepository, atividadeService) {
   async function verificarPosseAtividade(atividadeId, usuarioId) {
-    return atividadeService.buscar(atividadeId, usuarioId);
+    const atividade = await atividadeService.buscar(atividadeId, usuarioId);
+    if (atividade.arquivada) throw new ErroApp("ATIVIDADE_NAO_ENCONTRADA", 404);
+    return atividade;
   }
 
   async function buscarCategoriaDoUsuario(id, usuarioId) {
@@ -62,7 +64,8 @@ export function criarCategoriaService(categoriaRepository, atividadeService) {
 
     async reordenar(atividadeId, usuarioId, ordenacoes) {
       await verificarPosseAtividade(atividadeId, usuarioId);
-      return categoriaRepository.atualizarOrdem(ordenacoes);
+      const updates = ordenacoes.map((id, index) => ({ id, ordem: index }));
+      return categoriaRepository.atualizarOrdem(updates);
     },
   };
 }
