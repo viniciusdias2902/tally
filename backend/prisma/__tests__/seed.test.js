@@ -61,5 +61,42 @@ describe("seed", () => {
         },
       });
     });
+
+    it("deve criar 15 atividades (12 ativas + 3 arquivadas)", async () => {
+      await executarSeed();
+
+      expect(prismaMock.atividade.create).toHaveBeenCalledTimes(15);
+    });
+
+    it("deve criar atividades cronometradas e binárias", async () => {
+      await executarSeed();
+
+      const chamadas = prismaMock.atividade.create.mock.calls.map((c) => c[0].data);
+
+      const cronometradas = chamadas.filter((d) => d.tipoMedicao === "cronometrada");
+      const binarias = chamadas.filter((d) => d.tipoMedicao === "binaria");
+
+      expect(cronometradas).toHaveLength(10);
+      expect(binarias).toHaveLength(5);
+    });
+
+    it("deve criar 3 atividades arquivadas", async () => {
+      await executarSeed();
+
+      const chamadas = prismaMock.atividade.create.mock.calls.map((c) => c[0].data);
+      const arquivadas = chamadas.filter((d) => d.arquivada === true);
+
+      expect(arquivadas).toHaveLength(3);
+      expect(arquivadas.map((a) => a.nome)).toEqual(["Cursinho", "TCC", "Inglês básico"]);
+    });
+
+    it("deve vincular todas as atividades ao usuário criado", async () => {
+      await executarSeed();
+
+      const chamadas = prismaMock.atividade.create.mock.calls.map((c) => c[0].data);
+      const todosComUsuario = chamadas.every((d) => d.usuarioId === "u1");
+
+      expect(todosComUsuario).toBe(true);
+    });
   });
 });
