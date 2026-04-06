@@ -74,4 +74,52 @@ describe("POST /atividades/:atividadeId/categorias", () => {
     expect(res.status).toBe(404);
     expect(res.body.erro).toBe("ATIVIDADE_NAO_ENCONTRADA");
   });
+
+  it("deve retornar 404 para atividade arquivada", async () => {
+    await request(app)
+      .patch(`/atividades/${atividadeId}/arquivar`)
+      .set("Authorization", `Bearer ${accessToken}`);
+
+    const res = await request(app)
+      .post(`/atividades/${atividadeId}/categorias`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send({ nome: "Trabalho" });
+
+    expect(res.status).toBe(404);
+  });
+
+  it("deve retornar 409 para nome duplicado na mesma atividade", async () => {
+    await request(app)
+      .post(`/atividades/${atividadeId}/categorias`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send({ nome: "Trabalho" });
+
+    const res = await request(app)
+      .post(`/atividades/${atividadeId}/categorias`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send({ nome: "Trabalho" });
+
+    expect(res.status).toBe(409);
+    expect(res.body.erro).toBe("CATEGORIA_JA_EXISTE");
+  });
+
+  it("deve retornar 400 para cor hex inválida", async () => {
+    const res = await request(app)
+      .post(`/atividades/${atividadeId}/categorias`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send({ nome: "Trabalho", cor: "vermelho" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.erro).toBe("VALIDACAO_FALHOU");
+  });
+
+  it("deve retornar 400 para cor hex incompleta", async () => {
+    const res = await request(app)
+      .post(`/atividades/${atividadeId}/categorias`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send({ nome: "Trabalho", cor: "#FFF" });
+
+    expect(res.status).toBe(400);
+    expect(res.body.erro).toBe("VALIDACAO_FALHOU");
+  });
 });
