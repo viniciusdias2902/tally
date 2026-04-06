@@ -98,5 +98,14 @@ describe("seed", () => {
 
       expect(todosComUsuario).toBe(true);
     });
+
+    it("deve criar categorias para as atividades", async () => {
+      await executarSeed();
+
+      expect(prismaMock.categoria.createMany).toHaveBeenCalledOnce();
+
+      const { data } = prismaMock.categoria.createMany.mock.calls[0][0];
+      expect(data).toHaveLength(36);
+    });
   });
 });
