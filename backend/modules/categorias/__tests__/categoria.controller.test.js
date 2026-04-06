@@ -246,10 +246,7 @@ describe("categoria.controller", () => {
 
   describe("reordenar", () => {
     it("deve chamar servico.reordenar com atividadeId, usuarioId e ordenacoes e retornar 204", async () => {
-      const ordenacoes = [
-        { id: "c1", ordem: 2 },
-        { id: "c2", ordem: 0 },
-      ];
+      const ordenacoes = ["c1", "c2"];
       servico.reordenar.mockResolvedValue(null);
       const req = {
         usuarioId: "u1",
