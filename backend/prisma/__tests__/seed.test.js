@@ -116,5 +116,20 @@ describe("seed", () => {
       const { data } = prismaMock.configPomodoro.createMany.mock.calls[0][0];
       expect(data).toHaveLength(4);
     });
+
+    it("deve exibir o resumo no console", async () => {
+      await executarSeed();
+
+      expect(console.log).toHaveBeenCalled();
+
+      const mensagens = console.log.mock.calls.map((c) => c[0]);
+      expect(mensagens).toContain("\n✅ Seed concluído!");
+    });
+
+    it("deve desconectar o prisma após a execução", async () => {
+      await executarSeed();
+
+      expect(prismaMock.$disconnect).toHaveBeenCalledOnce();
+    });
   });
 });
