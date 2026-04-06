@@ -114,3 +114,43 @@ Routes → Controller → Service → Repository → Prisma (DB)
 - Atividade → N Sessões
 - Atividade → 1 ConfigPomodoro (opcional)
 - Categoria → N Sessões
+
+---
+
+# Endpoints — Autenticação
+
+| Método | Rota              | Descrição               |
+| ------ | ----------------- | ----------------------- |
+| POST   | `/auth/registrar` | Criar conta             |
+| POST   | `/auth/login`     | Login (retorna tokens)  |
+| POST   | `/auth/refresh`   | Renovar access token    |
+| POST   | `/auth/logout`    | Invalidar refresh token |
+
+Todas as rotas abaixo exigem **Bearer Token** no header `Authorization`.
+
+---
+
+# Endpoints — Atividades
+
+| Método | Rota                            | Descrição            |
+| ------ | ------------------------------- | -------------------- |
+| POST   | `/atividades`                   | Criar atividade      |
+| GET    | `/atividades`                   | Listar atividades    |
+| GET    | `/atividades/:id`               | Buscar por ID        |
+| PATCH  | `/atividades/:id`               | Atualizar atividade  |
+| PATCH  | `/atividades/:id/arquivar`      | Arquivar             |
+| DELETE | `/atividades/:id`               | Deletar              |
+
+---
+
+# Endpoints — Categorias
+
+| Método | Rota                                              | Descrição     |
+| ------ | ------------------------------------------------- | ------------- |
+| POST   | `/atividades/:atividadeId/categorias`              | Criar         |
+| GET    | `/atividades/:atividadeId/categorias`              | Listar        |
+| PUT    | `/atividades/:atividadeId/categorias/:id`          | Atualizar     |
+| PATCH  | `/atividades/:atividadeId/categorias/reordenar`    | Reordenar     |
+| PATCH  | `/atividades/:atividadeId/categorias/:id/arquivar` | Arquivar      |
+| PATCH  | `/atividades/:atividadeId/categorias/:id/desarquivar` | Desarquivar |
+| DELETE | `/atividades/:atividadeId/categorias/:id`          | Deletar       |
