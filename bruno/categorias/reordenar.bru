@@ -1,0 +1,21 @@
+meta {
+  name: Reordenar Categorias
+  type: http
+  seq: 4
+}
+
+patch {
+  url: {{baseUrl}}/atividades/{{atividadeId}}/categorias/reordenar
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "ordenacoes": ["{{categoriaId}}"]
+  }
+}

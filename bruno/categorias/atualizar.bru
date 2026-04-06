@@ -1,0 +1,22 @@
+meta {
+  name: Atualizar Categoria
+  type: http
+  seq: 3
+}
+
+put {
+  url: {{baseUrl}}/atividades/{{atividadeId}}/categorias/{{categoriaId}}
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "nome": "Categoria atualizada",
+    "cor": "#FF5733"
+  }
+}
