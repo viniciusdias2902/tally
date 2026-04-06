@@ -154,3 +154,26 @@ Todas as rotas abaixo exigem **Bearer Token** no header `Authorization`.
 | PATCH  | `/atividades/:atividadeId/categorias/:id/arquivar` | Arquivar      |
 | PATCH  | `/atividades/:atividadeId/categorias/:id/desarquivar` | Desarquivar |
 | DELETE | `/atividades/:atividadeId/categorias/:id`          | Deletar       |
+
+---
+
+# Testes
+
+**234 testes unitários** + **testes de integração** com banco real.
+
+| Tipo        | O que testa                              | Ferramentas       |
+| ----------- | ---------------------------------------- | ----------------- |
+| Unitário    | Controllers, services, repositories, schemas, middlewares, seed | Vitest + mocks |
+| Integração  | Fluxo completo HTTP → banco de dados     | Vitest + Supertest + PostgreSQL |
+
+```
+npm run test:unitario     # roda testes unitários
+npm run test:integracao   # roda testes de integração (requer PostgreSQL)
+npm run test:cobertura    # gera relatório de cobertura
+```
+
+<div class="highlight">
+
+⚠️ Os testes de integração usam um banco dedicado (`tally_db_teste`) para não afetar dados de desenvolvimento.
+
+</div>
