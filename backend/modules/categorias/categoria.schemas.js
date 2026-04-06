@@ -1,9 +1,10 @@
 import { z } from "zod";
 
-const corHex = z
+const corHexRegex = z
   .string()
-  .regex(/^#[0-9A-Fa-f]{6}$/, "Cor deve ser um hexadecimal válido (ex: #6366F1)")
-  .default("#6366F1");
+  .regex(/^#[0-9A-Fa-f]{6}$/, "Cor deve ser um hexadecimal válido (ex: #6366F1)");
+
+const corHex = corHexRegex.default("#6366F1");
 
 export const idAtividadeSchema = {
   params: z.object({
@@ -44,7 +45,7 @@ export const atualizarCategoriaSchema = {
   }),
   body: z.object({
     nome: z.string().min(1).max(100).optional(),
-    cor: corHex.optional(),
+    cor: corHexRegex.optional(),
     ordem: z.number().int().min(0).optional(),
   }),
 };
