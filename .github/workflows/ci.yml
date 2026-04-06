@@ -21,4 +21,6 @@ jobs:
 
       - run: npm ci
 
+      - run: cd backend && npx prisma generate
+
       - run: npm run test:unitario
