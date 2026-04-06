@@ -312,18 +312,18 @@ describe("categoria.service", () => {
 
   describe("reordenar", () => {
     it("deve reordenar as categorias da atividade", async () => {
-      const ordenacoes = [
-        { id: "c1", ordem: 2 },
-        { id: "c2", ordem: 0 },
-        { id: "c3", ordem: 1 },
-      ];
+      const ordenacoes = ["c1", "c2", "c3"];
       atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
       repositorio.atualizarOrdem.mockResolvedValue(undefined);
 
       await servico.reordenar("a1", "u1", ordenacoes);
 
       expect(atividadeServiceMock.buscar).toHaveBeenCalledWith("a1", "u1");
-      expect(repositorio.atualizarOrdem).toHaveBeenCalledWith(ordenacoes);
+      expect(repositorio.atualizarOrdem).toHaveBeenCalledWith([
+        { id: "c1", ordem: 0 },
+        { id: "c2", ordem: 1 },
+        { id: "c3", ordem: 2 },
+      ]);
     });
 
     it("deve lançar ErroApp 404 se a atividade não pertence ao usuário", async () => {
