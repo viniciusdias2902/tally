@@ -7,7 +7,7 @@ on:
     branches: [main]
 
 jobs:
-  test:
+  unitario:
     name: Testes unitários
     runs-on: ubuntu-latest
 
@@ -24,3 +24,36 @@ jobs:
       - run: cd backend && npx prisma generate
 
       - run: npm run test:unitario
+
+  integracao:
+    name: Testes de integração
+    runs-on: ubuntu-latest
+
+    services:
+      postgres:
+        image: postgres:17-alpine
+        env:
+          POSTGRES_USER: tally
+          POSTGRES_PASSWORD: tally_secret
+          POSTGRES_DB: tally_db_teste
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd "pg_isready -U tally -d tally_db_teste"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: cd backend && npx prisma generate
+
+      - run: npm run test:integracao
