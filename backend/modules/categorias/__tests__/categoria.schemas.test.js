@@ -169,3 +169,40 @@ describe("listarCategoriasSchema", () => {
     });
   });
 });
+
+// ---------------------------------------------------------------------------
+// atualizarCategoriaSchema
+// ---------------------------------------------------------------------------
+describe("atualizarCategoriaSchema", () => {
+  describe("params", () => {
+    const parse = (dados) => atualizarCategoriaSchema.params.safeParse(dados);
+
+    it("deve aceitar atividadeId e id válidos", () => {
+      expect(parse({ atividadeId: UUID_VALIDO, id: UUID_VALIDO_2 }).success).toBe(true);
+    });
+
+    it("deve rejeitar id inválido", () => {
+      expect(parse({ atividadeId: UUID_VALIDO, id: "invalido" }).success).toBe(false);
+    });
+
+    it("deve rejeitar atividadeId inválido", () => {
+      expect(parse({ atividadeId: "invalido", id: UUID_VALIDO }).success).toBe(false);
+    });
+  });
+
+  describe("body", () => {
+    const parse = (dados) => atualizarCategoriaSchema.body.safeParse(dados);
+
+    it("deve aceitar body vazio (todos os campos são opcionais)", () => {
+      expect(parse({}).success).toBe(true);
+    });
+
+    it("deve aceitar apenas nome", () => {
+      expect(parse({ nome: "Novo Nome" }).success).toBe(true);
+    });
+
+    it("deve aceitar apenas cor", () => {
+      expect(parse({ cor: "#AABB11" }).success).toBe(true);
+    })
+    
+});
