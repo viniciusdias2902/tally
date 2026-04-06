@@ -8,10 +8,13 @@ node_modules
 # Testes e cobertura
 coverage
 backend/tests
+backend/**/__tests__
 
 # Ferramentas de desenvolvimento
 bruno
 docker-compose.yml
+vitest.config.js
+.github
 
 # Logs
 *.log
