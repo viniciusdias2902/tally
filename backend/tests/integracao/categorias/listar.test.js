@@ -55,4 +55,66 @@ describe("GET /atividades/:atividadeId/categorias", () => {
     expect(res.body[2].nome).toBe("Segunda");
   });
 
+  it("deve excluir categorias arquivadas por padrão", async () => {
+    const resCat = await request(app)
+      .post(`/atividades/${atividadeId}/categorias`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send({ nome: "Ativa" });
+
+    const resCatArq = await request(app)
+      .post(`/atividades/${atividadeId}/categorias`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send({ nome: "Arquivada" });
+
+    // Arquiva a segunda categoria
+    await request(app)
+      .patch(`/atividades/${atividadeId}/categorias/${resCatArq.body.id}/arquivar`)
+      .set("Authorization", `Bearer ${accessToken}`);
+
+    const res = await request(app)
+      .get(`/atividades/${atividadeId}/categorias`)
+      .set("Authorization", `Bearer ${accessToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveLength(1);
+    expect(res.body[0].nome).toBe("Ativa");
+  });
+
+  it("deve incluir categorias arquivadas quando incluirArquivadas=true", async () => {
+    const resCat = await request(app)
+      .post(`/atividades/${atividadeId}/categorias`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send({ nome: "Ativa" });
+
+    const resCatArq = await request(app)
+      .post(`/atividades/${atividadeId}/categorias`)
+      .set("Authorization", `Bearer ${accessToken}`)
+      .send({ nome: "Arquivada" });
+
+    // Arquiva a segunda categoria
+    await request(app)
+      .patch(`/atividades/${atividadeId}/categorias/${resCatArq.body.id}/arquivar`)
+      .set("Authorization", `Bearer ${accessToken}`);
+
+    const res = await request(app)
+      .get(`/atividades/${atividadeId}/categorias`)
+      .query({ incluirArquivadas: "true" })
+      .set("Authorization", `Bearer ${accessToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toHaveLength(2);
+
+    const nomes = res.body.map((c) => c.nome);
+    expect(nomes).toContain("Ativa");
+    expect(nomes).toContain("Arquivada");
+  });
+
+  it("deve retornar array vazio quando não há categorias", async () => {
+    const res = await request(app)
+      .get(`/atividades/${atividadeId}/categorias`)
+      .set("Authorization", `Bearer ${accessToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body).toEqual([]);
+  });
 });
