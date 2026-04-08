@@ -89,4 +89,12 @@ describe("Sessao Repository", () => {
         expect(resultado).toEqual(sessaoAtualizada);
     });
 
+    it("deve deletar uma sessão", async () => {
+        prismaMock.sessao.delete.mockResolvedValue({ id: 1 });
+
+        await sessaoRepository.deletar(1);
+
+        expect(prismaMock.sessao.delete).toHaveBeenCalledWith({ where: { id: 1 } });
+    });
+
 });
