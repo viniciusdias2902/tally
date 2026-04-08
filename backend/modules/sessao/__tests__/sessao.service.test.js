@@ -18,3 +18,9 @@ function criarAtividadeServiceMock() {
         buscar: vi.fn(),
     }
 }
+
+function criarCategoriaServiceMock() {
+    return {
+        buscar: vi.fn(),
+    }
+}
