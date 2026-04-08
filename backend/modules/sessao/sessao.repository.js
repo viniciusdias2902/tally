@@ -39,6 +39,10 @@ export function criarSessaoRepository(prisma) {
             return prisma.sessao.count({ where: { atividadeId } });
         },
 
+        contarPorCategoria(categoriaId) {
+            return prisma.sessao.count({ where: { categoriaId } });
+        },
+
 
 
 
