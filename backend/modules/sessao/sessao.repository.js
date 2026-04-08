@@ -31,5 +31,10 @@ export function criarSessaoRepository(prisma) {
             return prisma.sessao.update({ where: { id }, data: dados });
         },
 
+        deletar(id) {
+            return prisma.sessao.delete({ where: { id } });
+        },
+
+
 
 
