@@ -27,5 +27,9 @@ export function criarSessaoRepository(prisma) {
             });
         },
 
+        atualizar(id, dados) {
+            return prisma.sessao.update({ where: { id }, data: dados });
+        },
+
 
 
