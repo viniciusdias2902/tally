@@ -20,4 +20,12 @@ export function criarSessaoRepository(prisma) {
             });
         },
 
+        buscarPorId(id) {
+            return prisma.sessao.findUnique({
+                where: { id },
+                include: { categoria: true }
+            });
+        },
+
+
 
