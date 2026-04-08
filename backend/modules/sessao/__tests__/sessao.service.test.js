@@ -1,0 +1,15 @@
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { criarSessaoService } from "../sessao.service.js";
+import { ErroApp } from "../../../lib/ErroApp.js";
+
+function criarRepositorioMock() {
+    return {
+        criar: vi.fn(),
+        listarPorAtividade: vi.fn(),
+        buscarPorId: vi.fn(),
+        atualizar: vi.fn(),
+        deletar: vi.fn(),
+        somarDuracaoPorAtividade: vi.fn(),
+    };
+}
+
