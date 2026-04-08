@@ -105,4 +105,12 @@ describe("Sessao Repository", () => {
         expect(prismaMock.sessao.count).toHaveBeenCalledWith({ where: { atividadeId: 1 } });
         expect(resultado).toEqual(10);
     });
+
+    it("deve contar sessões por categoria", async () => {
+        prismaMock.sessao.count.mockResolvedValue(3);
+        const resultado = await sessaoRepository.contarPorCategoria(1);
+
+        expect(prismaMock.sessao.count).toHaveBeenCalledWith({ where: { categoriaId: 1 } });
+        expect(resultado).toEqual(3);
+    });
 });
