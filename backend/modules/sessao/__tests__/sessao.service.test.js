@@ -13,3 +13,8 @@ function criarRepositorioMock() {
     };
 }
 
+function criarAtividadeServiceMock() {
+    return {
+        buscar: vi.fn(),
+    }
+}
