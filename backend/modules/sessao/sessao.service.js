@@ -25,16 +25,23 @@ export function criarSessaoService(sessaoRepository, atividadeService, categoria
             await verificarCategoria(categoriaId, usuarioId);
             return sessaoRepository.criar({ atividadeId, categoriaId, iniciadoEm, duracaoSegundos, modo, ciclosPomodoro, observacoes });
         },
-    },
 
         async listar(atividadeId, usuarioId, opcoes) {
-        await verificarAcessoAtividade(atividadeId, usuarioId);
-        return sessaoRepository.listarPorAtividade(atividadeId, opcoes);
-    },
+            await verificarAcessoAtividade(atividadeId, usuarioId);
+            return sessaoRepository.listarPorAtividade(atividadeId, opcoes);
+        },
 
-    buscar(id, usuarioId) {
-        return buscarSessaoDoUsuario(id, usuarioId);
-    },
+        buscar(id, usuarioId) {
+            return buscarSessaoDoUsuario(id, usuarioId);
+        },
 
-};
+        async atualizar(id, usuarioId, dados) {
+            await buscarSessaoDoUsuario(id, usuarioId);
+            if (dados.categoriaId) {
+                await verificarCategoria(dados.categoriaId, usuarioId);
+            }
+            return sessaoRepository.atualizar(id, dados);
+        },
+
+    };
 }
