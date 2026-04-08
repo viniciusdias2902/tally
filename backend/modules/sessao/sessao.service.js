@@ -25,7 +25,11 @@ export function criarSessaoService(sessaoRepository, atividadeService, categoria
             await verificarCategoria(categoriaId, usuarioId);
             return sessaoRepository.criar({ atividadeId, categoriaId, iniciadoEm, duracaoSegundos, modo, ciclosPomodoro, observacoes });
         },
-    }
+    },
 
-
-
+        async listar(atividadeId, usuarioId, opcoes) {
+        await verificarAcessoAtividade(atividadeId, usuarioId);
+        return sessaoRepository.listarPorAtividade(atividadeId, opcoes);
+    },
+};
+}
