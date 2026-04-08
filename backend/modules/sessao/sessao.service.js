@@ -19,4 +19,13 @@ export function criarSessaoService(sessaoRepository, atividadeService, categoria
         return sessao;
     }
 
+    return {
+        async criar({ atividadeId, categoriaId, usuarioId, iniciadoEm, duracaoSegundos, modo, ciclosPomodoro, observacoes }) {
+            await verificarAcessoAtividade(atividadeId, usuarioId);
+            await verificarCategoria(categoriaId, usuarioId);
+            return sessaoRepository.criar({ atividadeId, categoriaId, iniciadoEm, duracaoSegundos, modo, ciclosPomodoro, observacoes });
+        },
+    }
+
+
 
