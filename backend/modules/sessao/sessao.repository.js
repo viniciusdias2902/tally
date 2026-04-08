@@ -35,6 +35,10 @@ export function criarSessaoRepository(prisma) {
             return prisma.sessao.delete({ where: { id } });
         },
 
+        contarPorAtividade(atividadeId) {
+            return prisma.sessao.count({ where: { atividadeId } });
+        },
+
 
 
 
