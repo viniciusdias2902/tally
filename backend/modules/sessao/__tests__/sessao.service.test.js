@@ -115,6 +115,29 @@ describe("sessao.service", () => {
             expect(categoriaServiceMock.buscar).not.toHaveBeenCalled();
             expect(resultado).toEqual(sessaoSemCategoria);
         });
+
+        it("deve lançar ErroApp 404 se a atividade não pertence ao usuário", async () => {
+            atividadeServiceMock.buscar.mockRejectedValue(
+                new ErroApp("ATIVIDADE_NAO_ENCONTRADA", 404)
+            );
+
+            await expect(
+                servico.criar({
+                    atividadeId: "atividade1",
+                    categoriaId: "categoria1",
+                    usuarioId: "usuario1",
+                    iniciadoEm: new Date(),
+                    duracaoSegundos: 3600,
+                    modo: "timer",
+                })
+            ).rejects.toMatchObject({
+                message: "ATIVIDADE_NAO_ENCONTRADA",
+                codigoStatus: 404,
+            });
+
+            expect(repositorio.criar).not.toHaveBeenCalled();
+        });
+
     });
 
     describe("listar", () => {
@@ -132,4 +155,5 @@ describe("sessao.service", () => {
             expect(resultado).toEqual(sessoes);
         });
     });
+
 });
