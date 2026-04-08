@@ -61,4 +61,18 @@ describe("Sessao Repository", () => {
         });
         expect(resultado).toEqual(sessoes);
     });
+
+    it("deve buscar uma sessão pelo seu id", async () => {
+        const sessao = {
+            id: 1, atividadeId: 1, categoriaId: 1, iniciadoEm: new Date(), duracaoSegundos: 3600
+        };
+
+        prismaMock.sessao.findUnique.mockResolvedValue(sessao);
+
+        const resultado = await sessaoRepository.buscarPorId(1);
+
+        expect(prismaMock.sessao.findUnique).toHaveBeenCalledWith({ where: { id: 1 }, include: { categoria: true } });
+        expect(resultado).toEqual(sessao);
+    });
+
 });
