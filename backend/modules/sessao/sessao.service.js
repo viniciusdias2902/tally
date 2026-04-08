@@ -43,5 +43,10 @@ export function criarSessaoService(sessaoRepository, atividadeService, categoria
             return sessaoRepository.atualizar(id, dados);
         },
 
+        async deletar(id, usuarioId) {
+            await buscarSessaoDoUsuario(id, usuarioId);
+            return sessaoRepository.deletar(id);
+        },
+
     };
 }
