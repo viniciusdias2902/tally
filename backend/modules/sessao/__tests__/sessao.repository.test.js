@@ -75,4 +75,18 @@ describe("Sessao Repository", () => {
         expect(resultado).toEqual(sessao);
     });
 
+    it("deve atualizar uma sessão", async () => {
+        const dadosAtualizados = {
+            duracaoSegundos: 5400, observacoes: "Atualizada"
+        };
+        const sessaoAtualizada = { id: 1, atividadeId: 1, iniciadoEm: new Date(), duracaoSegundos: 5400, observacoes: "Atualizada" };
+
+        prismaMock.sessao.update.mockResolvedValue(sessaoAtualizada);
+
+        const resultado = await sessaoRepository.atualizar(1, dadosAtualizados);
+
+        expect(prismaMock.sessao.update).toHaveBeenCalledWith({ where: { id: 1 }, data: dadosAtualizados });
+        expect(resultado).toEqual(sessaoAtualizada);
+    });
+
 });
