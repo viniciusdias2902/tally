@@ -97,4 +97,12 @@ describe("Sessao Repository", () => {
         expect(prismaMock.sessao.delete).toHaveBeenCalledWith({ where: { id: 1 } });
     });
 
+    it("deve contar sessões por atividade", async () => {
+        prismaMock.sessao.count.mockResolvedValue(10);
+
+        const resultado = await sessaoRepository.contarPorAtividade(1);
+
+        expect(prismaMock.sessao.count).toHaveBeenCalledWith({ where: { atividadeId: 1 } });
+        expect(resultado).toEqual(10);
+    });
 });
