@@ -63,4 +63,36 @@ describe("sessao.service", () => {
         categoriaServiceMock = criarCategoriaServiceMock();
         servico = criarSessaoService(repositorio, atividadeServiceMock, categoriaServiceMock);
     });
+
+    describe("criar", () => {
+        it("deve criar e retornar a sessão", async () => {
+            atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+            categoriaServiceMock.buscar.mockResolvedValue(categoriaBase);
+            repositorio.criar.mockResolvedValue(sessaoBase);
+
+            const resultado = await servico.criar({
+                atividadeId: "atividade1",
+                categoriaId: "categoria1",
+                usuarioId: "usuario1",
+                iniciadoEm: sessaoBase.iniciadoEm,
+                duracaoSegundos: 3600,
+                modo: "timer",
+                ciclosPomodoro: null,
+                observacoes: null,
+            });
+
+            expect(atividadeServiceMock.buscar).toHaveBeenCalledWith("atividade1", "usuario1");
+            expect(categoriaServiceMock.buscar).toHaveBeenCalledWith("categoria1", "usuario1");
+            expect(repositorio.criar).toHaveBeenCalledWith({
+                atividadeId: "atividade1",
+                categoriaId: "categoria1",
+                iniciadoEm: sessaoBase.iniciadoEm,
+                duracaoSegundos: 3600,
+                modo: "timer",
+                ciclosPomodoro: null,
+                observacoes: null,
+            });
+            expect(resultado).toEqual(sessaoBase);
+        });
+    });
 });
