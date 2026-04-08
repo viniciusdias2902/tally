@@ -14,3 +14,11 @@ function criarPrismaMock() {
     };
 }
 
+describe("Sessao Repository", () => {
+    let prismaMock;
+    let sessaoRepository;
+
+    beforeEach(() => {
+        prismaMock = criarPrismaMock();
+        sessaoRepository = criarSessaoRepository(prismaMock);
+    });
