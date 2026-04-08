@@ -31,5 +31,10 @@ export function criarSessaoService(sessaoRepository, atividadeService, categoria
         await verificarAcessoAtividade(atividadeId, usuarioId);
         return sessaoRepository.listarPorAtividade(atividadeId, opcoes);
     },
+
+    buscar(id, usuarioId) {
+        return buscarSessaoDoUsuario(id, usuarioId);
+    },
+
 };
 }
