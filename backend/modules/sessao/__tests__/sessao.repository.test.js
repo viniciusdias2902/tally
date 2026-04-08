@@ -10,7 +10,8 @@ function criarPrismaMock() {
             findUnique: vi.fn(),
             update: vi.fn(),
             delete: vi.fn(),
-            count: vi.fn()
+            count: vi.fn(),
+            aggregate: vi.fn()
         },
     };
 }
@@ -112,5 +113,19 @@ describe("Sessao Repository", () => {
 
         expect(prismaMock.sessao.count).toHaveBeenCalledWith({ where: { categoriaId: 1 } });
         expect(resultado).toEqual(3);
+    });
+
+    it("deve somar a duração das sessões por atividade", async () => {
+        prismaMock.sessao.aggregate.mockResolvedValue({ _sum: { duracaoSegundos: 10800 } });
+
+
+        const resultado = await sessaoRepository.somarDuracaoPorAtividade(1);
+
+
+        expect(prismaMock.sessao.aggregate).toHaveBeenCalledWith({
+            where: { atividadeId: 1 },
+            _sum: { duracaoSegundos: true },
+        });
+        expect(resultado).toEqual({ _sum: { duracaoSegundos: 10800 } });
     });
 });
