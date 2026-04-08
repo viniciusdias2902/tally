@@ -50,3 +50,17 @@ const sessaoBase = {
     ciclosPomodoro: null,
     observacoes: null,
 };
+
+describe("sessao.service", () => {
+    let repositorio;
+    let atividadeServiceMock;
+    let categoriaServiceMock;
+    let servico;
+
+    beforeEach(() => {
+        repositorio = criarRepositorioMock();
+        atividadeServiceMock = criarAtividadeServiceMock();
+        categoriaServiceMock = criarCategoriaServiceMock();
+        servico = criarSessaoService(repositorio, atividadeServiceMock, categoriaServiceMock);
+    });
+});
