@@ -116,4 +116,20 @@ describe("sessao.service", () => {
             expect(resultado).toEqual(sessaoSemCategoria);
         });
     });
+
+    describe("listar", () => {
+        it("deve retornar as sessões da atividade", async () => {
+            const sessoes = [sessaoBase];
+            atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+            repositorio.listarPorAtividade.mockResolvedValue(sessoes);
+
+
+            const resultado = await servico.listar("atividade1", "usuario1", { categoriaId: "categoria1" });
+
+
+            expect(atividadeServiceMock.buscar).toHaveBeenCalledWith("atividade1", "usuario1");
+            expect(repositorio.listarPorAtividade).toHaveBeenCalledWith("atividade1", { categoriaId: "categoria1" });
+            expect(resultado).toEqual(sessoes);
+        });
+    });
 });
