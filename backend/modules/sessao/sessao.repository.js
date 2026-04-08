@@ -43,6 +43,16 @@ export function criarSessaoRepository(prisma) {
             return prisma.sessao.count({ where: { categoriaId } });
         },
 
+        somarDuracaoPorAtividade(atividadeId) {
+            return prisma.sessao.aggregate({
+                where: { atividadeId },
+                _sum: { duracaoSegundos: true },
+            });
+        },
+    };
+}
+
+
 
 
 
