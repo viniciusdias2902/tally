@@ -48,5 +48,12 @@ export function criarSessaoService(sessaoRepository, atividadeService, categoria
             return sessaoRepository.deletar(id);
         },
 
+        async somarDuracao(atividadeId, usuarioId) {
+            await verificarAcessoAtividade(atividadeId, usuarioId);
+            const resultado = await sessaoRepository.somarDuracaoPorAtividade(atividadeId);
+            return resultado._sum.duracaoSegundos ?? 0;
+        },
+
+
     };
 }
