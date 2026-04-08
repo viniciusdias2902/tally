@@ -11,3 +11,12 @@ export function criarSessaoService(sessaoRepository, atividadeService, categoria
         if (categoria.arquivada) throw new ErroApp("CATEGORIA_ARQUIVADA", 422);
         return categoria;
     }
+
+    async function buscarSessaoDoUsuario(id, usuarioId) {
+        const sessao = await sessaoRepository.buscarPorId(id);
+        if (!sessao) throw new ErroApp("SESSAO_NAO_ENCONTRADA", 404);
+        await verificarAcessoAtividade(sessao.atividadeId, usuarioId);
+        return sessao;
+    }
+
+
