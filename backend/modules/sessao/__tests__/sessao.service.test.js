@@ -24,3 +24,18 @@ function criarCategoriaServiceMock() {
         buscar: vi.fn(),
     }
 }
+
+const atividadeBase = {
+    id: "atividade1",
+    usuarioId: "usuario1",
+    nome: "Estudos",
+    tipoMedicao: "cronometrada",
+    arquivada: false,
+};
+
+const categoriaBase = {
+    id: "categoria1",
+    usuarioId: "usuario1",
+    nome: "Estudos",
+    arquivada: false,
+};
