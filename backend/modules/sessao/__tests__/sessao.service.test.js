@@ -39,3 +39,14 @@ const categoriaBase = {
     nome: "Estudos",
     arquivada: false,
 };
+
+const sessaoBase = {
+    id: "sessao1",
+    atividadeId: "atividade1",
+    categoriaId: "categoria1",
+    iniciadoEm: new Date("2026-04-08T10:00:00Z"),
+    duracaoSegundos: 3600,
+    modo: "timer",
+    ciclosPomodoro: null,
+    observacoes: null,
+};
