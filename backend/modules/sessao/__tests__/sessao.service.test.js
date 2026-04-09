@@ -262,4 +262,17 @@ describe("sessao.service", () => {
         });
 
     });
-})
+
+    describe("deletar", () => {
+        it("deve deletar a sessão", async () => {
+            repositorio.buscarPorId.mockResolvedValue(sessaoBase);
+            atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+            repositorio.deletar.mockResolvedValue(sessaoBase);
+
+            await servico.deletar("sessao1", "usuario1");
+
+            expect(repositorio.buscarPorId).toHaveBeenCalledWith("sessao1");
+
+        });
+    });
+});
