@@ -207,5 +207,17 @@ describe("sessao.service", () => {
             });
         });
 
+        it("deve lançar ErroApp 404 quando a atividade não pertence ao usuário", async () => {
+            repositorio.buscarPorId.mockResolvedValue(sessaoBase);
+            atividadeServiceMock.buscar.mockRejectedValue(
+                new ErroApp("ATIVIDADE_NAO_ENCONTRADA", 404)
+            );
+
+            await expect(servico.buscar("sessao1", "usuario1")).rejects.toMatchObject({
+                message: "ATIVIDADE_NAO_ENCONTRADA",
+                codigoStatus: 404,
+            });
+        });
     });
+
 });
