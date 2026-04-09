@@ -301,5 +301,16 @@ describe("sessao.service", () => {
             expect(repositorio.somarDuracaoPorAtividade).toHaveBeenCalledWith("atividade1")
             expect(resultado).toBe(10800);
         });
+
+        it("deve retornar 0 quando não houver sessões", async () => {
+            atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+            repositorio.somarDuracaoPorAtividade.mockResolvedValue({
+                _sum: { duracaoSegundos: 0 },
+            });
+
+            const resultado = await servico.somarDuracao("atividade1", "usuario1");
+
+            expect(resultado).toBe(0);
+        });
     })
 });
