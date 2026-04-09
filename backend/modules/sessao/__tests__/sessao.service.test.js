@@ -286,7 +286,20 @@ describe("sessao.service", () => {
             expect(repositorio.deletar).not.toHaveBeenCalled();
         });
 
-
-
     });
+
+    describe("somarDuracao", () => {
+        it("deve retornar a soma da duração das sessões", async () => {
+            atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+            repositorio.somarDuracaoPorAtividade.mockResolvedValue({
+                _sum: { duracaoSegundos: 10800 },
+            });
+
+            const resultado = await servico.somarDuracao("atividade1", "usuario1");
+
+            expect(atividadeServiceMock.buscar).toHaveBeenCalledWith("atividade1", "usuario1");
+            expect(repositorio.somarDuracaoPorAtividade).toHaveBeenCalledWith("atividade1")
+            expect(resultado).toBe(10800);
+        });
+    })
 });
