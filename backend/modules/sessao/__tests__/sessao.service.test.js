@@ -138,6 +138,27 @@ describe("sessao.service", () => {
             expect(repositorio.criar).not.toHaveBeenCalled();
         });
 
+        it("deve lançar ErroApp 422 se a categoria está arquivada", async () => {
+            atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+            categoriaServiceMock.buscar.mockResolvedValue({ ...categoriaBase, arquivada: true });
+
+            await expect(
+                servico.criar({
+                    atividadeId: "atividade1",
+                    categoriaId: "categoria1",
+                    usuarioId: "usuario1",
+                    iniciadoEm: new Date(),
+                    duracaoSegundos: 3600,
+                    modo: "timer",
+                })
+            ).rejects.toMatchObject({
+                message: "CATEGORIA_ARQUIVADA",
+                codigoStatus: 422,
+            });
+            expect(repositorio.criar).not.toHaveBeenCalled();
+
+        });
+
     });
 
     describe("listar", () => {
