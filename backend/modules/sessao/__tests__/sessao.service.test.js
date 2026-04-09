@@ -274,5 +274,19 @@ describe("sessao.service", () => {
             expect(repositorio.buscarPorId).toHaveBeenCalledWith("sessao1");
 
         });
+
+        it("deve lançar ErroApp 404 se a sessão não existe", async () => {
+            repositorio.buscarPorId.mockResolvedValue(null);
+
+            await expect(servico.deletar("sessao1", "usuario1")).rejects.toMatchObject({
+                message: "SESSAO_NAO_ENCONTRADA",
+                codigoStatus: 404,
+            });
+
+            expect(repositorio.deletar).not.toHaveBeenCalled();
+        });
+
+
+
     });
 });
