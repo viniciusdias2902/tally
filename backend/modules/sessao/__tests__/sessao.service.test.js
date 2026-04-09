@@ -186,4 +186,18 @@ describe("sessao.service", () => {
         });
     });
 
+    describe("buscar", () => {
+        it("deve retornar a sessão", async () => {
+            repositorio.buscarPorId.mockResolvedValue(sessaoBase);
+
+            atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+
+            const resultado = await servico.buscar("sessao1", "usuario1");
+
+            expect(repositorio.buscarPorId).toHaveBeenCalledWith("sessao1");
+            expect(atividadeServiceMock.buscar).toHaveBeenCalledWith("atividade1", "usuario1");
+            expect(resultado).toEqual(sessaoBase);
+        });
+
+    });
 });
