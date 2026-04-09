@@ -249,5 +249,17 @@ describe("sessao.service", () => {
             expect(categoriaServiceMock.buscar).toHaveBeenCalledWith("categoria2", "usuario1");
             expect(resultado).toEqual(atualizada);
         });
+
+        it("deve lançar ErroApp 404 se a sessão não existe", async () => {
+            repositorio.buscarPorId.mockResolvedValue(null);
+
+            await expect(
+                servico.atualizar("sessao1", "usuario1", { observacoes: "Teste" })
+            ).rejects.toMatchObject({
+                message: "SESSAO_NAO_ENCONTRADA",
+                codigoStatus: 404,
+            });
+        });
+
     });
-});
+})
