@@ -235,5 +235,19 @@ describe("sessao.service", () => {
             });
             expect(resultado).toEqual(atualizada);
         });
+
+        it("deve verificar a nova categoria ao trocar categoriaId", async () => {
+            const atualizada = { ...sessaoBase, categoriaId: "categoria2" };
+            repositorio.buscarPorId.mockResolvedValue(sessaoBase);
+            atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+            categoriaServiceMock.buscar.mockResolvedValue({ ...categoriaBase, id: "categoria2", arquivada: false });
+            repositorio.atualizar.mockResolvedValue(atualizada);
+
+            const resultado = await servico.atualizar("sessao1", "usuario1", {
+                categoriaId: "categoria2"
+            });
+            expect(categoriaServiceMock.buscar).toHaveBeenCalledWith("categoria2", "usuario1");
+            expect(resultado).toEqual(atualizada);
+        });
     });
 });
