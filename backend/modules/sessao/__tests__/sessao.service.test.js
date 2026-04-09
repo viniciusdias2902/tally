@@ -175,6 +175,15 @@ describe("sessao.service", () => {
             expect(repositorio.listarPorAtividade).toHaveBeenCalledWith("atividade1", { categoriaId: "categoria1" });
             expect(resultado).toEqual(sessoes);
         });
+
+        it("deve lançar ErroApp 404 se a atividade não pertence ao usuário", async () => {
+            atividadeServiceMock.buscar.mockRejectedValue(
+                new ErroApp("ATIVIDADE_NAO_ENCONTRADA", 404)
+            );
+
+            await expect(servico.listar("atividade1", "usuario1", {})).rejects.toMatchObject({ message: "ATIVIDADE_NAO_ENCONTRADA", codigoStatus: 404, });
+            expect(repositorio.listarPorAtividade).not.toHaveBeenCalled();
+        });
     });
 
 });
