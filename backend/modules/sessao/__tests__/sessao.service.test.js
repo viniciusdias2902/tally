@@ -220,4 +220,20 @@ describe("sessao.service", () => {
         });
     });
 
+    describe("atualizar", () => {
+        it("deve atualizar e retornar a sessão", async () => {
+            const atualizada = { ...sessaoBase, observacoes: "Atualizada" };
+            repositorio.buscarPorId.mockResolvedValue(sessaoBase);
+            atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+            repositorio.atualizar.mockResolvedValue(atualizada);
+
+            const resultado = await servico.atualizar("sessao1", "usuario1", {
+                observacoes: "Atualizada"
+            });
+            expect(repositorio.atualizar).toHaveBeenCalledWith("sessao1", {
+                observacoes: "Atualizada"
+            });
+            expect(resultado).toEqual(atualizada);
+        });
+    });
 });
