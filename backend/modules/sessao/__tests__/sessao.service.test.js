@@ -199,5 +199,13 @@ describe("sessao.service", () => {
             expect(resultado).toEqual(sessaoBase);
         });
 
+        it("deve lançar ErroApp 404 quando a sessão não existe", async () => {
+            repositorio.buscarPorId.mockResolvedValue(null);
+            await expect(servico.buscar("inexistente", "usuario1")).rejects.toMatchObject({
+                message: "SESSAO_NAO_ENCONTRADA",
+                codigoStatus: 404,
+            });
+        });
+
     });
 });
