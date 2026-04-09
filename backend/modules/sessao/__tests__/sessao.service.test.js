@@ -36,7 +36,7 @@ const atividadeBase = {
 const categoriaBase = {
     id: "categoria1",
     usuarioId: "usuario1",
-    nome: "Estudos",
+    nome: "História",
     arquivada: false,
 };
 
