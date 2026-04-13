@@ -17,6 +17,10 @@ import { criarCategoriaRepository } from "./modules/categorias/categoria.reposit
 import { criarCategoriaService } from "./modules/categorias/categoria.service.js";
 import { criarCategoriaController } from "./modules/categorias/categoria.controller.js";
 import { criarCategoriaRoutes } from "./modules/categorias/categoria.routes.js";
+import { criarConfigPomodoroRepository } from "./modules/config-pomodoro/configPomodoro.repository.js";
+import { criarConfigPomodoroService } from "./modules/config-pomodoro/configPomodoro.service.js";
+import { criarConfigPomodoroController } from "./modules/config-pomodoro/configPomodoro.controller.js";
+import { criarConfigPomodoroRoutes } from "./modules/config-pomodoro/configPomodoro.routes.js";
 
 // --- Auth ---
 const usuarioRepository = criarUsuarioRepository(prisma);
@@ -36,6 +40,12 @@ const categoriaService = criarCategoriaService(categoriaRepository, atividadeSer
 const categoriaController = criarCategoriaController(categoriaService);
 const categoriaRoutes = criarCategoriaRoutes(categoriaController);
 
+// --- Config Pomodoro ---
+const configPomodoroRepository = criarConfigPomodoroRepository(prisma);
+const configPomodoroService = criarConfigPomodoroService(configPomodoroRepository, atividadeService);
+const configPomodoroController = criarConfigPomodoroController(configPomodoroService);
+const configPomodoroRoutes = criarConfigPomodoroRoutes(configPomodoroController);
+
 const app = express();
 
 app.use(express.json());
@@ -53,6 +63,7 @@ app.use(autenticar);
 
 app.use("/atividades", atividadeRoutes);
 app.use("/atividades/:atividadeId/categorias", categoriaRoutes);
+app.use("/atividades/:atividadeId/config-pomodoro", configPomodoroRoutes);
 
 app.use(tratarErro);
 
