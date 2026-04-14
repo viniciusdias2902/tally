@@ -5,12 +5,15 @@ import Header from "./Header.jsx";
 
 export default function AppShell() {
   const [sidebarAberta, setSidebarAberta] = useState(false);
+  const [colapsada, setColapsada] = useState(false);
 
   return (
     <div className="flex h-screen overflow-hidden bg-bg-primary">
       <Sidebar
         aberto={sidebarAberta}
+        colapsada={colapsada}
         onFechar={() => setSidebarAberta(false)}
+        onColapsar={() => setColapsada((prev) => !prev)}
       />
 
       <div className="flex flex-1 flex-col overflow-hidden">
