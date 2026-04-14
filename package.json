@@ -7,7 +7,8 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon backend/server.js",
+    "dev": "concurrently -n back,front -c blue,magenta \"nodemon backend/server.js\" \"npm --prefix frontend run dev\"",
+    "dev:backend": "nodemon backend/server.js",
     "dev:frontend": "npm --prefix frontend run dev",
     "build:frontend": "npm --prefix frontend run build",
     "test:e2e": "npm --prefix frontend run test:e2e",
@@ -22,6 +23,7 @@
   "devDependencies": {
     "@types/pg": "^8.18.0",
     "@vitest/coverage-v8": "^4.1.0",
+    "concurrently": "^9.2.1",
     "nodemon": "^3.1.14",
     "prisma": "^7.5.0",
     "supertest": "^7.2.2",
