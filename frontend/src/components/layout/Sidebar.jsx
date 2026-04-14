@@ -7,7 +7,7 @@ const links = [
   { to: "/atividades", label: "Atividades", icon: ListIcon },
 ];
 
-export default function Sidebar({ aberto, onFechar }) {
+export default function Sidebar({ aberto, colapsada, onFechar, onColapsar }) {
   const { sair, usuario } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
@@ -21,9 +21,9 @@ export default function Sidebar({ aberto, onFechar }) {
       )}
 
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-64 bg-bg-elevated shadow-[2px_0_8px_-2px_rgba(0,0,0,0.08)] dark:shadow-[2px_0_8px_-2px_rgba(0,0,0,0.3)] flex flex-col transition-transform lg:translate-x-0 lg:static lg:z-auto ${
+        className={`fixed top-0 left-0 z-50 h-full bg-bg-elevated shadow-[2px_0_8px_-2px_rgba(0,0,0,0.08)] dark:shadow-[2px_0_8px_-2px_rgba(0,0,0,0.3)] flex flex-col transition-all duration-200 lg:translate-x-0 lg:static lg:z-auto ${
           aberto ? "translate-x-0" : "-translate-x-full"
-        }`}
+        } ${colapsada ? "lg:w-16 w-64" : "w-64"}`}
       >
         <div className="px-5 py-6">
           <h1 className="text-xl font-bold tracking-tight text-text-primary">
