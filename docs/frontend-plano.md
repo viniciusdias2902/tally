@@ -2,59 +2,60 @@
 
 ## Conceito visual
 
-**Tally** é um app de rastreamento de tempo — a palavra "tally" vem de "marcar/contar". A identidade visual se inspira em **marcações analógicas** (tally marks ||||) combinadas com uma estética de **instrumento de precisão**: limpa, com tipografia confiante e cores que comunicam foco sem agressividade.
+**Tally** é um app de rastreamento de tempo — a palavra "tally" vem de "marcar/contar". A identidade visual se inspira em **marcações analógicas** (tally marks ||||) combinadas com uma estética **moderna e acolhedora**: clean, com tipografia confiante e cores suaves que convidam ao uso sem cansar os olhos.
 
 ### Princípios de design
 
-1. **Densidade informacional sem ruído** — Dados de tempo precisam ser escaneáveis. Usar espaçamento generoso mas aproveitar cada pixel com propósito. Nada de cards decorativos vazios.
+1. **Suavidade sem perder clareza** — Baixo contraste no chrome da UI (bordas, fundos, texto secundário), alto contraste apenas onde importa (texto principal, dados numéricos, estados do timer).
 2. **Tipografia como hierarquia** — Números grandes para timers e métricas (font mono/tabular), texto menor para labels. A tipografia carrega a interface, não ícones.
 3. **Cor como dado, não como decoração** — As cores das categorias do usuário são protagonistas. A UI em si é quase monocromática, deixando as cores de categoria ocuparem o espaço semântico.
 4. **Movimento mínimo e proposital** — Transições sutis nos estados do timer (idle → running → paused). Sem animações gratuitas.
+5. **Cantos arredondados e sombras suaves** — Bordas quase invisíveis, sombras leves nos cards e botões. Visual que parece um app nativo moderno, não um painel de controle.
 
 ### Paleta
 
-**Light mode — "Papel milimetrado"**
+**Light mode — "Nuvem"**
 
 | Token              | Hex       | Uso                                              |
 |--------------------|-----------|--------------------------------------------------|
-| `--bg-primary`     | `#FAFAF9` | Fundo principal (stone-50, tom quente sutil)      |
-| `--bg-secondary`   | `#F5F5F4` | Cards, sidebars (stone-100)                      |
-| `--bg-elevated`    | `#FFFFFF` | Modais, dropdowns                                |
-| `--border`         | `#E7E5E4` | Bordas e divisores (stone-200)                   |
-| `--text-primary`   | `#1C1917` | Texto principal (stone-900)                      |
-| `--text-secondary` | `#78716C` | Labels, placeholders (stone-500)                 |
-| `--text-muted`     | `#A8A29E` | Texto desabilitado (stone-400)                   |
-| `--accent`         | `#D97706` | Ação primária — âmbar quente (amber-600)         |
-| `--accent-hover`   | `#B45309` | Hover do accent (amber-700)                      |
-| `--accent-subtle`  | `#FEF3C7` | Background de badges/tags accent (amber-100)     |
-| `--danger`         | `#DC2626` | Erros, deleção (red-600)                         |
-| `--success`        | `#16A34A` | Confirmação, timer ativo (green-600)             |
-| `--timer-running`  | `#16A34A` | Indicador de timer rodando (green-600)           |
-| `--timer-paused`   | `#D97706` | Timer pausado (amber-600)                        |
-| `--timer-idle`     | `#78716C` | Timer parado (stone-500)                         |
-
-**Dark mode — "Terminal"**
-
-| Token              | Hex       | Uso                                              |
-|--------------------|-----------|--------------------------------------------------|
-| `--bg-primary`     | `#0C0A09` | Fundo principal (stone-950)                      |
-| `--bg-secondary`   | `#1C1917` | Cards, sidebars (stone-900)                      |
-| `--bg-elevated`    | `#292524` | Modais, dropdowns (stone-800)                    |
-| `--border`         | `#44403C` | Bordas e divisores (stone-700)                   |
-| `--text-primary`   | `#FAFAF9` | Texto principal (stone-50)                       |
-| `--text-secondary` | `#A8A29E` | Labels, placeholders (stone-400)                 |
-| `--text-muted`     | `#78716C` | Texto desabilitado (stone-500)                   |
-| `--accent`         | `#F59E0B` | Ação primária — âmbar (amber-500)                |
-| `--accent-hover`   | `#D97706` | Hover do accent (amber-600)                      |
-| `--accent-subtle`  | `#451A03` | Background de badges/tags accent (amber-950)     |
+| `--bg-primary`     | `#F8FAFC` | Fundo principal (slate-50)                       |
+| `--bg-secondary`   | `#F1F5F9` | Áreas secundárias (slate-100)                    |
+| `--bg-elevated`    | `#FFFFFF` | Cards, modais, sidebar                           |
+| `--border`         | `#E2E8F0` | Bordas e divisores (slate-200)                   |
+| `--text-primary`   | `#334155` | Texto principal (slate-700 — médio, não preto)   |
+| `--text-secondary` | `#64748B` | Labels, placeholders (slate-500)                 |
+| `--text-muted`     | `#94A3B8` | Texto desabilitado (slate-400)                   |
+| `--accent`         | `#6366F1` | Ação primária — indigo (indigo-500)              |
+| `--accent-hover`   | `#4F46E5` | Hover do accent (indigo-600)                     |
+| `--accent-subtle`  | `#EEF2FF` | Background de badges/tags accent (indigo-50)     |
 | `--danger`         | `#EF4444` | Erros, deleção (red-500)                         |
-| `--success`        | `#22C55E` | Confirmação, timer ativo (green-500)             |
-| `--timer-running`  | `#22C55E` | Indicador de timer rodando (green-500)           |
+| `--success`        | `#10B981` | Confirmação, timer ativo (emerald-500)           |
+| `--timer-running`  | `#10B981` | Indicador de timer rodando (emerald-500)         |
 | `--timer-paused`   | `#F59E0B` | Timer pausado (amber-500)                        |
-| `--timer-idle`     | `#A8A29E` | Timer parado (stone-400)                         |
+| `--timer-idle`     | `#94A3B8` | Timer parado (slate-400)                         |
 
-**Por que âmbar em vez de azul?**
-Azul é o padrão de toda SaaS genérica. Âmbar comunica calor, foco e energia — mais alinhado com produtividade e estudo. O stone (em vez de gray/slate/zinc) adiciona uma temperatura levemente quente que evita a frieza de apps corporativos.
+**Dark mode — "Meia-noite"**
+
+| Token              | Hex                       | Uso                                    |
+|--------------------|---------------------------|----------------------------------------|
+| `--bg-primary`     | `#0F172A`                 | Fundo principal (slate-900)            |
+| `--bg-secondary`   | `#1E293B`                 | Áreas secundárias (slate-800)          |
+| `--bg-elevated`    | `#1E293B`                 | Cards, modais, sidebar (slate-800)     |
+| `--border`         | `#334155`                 | Bordas e divisores (slate-700)         |
+| `--text-primary`   | `#E2E8F0`                 | Texto principal (slate-200)            |
+| `--text-secondary` | `#94A3B8`                 | Labels (slate-400)                     |
+| `--text-muted`     | `#64748B`                 | Texto desabilitado (slate-500)         |
+| `--accent`         | `#818CF8`                 | Ação primária — indigo claro (indigo-400) |
+| `--accent-hover`   | `#6366F1`                 | Hover do accent (indigo-500)           |
+| `--accent-subtle`  | `rgba(99, 102, 241, 0.15)` | Background semitransparente           |
+| `--danger`         | `#F87171`                 | Erros, deleção (red-400)               |
+| `--success`        | `#34D399`                 | Confirmação (emerald-400)              |
+| `--timer-running`  | `#34D399`                 | Timer rodando (emerald-400)            |
+| `--timer-paused`   | `#FBBF24`                 | Timer pausado (amber-400)              |
+| `--timer-idle`     | `#64748B`                 | Timer parado (slate-500)               |
+
+**Por que indigo em vez de âmbar?**
+Indigo é uma cor familiar e acolhedora — presente em apps como Discord, Notion e Linear. Diferente do azul corporativo genérico, o indigo tem personalidade sem ser agressivo. O slate (em vez de stone) dá um tom neutro frio que combina melhor com o accent e é mais fácil aos olhos em sessões longas de uso.
 
 ### Tipografia
 
