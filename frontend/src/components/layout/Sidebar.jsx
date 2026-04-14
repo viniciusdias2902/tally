@@ -25,9 +25,10 @@ export default function Sidebar({ aberto, colapsada, onFechar, onColapsar }) {
           aberto ? "translate-x-0" : "-translate-x-full"
         } ${colapsada ? "lg:w-16 w-64" : "w-64"}`}
       >
-        <div className="px-5 py-6">
-          <h1 className="text-xl font-bold tracking-tight text-text-primary">
-            <span className="text-accent">||||</span>{" "}Tally
+        <div className={`py-6 ${colapsada ? "px-0 text-center" : "px-5"}`}>
+          <h1 className={`font-bold tracking-tight text-text-primary ${colapsada ? "text-base" : "text-xl"}`}>
+            <span className="text-accent">||||</span>
+            {!colapsada && <>{" "}Tally</>}
           </h1>
         </div>
 
