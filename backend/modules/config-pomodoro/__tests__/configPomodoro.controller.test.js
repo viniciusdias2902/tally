@@ -141,4 +141,52 @@ describe("configPomodoro.controller", () => {
       expect(res.json).not.toHaveBeenCalled();
     });
   });
+
+  describe("deletar", () => {
+    it("deve chamar service.deletar com atividadeId e usuarioId corretos", async () => {
+      serviceMock.deletar.mockResolvedValue(undefined);
+
+      const req = criarReq({ params: { atividadeId: "a1" }, usuarioId: "u1" });
+      const res = criarRes();
+
+      await controller.deletar(req, res);
+
+      expect(serviceMock.deletar).toHaveBeenCalledWith("a1", "u1");
+    });
+
+    it("deve retornar status 204 e chamar end()", async () => {
+      serviceMock.deletar.mockResolvedValue(undefined);
+
+      const req = criarReq({ params: { atividadeId: "a1" } });
+      const res = criarRes();
+
+      await controller.deletar(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(204);
+      expect(res.end).toHaveBeenCalledTimes(1);
+    });
+
+    it("não deve chamar res.json no método deletar", async () => {
+      serviceMock.deletar.mockResolvedValue(undefined);
+
+      const req = criarReq({ params: { atividadeId: "a1" } });
+      const res = criarRes();
+
+      await controller.deletar(req, res);
+
+      expect(res.json).not.toHaveBeenCalled();
+    });
+
+    it("deve propagar erro quando o service lança exceção", async () => {
+      const erro = new Error("FALHA_DELETAR");
+      serviceMock.deletar.mockRejectedValue(erro);
+
+      const req = criarReq({ params: { atividadeId: "a1" } });
+      const res = criarRes();
+
+      await expect(controller.deletar(req, res)).rejects.toThrow("FALHA_DELETAR");
+      expect(res.status).not.toHaveBeenCalled();
+      expect(res.end).not.toHaveBeenCalled();
+    });
+  });
 });
