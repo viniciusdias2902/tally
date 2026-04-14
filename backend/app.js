@@ -1,5 +1,6 @@
 import "dotenv/config";
 import express from "express";
+import cors from "cors";
 import swaggerUi from "swagger-ui-express";
 import prisma from "./lib/prisma.js";
 import { swaggerSpec } from "./lib/swagger.js";
@@ -58,6 +59,7 @@ const configPomodoroRoutes = criarConfigPomodoroRoutes(configPomodoroController)
 
 const app = express();
 
+app.use(cors());
 app.use(express.json());
 
 app.get("/health", (_req, res) => res.json({ status: "ok" }));
