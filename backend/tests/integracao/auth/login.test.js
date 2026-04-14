@@ -11,7 +11,7 @@ describe("POST /auth/login", () => {
     await request(app).post("/auth/registrar").send(USUARIO);
   });
 
-  it("deve retornar 200 com tokens para credenciais válidas", async () => {
+  it("deve retornar 200 com tokens e dados do usuário", async () => {
     const res = await request(app)
       .post("/auth/login")
       .send({ email: USUARIO.email, senha: USUARIO.senha });
@@ -19,6 +19,8 @@ describe("POST /auth/login", () => {
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("accessToken");
     expect(res.body).toHaveProperty("refreshToken");
+    expect(res.body.usuario).toMatchObject({ nome: USUARIO.nome, email: USUARIO.email });
+    expect(res.body.usuario).toHaveProperty("id");
   });
 
   it("deve retornar 401 para email inexistente", async () => {
