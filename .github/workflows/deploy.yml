@@ -74,9 +74,7 @@ jobs:
 
       - run: npm ci --prefix frontend
 
-      - run: npm run build --prefix frontend
-        env:
-          VITE_API_URL: ${{ vars.VITE_API_URL }}
+      - run: VITE_API_URL=https://viniciusdias.tech/tally/api npm run build --prefix frontend
 
       - name: Enviar build para VPS
         uses: appleboy/scp-action@v0.1.7
