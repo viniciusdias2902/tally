@@ -5,7 +5,7 @@ export default defineConfig({
   fullyParallel: false,
   retries: 0,
   use: {
-    baseURL: "http://localhost:5173",
+    baseURL: "http://localhost:5173/tally/app/",
     trace: "on-first-retry",
   },
   webServer: {
