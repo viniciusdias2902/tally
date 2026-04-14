@@ -21,7 +21,7 @@ export default function Sidebar({ aberto, onFechar }) {
       )}
 
       <aside
-        className={`fixed top-0 left-0 z-50 h-full w-64 bg-bg-elevated border-r border-border flex flex-col transition-transform lg:translate-x-0 lg:static lg:z-auto ${
+        className={`fixed top-0 left-0 z-50 h-full w-64 bg-bg-elevated flex flex-col transition-transform lg:translate-x-0 lg:static lg:z-auto ${
           aberto ? "translate-x-0" : "-translate-x-full"
         }`}
       >
