@@ -14,7 +14,7 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
   }
 
   return (
-    <div className="flex items-center justify-between rounded-xl border border-border/50 bg-bg-elevated p-4 shadow-sm transition-all duration-150 hover:shadow-md">
+    <div className="flex items-center justify-between rounded-xl bg-bg-elevated p-4 shadow-md transition-all duration-150 hover:shadow-lg">
       <div className="min-w-0 flex-1">
         <h3 className="text-sm font-semibold text-text-primary truncate">
           {atividade.nome}
