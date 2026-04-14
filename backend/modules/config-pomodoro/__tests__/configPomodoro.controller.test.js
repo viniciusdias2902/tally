@@ -131,6 +131,24 @@ describe("configPomodoro.controller", () => {
       expect(res.json).toHaveBeenCalledTimes(1);
     });
 
+    it("deve mesclar corretamente body vazio com atividadeId e usuarioId", async () => {
+      serviceMock.upsert.mockResolvedValue({});
+
+      const req = criarReq({
+        params: { atividadeId: "a2" },
+        usuarioId: "u7",
+        body: {},
+      });
+      const res = criarRes();
+
+      await controller.upsert(req, res);
+
+      expect(serviceMock.upsert).toHaveBeenCalledWith({
+        atividadeId: "a2",
+        usuarioId: "u7",
+      });
+    });
+
     it("deve propagar erro quando o service lança exceção", async () => {
       const erro = new Error("FALHA_UPSERT");
       serviceMock.upsert.mockRejectedValue(erro);
