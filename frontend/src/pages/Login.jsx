@@ -33,57 +33,60 @@ export default function Login() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-bg-primary p-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-bg-primary via-bg-primary to-accent/5 p-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight text-text-primary">
             <span className="text-accent">||||</span> Tally
           </h1>
-          <p className="mt-2 text-sm text-text-secondary">
-            Entre na sua conta
+          <p className="mt-3 text-sm text-text-secondary">
+            Entre na sua conta para continuar
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            id="email"
-            label="E-mail"
-            type="email"
-            placeholder="seu@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            autoComplete="email"
-          />
+        <div className="bg-bg-elevated rounded-2xl border border-border shadow-lg p-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Input
+              id="email"
+              label="E-mail"
+              type="email"
+              placeholder="seu@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
 
-          <Input
-            id="senha"
-            label="Senha"
-            type="password"
-            placeholder="Sua senha"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required
-            autoComplete="current-password"
-            minLength={8}
-          />
+            <Input
+              id="senha"
+              label="Senha"
+              type="password"
+              placeholder="Sua senha"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+              autoComplete="current-password"
+              minLength={8}
+            />
 
-          {erro && (
-            <p className="text-sm text-danger text-center">{erro}</p>
-          )}
+            {erro && (
+              <p className="text-sm text-danger text-center">{erro}</p>
+            )}
 
-          <Button
-            type="submit"
-            disabled={enviando}
-            className="w-full"
-          >
-            {enviando ? "Entrando..." : "Entrar"}
-          </Button>
-        </form>
+            <Button
+              type="submit"
+              disabled={enviando}
+              className="w-full"
+              size="lg"
+            >
+              {enviando ? "Entrando..." : "Entrar"}
+            </Button>
+          </form>
+        </div>
 
         <p className="mt-6 text-center text-sm text-text-secondary">
-          Não tem conta?{" "}
-          <Link to="/registro" className="text-accent hover:text-accent-hover font-medium">
+          Ainda no tem conta?{" "}
+          <Link to="/registro" className="text-accent hover:text-accent-hover font-medium transition-colors">
             Criar conta
           </Link>
         </p>
