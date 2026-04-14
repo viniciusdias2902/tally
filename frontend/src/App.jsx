@@ -11,7 +11,7 @@ import NaoEncontrada from "./pages/NaoEncontrada.jsx";
 
 export default function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/tally/app">
       <ThemeProvider>
         <AuthProvider>
           <Routes>
