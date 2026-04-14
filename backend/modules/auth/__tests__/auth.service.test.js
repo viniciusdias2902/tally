@@ -33,9 +33,9 @@ describe("auth.service", () => {
   });
 
   describe("registrar", () => {
-    it("deve criar usuario e retornar tokens", async () => {
+    it("deve criar usuario e retornar tokens com dados do usuario", async () => {
       repositorio.buscarPorEmail.mockResolvedValue(null);
-      repositorio.criar.mockResolvedValue({ id: "1" });
+      repositorio.criar.mockResolvedValue({ id: "1", nome: "Teste", email: "teste@email.com" });
       repositorio.atualizarRefreshToken.mockResolvedValue(null);
 
       const resultado = await servico.registrar({
@@ -50,6 +50,7 @@ describe("auth.service", () => {
       );
       expect(resultado).toHaveProperty("accessToken");
       expect(resultado).toHaveProperty("refreshToken");
+      expect(resultado.usuario).toEqual({ id: "1", nome: "Teste", email: "teste@email.com" });
     });
 
     it("deve gerar hash da senha ao criar", async () => {
