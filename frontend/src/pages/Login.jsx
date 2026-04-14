@@ -44,7 +44,7 @@ export default function Login() {
           </p>
         </div>
 
-        <div className="bg-bg-elevated rounded-2xl border border-border/50 shadow-lg p-6">
+        <div className="bg-bg-elevated rounded-2xl border border-black/[0.06] dark:border-white/[0.08] shadow-lg p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
               id="email"
