@@ -51,7 +51,7 @@ export default function Sidebar({ aberto, onFechar }) {
           ))}
         </nav>
 
-        <div className="p-3 border-t border-border space-y-0.5">
+        <div className="p-3 space-y-0.5">
           <button
             onClick={toggleTheme}
             className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-all duration-150 w-full"
