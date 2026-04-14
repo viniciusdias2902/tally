@@ -54,16 +54,19 @@ export default function Sidebar({ aberto, colapsada, onFechar, onColapsar }) {
           ))}
         </nav>
 
-        <div className="p-3 space-y-0.5">
+        <div className={`p-3 space-y-0.5 ${colapsada ? "px-2" : ""}`}>
           <button
             onClick={toggleTheme}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-all duration-150 w-full"
+            title={colapsada ? (theme === "dark" ? "Modo claro" : "Modo escuro") : undefined}
+            className={`flex items-center rounded-xl text-sm font-medium text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-all duration-150 w-full ${
+              colapsada ? "justify-center px-0 py-2.5" : "gap-3 px-3 py-2.5"
+            }`}
           >
             {theme === "dark" ? <SunIcon /> : <MoonIcon />}
-            {theme === "dark" ? "Modo claro" : "Modo escuro"}
+            {!colapsada && (theme === "dark" ? "Modo claro" : "Modo escuro")}
           </button>
 
-          {usuario && (
+          {usuario && !colapsada && (
             <div className="flex items-center gap-3 px-3 py-2.5 text-text-secondary">
               <UserIcon />
               <span className="text-sm truncate">
@@ -74,10 +77,13 @@ export default function Sidebar({ aberto, colapsada, onFechar, onColapsar }) {
 
           <button
             onClick={sair}
-            className="flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium text-text-secondary hover:bg-bg-secondary hover:text-danger transition-all duration-150 w-full"
+            title={colapsada ? "Sair" : undefined}
+            className={`flex items-center rounded-xl text-sm font-medium text-text-secondary hover:bg-bg-secondary hover:text-danger transition-all duration-150 w-full ${
+              colapsada ? "justify-center px-0 py-2.5" : "gap-3 px-3 py-2.5"
+            }`}
           >
             <LogoutIcon />
-            Sair
+            {!colapsada && "Sair"}
           </button>
         </div>
       </aside>
