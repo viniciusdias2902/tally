@@ -31,14 +31,17 @@ export default function Sidebar({ aberto, colapsada, onFechar, onColapsar }) {
           </h1>
         </div>
 
-        <nav className="flex-1 px-3 space-y-0.5">
+        <nav className={`flex-1 space-y-0.5 ${colapsada ? "px-2" : "px-3"}`}>
           {links.map(({ to, label, icon: Icon }) => (
             <NavLink
               key={to}
               to={to}
               onClick={onFechar}
+              title={colapsada ? label : undefined}
               className={({ isActive }) =>
-                `flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${
+                `flex items-center rounded-xl text-sm font-medium transition-all duration-150 ${
+                  colapsada ? "justify-center px-0 py-2.5" : "gap-3 px-3 py-2.5"
+                } ${
                   isActive
                     ? "bg-accent/10 text-accent"
                     : "text-text-secondary hover:bg-bg-secondary hover:text-text-primary"
@@ -46,7 +49,7 @@ export default function Sidebar({ aberto, colapsada, onFechar, onColapsar }) {
               }
             >
               <Icon />
-              {label}
+              {!colapsada && label}
             </NavLink>
           ))}
         </nav>
