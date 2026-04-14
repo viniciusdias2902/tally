@@ -14,7 +14,7 @@ describe("POST /auth/refresh", () => {
     refreshToken = res.body.refreshToken;
   });
 
-  it("deve retornar 200 com novos tokens", async () => {
+  it("deve retornar 200 com novos tokens e dados do usuário", async () => {
     const res = await request(app)
       .post("/auth/refresh")
       .send({ refreshToken });
@@ -22,6 +22,8 @@ describe("POST /auth/refresh", () => {
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty("accessToken");
     expect(res.body).toHaveProperty("refreshToken");
+    expect(res.body.usuario).toMatchObject({ nome: USUARIO.nome, email: USUARIO.email });
+    expect(res.body.usuario).toHaveProperty("id");
   });
 
   it("deve invalidar o refreshToken anterior após rotação", async () => {
