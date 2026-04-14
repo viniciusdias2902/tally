@@ -36,6 +36,12 @@
 }
 
 /* ── Dark mode ── */
+.dark,
+.dark dialog,
+.dark ::backdrop {
+  color-scheme: dark;
+}
+
 .dark {
   --color-bg-primary: #0F172A;
   --color-bg-secondary: #1E293B;

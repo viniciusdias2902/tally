@@ -45,7 +45,7 @@ export default function Registro() {
           </p>
         </div>
 
-        <div className="bg-bg-elevated rounded-2xl border border-border shadow-lg p-6">
+        <div className="bg-bg-elevated rounded-2xl shadow-lg p-6">
           <form onSubmit={handleSubmit} className="space-y-4">
             <Input
               id="nome"

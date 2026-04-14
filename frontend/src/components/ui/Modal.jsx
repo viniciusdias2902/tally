@@ -25,7 +25,7 @@ export default function Modal({ aberto, onFechar, titulo, children }) {
       ref={dialogRef}
       onClick={handleClick}
       onCancel={onFechar}
-      className="backdrop:bg-black/40 backdrop:backdrop-blur-sm bg-bg-elevated text-text-primary rounded-2xl border border-border p-0 shadow-2xl max-w-lg w-full"
+      className="backdrop:bg-black/40 backdrop:backdrop-blur-sm bg-bg-elevated text-text-primary rounded-2xl border-none p-0 shadow-2xl max-w-lg w-full fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 m-0"
     >
       <div className="p-6">
         {titulo && (

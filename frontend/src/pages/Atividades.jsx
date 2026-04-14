@@ -97,7 +97,7 @@ export default function Atividades() {
           </p>
         </div>
       ) : (
-        <div className="space-y-2">
+        <div className="space-y-3">
           {atividades.map((atividade) => (
             <CardAtividade
               key={atividade.id}
