@@ -98,6 +98,8 @@ describe("configPomodoro.controller", () => {
       expect(serviceMock.upsert).toHaveBeenCalledWith({
         atividadeId: "a1",
         usuarioId: "u1",
+        tempoFoco: 30,
+        tempoPausa: 10,
       });
     });
 
