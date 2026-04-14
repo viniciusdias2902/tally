@@ -25,7 +25,7 @@ export default function Registro() {
     } catch (err) {
       setErro(
         err.message === "EMAIL_JA_EXISTE"
-          ? "Este e-mail já está cadastrado."
+          ? "Este e-mail ja esta cadastrado."
           : "Erro ao criar conta. Tente novamente.",
       );
     } finally {
@@ -34,70 +34,73 @@ export default function Registro() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-bg-primary p-4">
+    <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-bg-primary via-bg-primary to-accent/5 p-4">
       <div className="w-full max-w-sm">
         <div className="mb-8 text-center">
-          <h1 className="text-2xl font-bold tracking-tight">
+          <h1 className="text-3xl font-bold tracking-tight text-text-primary">
             <span className="text-accent">||||</span> Tally
           </h1>
-          <p className="mt-2 text-sm text-text-secondary">
-            Crie sua conta
+          <p className="mt-3 text-sm text-text-secondary">
+            Crie sua conta para comecar
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <Input
-            id="nome"
-            label="Nome"
-            type="text"
-            placeholder="Seu nome"
-            value={nome}
-            onChange={(e) => setNome(e.target.value)}
-            required
-            autoComplete="name"
-            maxLength={100}
-          />
+        <div className="bg-bg-elevated rounded-2xl border border-border shadow-lg p-6">
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <Input
+              id="nome"
+              label="Nome"
+              type="text"
+              placeholder="Seu nome"
+              value={nome}
+              onChange={(e) => setNome(e.target.value)}
+              required
+              autoComplete="name"
+              maxLength={100}
+            />
 
-          <Input
-            id="email"
-            label="E-mail"
-            type="email"
-            placeholder="seu@email.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            autoComplete="email"
-          />
+            <Input
+              id="email"
+              label="E-mail"
+              type="email"
+              placeholder="seu@email.com"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="email"
+            />
 
-          <Input
-            id="senha"
-            label="Senha"
-            type="password"
-            placeholder="Mínimo 8 caracteres"
-            value={senha}
-            onChange={(e) => setSenha(e.target.value)}
-            required
-            autoComplete="new-password"
-            minLength={8}
-            maxLength={72}
-          />
+            <Input
+              id="senha"
+              label="Senha"
+              type="password"
+              placeholder="Minimo 8 caracteres"
+              value={senha}
+              onChange={(e) => setSenha(e.target.value)}
+              required
+              autoComplete="new-password"
+              minLength={8}
+              maxLength={72}
+            />
 
-          {erro && (
-            <p className="text-sm text-danger text-center">{erro}</p>
-          )}
+            {erro && (
+              <p className="text-sm text-danger text-center">{erro}</p>
+            )}
 
-          <Button
-            type="submit"
-            disabled={enviando}
-            className="w-full"
-          >
-            {enviando ? "Criando conta..." : "Criar conta"}
-          </Button>
-        </form>
+            <Button
+              type="submit"
+              disabled={enviando}
+              className="w-full"
+              size="lg"
+            >
+              {enviando ? "Criando conta..." : "Criar conta"}
+            </Button>
+          </form>
+        </div>
 
         <p className="mt-6 text-center text-sm text-text-secondary">
-          Já tem conta?{" "}
-          <Link to="/login" className="text-accent hover:text-accent-hover font-medium">
+          Ja tem conta?{" "}
+          <Link to="/login" className="text-accent hover:text-accent-hover font-medium transition-colors">
             Entrar
           </Link>
         </p>
