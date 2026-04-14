@@ -8,7 +8,7 @@ describe("POST /auth/registrar", () => {
     await limparBanco();
   });
 
-  it("deve registrar um usuario e retornar 201 com tokens", async () => {
+  it("deve registrar um usuario e retornar 201 com tokens e dados do usuário", async () => {
     const res = await request(app)
       .post("/auth/registrar")
       .send({ email: "novo@email.com", nome: "Novo", senha: "senha1234" });
@@ -16,6 +16,8 @@ describe("POST /auth/registrar", () => {
     expect(res.status).toBe(201);
     expect(res.body).toHaveProperty("accessToken");
     expect(res.body).toHaveProperty("refreshToken");
+    expect(res.body.usuario).toMatchObject({ nome: "Novo", email: "novo@email.com" });
+    expect(res.body.usuario).toHaveProperty("id");
   });
 
   it("deve retornar 409 para email duplicado", async () => {
