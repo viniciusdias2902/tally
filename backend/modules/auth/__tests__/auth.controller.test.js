@@ -42,8 +42,8 @@ describe("auth.controller", () => {
 
   describe("registrar", () => {
     it("deve chamar servico.registrar com req.body e retornar 201", async () => {
-      const tokens = { accessToken: "at", refreshToken: "rt" };
-      servico.registrar.mockResolvedValue(tokens);
+      const resposta = { accessToken: "at", refreshToken: "rt", usuario: { id: "1", nome: "T", email: "t@e.com" } };
+      servico.registrar.mockResolvedValue(resposta);
       const req = { body: { email: "t@e.com", nome: "T", senha: "12345678" } };
       const res = criarRes();
 
@@ -51,7 +51,7 @@ describe("auth.controller", () => {
 
       expect(servico.registrar).toHaveBeenCalledWith(req.body);
       expect(res.statusCode).toBe(201);
-      expect(res.corpo).toEqual(tokens);
+      expect(res.corpo).toEqual(resposta);
     });
 
     it("deve propagar erro do servico", async () => {
@@ -65,8 +65,8 @@ describe("auth.controller", () => {
 
   describe("login", () => {
     it("deve chamar servico.login com req.body e retornar 200", async () => {
-      const tokens = { accessToken: "at", refreshToken: "rt" };
-      servico.login.mockResolvedValue(tokens);
+      const resposta = { accessToken: "at", refreshToken: "rt", usuario: { id: "1", nome: "T", email: "t@e.com" } };
+      servico.login.mockResolvedValue(resposta);
       const req = { body: { email: "t@e.com", senha: "12345678" } };
       const res = criarRes();
 
@@ -74,7 +74,7 @@ describe("auth.controller", () => {
 
       expect(servico.login).toHaveBeenCalledWith(req.body);
       expect(res.statusCode).toBe(200);
-      expect(res.corpo).toEqual(tokens);
+      expect(res.corpo).toEqual(resposta);
     });
 
     it("deve propagar erro do servico", async () => {
@@ -88,8 +88,8 @@ describe("auth.controller", () => {
 
   describe("refresh", () => {
     it("deve chamar servico.refresh com refreshToken do body e retornar 200", async () => {
-      const tokens = { accessToken: "at2", refreshToken: "rt2" };
-      servico.refresh.mockResolvedValue(tokens);
+      const resposta = { accessToken: "at2", refreshToken: "rt2", usuario: { id: "1", nome: "T", email: "t@e.com" } };
+      servico.refresh.mockResolvedValue(resposta);
       const req = { body: { refreshToken: "rt1" } };
       const res = criarRes();
 
@@ -97,7 +97,7 @@ describe("auth.controller", () => {
 
       expect(servico.refresh).toHaveBeenCalledWith("rt1");
       expect(res.statusCode).toBe(200);
-      expect(res.corpo).toEqual(tokens);
+      expect(res.corpo).toEqual(resposta);
     });
 
     it("deve propagar erro do servico", async () => {
