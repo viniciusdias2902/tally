@@ -15,6 +15,7 @@ function criarRes() {
     end: vi.fn(),
     status: vi.fn(),
   };
+  res.status.mockReturnValue(res);
   return res;
 }
 
