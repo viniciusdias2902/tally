@@ -1,10 +1,10 @@
 const variants = {
   primary:
-    "bg-accent text-white hover:bg-accent-hover focus-visible:ring-accent/50",
+    "bg-accent text-white shadow-sm hover:bg-accent-hover focus-visible:ring-accent/40",
   secondary:
-    "bg-bg-secondary text-text-primary border border-border hover:bg-border focus-visible:ring-border",
+    "bg-bg-elevated text-text-primary border border-border shadow-sm hover:bg-bg-secondary focus-visible:ring-border",
   danger:
-    "bg-danger text-white hover:bg-danger-hover focus-visible:ring-danger/50",
+    "bg-danger text-white shadow-sm hover:bg-danger-hover focus-visible:ring-danger/40",
   ghost:
     "text-text-secondary hover:bg-bg-secondary hover:text-text-primary",
 };
@@ -25,7 +25,7 @@ export default function Button({
 }) {
   return (
     <button
-      className={`inline-flex items-center justify-center gap-2 rounded-lg font-medium transition-colors focus-visible:outline-none focus-visible:ring-2 disabled:pointer-events-none disabled:opacity-50 ${variants[variant]} ${sizes[size]} ${className}`}
+      className={`inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-1 disabled:pointer-events-none disabled:opacity-50 cursor-pointer ${variants[variant]} ${sizes[size]} ${className}`}
       disabled={disabled}
       {...props}
     >
