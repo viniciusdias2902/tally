@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "nodemon backend/server.js",
     "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build",
     "test": "vitest run",
     "test:unitario": "vitest run --project unitario",
     "test:integracao": "vitest run --project integracao",
