@@ -167,23 +167,23 @@ A ordem segue a lógica de dependência: primeiro o que é base para tudo, depoi
 
 ### Fase 1 — Fundação (setup + auth + layout)
 
-- [ ] **1.1** Inicializar projeto Vite + React
-- [ ] **1.2** Instalar e configurar TailwindCSS v4
-- [ ] **1.3** Configurar variáveis de ambiente (`VITE_API_URL`)
-- [ ] **1.4** Criar `.env` e `.env.production`
-- [ ] **1.5** Criar CSS base com custom properties (paleta light/dark)
-- [ ] **1.6** Criar ThemeContext (dark/light toggle com persistência em localStorage)
-- [ ] **1.7** Criar api/client.js (fetch wrapper com baseURL, interceptors, refresh token)
-- [ ] **1.8** Criar api/auth.js (registrar, login, refresh, logout)
-- [ ] **1.9** Criar AuthContext + useAuth hook
-- [ ] **1.10** Criar componentes ui/ base (Button, Input, Modal, Spinner)
-- [ ] **1.11** Criar layout shell (Sidebar + Header + main content area)
-- [ ] **1.12** Criar ProtectedRoute wrapper
-- [ ] **1.13** Configurar React Router DOM com todas as rotas
-- [ ] **1.14** Criar página Login
-- [ ] **1.15** Criar página Registro
-- [ ] **1.16** Criar página NaoEncontrada (404)
-- [ ] **1.17** Configurar Playwright e criar primeiro teste e2e (fluxo de auth)
+- [x] **1.1** Inicializar projeto Vite + React
+- [x] **1.2** Instalar e configurar TailwindCSS v4
+- [x] **1.3** Configurar variáveis de ambiente (`VITE_API_URL`)
+- [x] **1.4** Criar `.env` e `.env.production`
+- [x] **1.5** Criar CSS base com custom properties (paleta light/dark)
+- [x] **1.6** Criar ThemeContext (dark/light toggle com persistência em localStorage)
+- [x] **1.7** Criar api/client.js (fetch wrapper com baseURL, interceptors, refresh token)
+- [x] **1.8** Criar api/auth.js (registrar, login, refresh, logout)
+- [x] **1.9** Criar AuthContext + useAuth hook
+- [x] **1.10** Criar componentes ui/ base (Button, Input, Modal, Spinner)
+- [x] **1.11** Criar layout shell (Sidebar + Header + main content area)
+- [x] **1.12** Criar ProtectedRoute wrapper
+- [x] **1.13** Configurar React Router DOM com todas as rotas
+- [x] **1.14** Criar página Login
+- [x] **1.15** Criar página Registro
+- [x] **1.16** Criar página NaoEncontrada (404)
+- [x] **1.17** Configurar Playwright e criar primeiro teste e2e (fluxo de auth)
 
 ### Fase 2 — CRUDs visuais (atividades + categorias)
 
