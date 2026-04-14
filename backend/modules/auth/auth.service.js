@@ -37,7 +37,11 @@ export function criarAuthService(usuarioRepository) {
       const refreshToken = gerarRefreshToken(usuario.id);
       await usuarioRepository.atualizarRefreshToken(usuario.id, refreshToken);
 
-      return { accessToken, refreshToken };
+      return {
+        accessToken,
+        refreshToken,
+        usuario: { id: usuario.id, nome: usuario.nome, email: usuario.email },
+      };
     },
 
     async login({ email, senha }) {
