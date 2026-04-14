@@ -1,0 +1,15 @@
+meta {
+  name: Buscar Config Pomodoro
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/atividades/{{atividadeId}}/config-pomodoro
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
