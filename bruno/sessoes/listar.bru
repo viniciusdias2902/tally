@@ -1,0 +1,21 @@
+meta {
+  name: Listar Sessões
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/atividades/{{atividadeId}}/sessoes
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+params:query {
+  ~categoriaId:
+  ~cursor:
+  ~limite: 20
+}

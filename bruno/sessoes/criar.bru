@@ -1,0 +1,29 @@
+meta {
+  name: Criar Sessão
+  type: http
+  seq: 1
+}
+
+post {
+  url: {{baseUrl}}/atividades/{{atividadeId}}/sessoes
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "iniciadoEm": "2026-04-14T10:00:00Z",
+    "duracaoSegundos": 1500,
+    "modo": "timer"
+  }
+}
+
+script:post-response {
+  if (res.status === 201) {
+    bru.setVar("sessaoId", res.body.id);
+  }
+}

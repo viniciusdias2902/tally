@@ -1,0 +1,15 @@
+meta {
+  name: Duração Total
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/atividades/{{atividadeId}}/sessoes/duracao
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

@@ -1,0 +1,15 @@
+meta {
+  name: Buscar Sessão
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{baseUrl}}/atividades/{{atividadeId}}/sessoes/{{sessaoId}}
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
