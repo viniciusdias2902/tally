@@ -25,11 +25,18 @@ export default function Sidebar({ aberto, colapsada, onFechar, onColapsar }) {
           aberto ? "translate-x-0" : "-translate-x-full"
         } ${colapsada ? "lg:w-16 w-64" : "w-64"}`}
       >
-        <div className={`py-6 ${colapsada ? "px-0 text-center" : "px-5"}`}>
+        <div className={`py-6 flex items-center ${colapsada ? "px-0 justify-center" : "px-5 justify-between"}`}>
           <h1 className={`font-bold tracking-tight text-text-primary ${colapsada ? "text-base" : "text-xl"}`}>
             <span className="text-accent">||||</span>
             {!colapsada && <>{" "}Tally</>}
           </h1>
+          <button
+            onClick={onColapsar}
+            className="hidden lg:flex p-1.5 rounded-lg text-text-muted hover:text-text-secondary hover:bg-bg-secondary transition-all duration-150"
+            aria-label={colapsada ? "Expandir sidebar" : "Colapsar sidebar"}
+          >
+            <CollapseIcon colapsada={colapsada} />
+          </button>
         </div>
 
         <nav className={`flex-1 space-y-0.5 ${colapsada ? "px-2" : "px-3"}`}>
@@ -89,6 +96,20 @@ export default function Sidebar({ aberto, colapsada, onFechar, onColapsar }) {
         </div>
       </aside>
     </>
+  );
+}
+
+function CollapseIcon({ colapsada }) {
+  return (
+    <svg
+      className={`w-4 h-4 transition-transform duration-200 ${colapsada ? "rotate-180" : ""}`}
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={1.5}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M18.75 19.5l-7.5-7.5 7.5-7.5m-6 15L5.25 12l7.5-7.5" />
+    </svg>
   );
 }
 
