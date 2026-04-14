@@ -33,7 +33,9 @@ export function AuthProvider({ children }) {
       .then((data) => {
         setAccessToken(data.accessToken);
         localStorage.setItem("tally-refresh-token", data.refreshToken);
-        setUsuario(JSON.parse(usuarioSalvo));
+        const usuario = data.usuario || JSON.parse(usuarioSalvo);
+        localStorage.setItem("tally-usuario", JSON.stringify(usuario));
+        setUsuario(usuario);
       })
       .catch(() => {
         limparAuth();
