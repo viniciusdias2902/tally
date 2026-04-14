@@ -107,14 +107,15 @@ describe("auth.service", () => {
       senhaHash = await bcrypt.hash(senhaPlana, 4);
     });
 
-    it("deve retornar tokens com credenciais válidas", async () => {
-      repositorio.buscarPorEmail.mockResolvedValue({ id: "1", senhaHash });
+    it("deve retornar tokens com dados do usuario para credenciais válidas", async () => {
+      repositorio.buscarPorEmail.mockResolvedValue({ id: "1", nome: "Teste", email: "teste@email.com", senhaHash });
       repositorio.atualizarRefreshToken.mockResolvedValue(null);
 
       const resultado = await servico.login({ email: "teste@email.com", senha: senhaPlana });
 
       expect(resultado).toHaveProperty("accessToken");
       expect(resultado).toHaveProperty("refreshToken");
+      expect(resultado.usuario).toEqual({ id: "1", nome: "Teste", email: "teste@email.com" });
     });
 
     it("deve lançar ErroApp 401 se usuario não existe", async () => {
