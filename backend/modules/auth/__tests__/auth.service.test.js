@@ -55,7 +55,7 @@ describe("auth.service", () => {
 
     it("deve gerar hash da senha ao criar", async () => {
       repositorio.buscarPorEmail.mockResolvedValue(null);
-      repositorio.criar.mockResolvedValue({ id: "1" });
+      repositorio.criar.mockResolvedValue({ id: "1", nome: "Teste", email: "teste@email.com" });
       repositorio.atualizarRefreshToken.mockResolvedValue(null);
 
       await servico.registrar({
@@ -71,7 +71,7 @@ describe("auth.service", () => {
 
     it("deve salvar o refreshToken no repositorio", async () => {
       repositorio.buscarPorEmail.mockResolvedValue(null);
-      repositorio.criar.mockResolvedValue({ id: "1" });
+      repositorio.criar.mockResolvedValue({ id: "1", nome: "Teste", email: "teste@email.com" });
       repositorio.atualizarRefreshToken.mockResolvedValue(null);
 
       const resultado = await servico.registrar({
