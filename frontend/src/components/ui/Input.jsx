@@ -14,7 +14,7 @@ export default function Input({
       )}
       <input
         id={id}
-        className={`rounded-lg border bg-input-bg px-3 py-2 text-sm text-text-primary placeholder:text-text-muted transition-colors focus:outline-none focus:ring-2 focus:ring-accent/50 ${
+        className={`rounded-xl border bg-input-bg px-3.5 py-2.5 text-sm text-text-primary shadow-sm placeholder:text-text-muted transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent ${
           erro ? "border-danger" : "border-border"
         }`}
         {...props}
