@@ -136,15 +136,16 @@ describe("auth.service", () => {
   });
 
   describe("refresh", () => {
-    it("deve retornar novos tokens com refreshToken válido", async () => {
+    it("deve retornar novos tokens com dados do usuario", async () => {
       const tokenValido = jwt.sign({ sub: "1" }, JWT_REFRESH_SECRET, { expiresIn: "7d" });
-      repositorio.buscarPorId.mockResolvedValue({ id: "1", refreshToken: tokenValido });
+      repositorio.buscarPorId.mockResolvedValue({ id: "1", nome: "Teste", email: "teste@email.com", refreshToken: tokenValido });
       repositorio.atualizarRefreshToken.mockResolvedValue(null);
 
       const resultado = await servico.refresh(tokenValido);
 
       expect(resultado).toHaveProperty("accessToken");
       expect(resultado).toHaveProperty("refreshToken");
+      expect(resultado.usuario).toEqual({ id: "1", nome: "Teste", email: "teste@email.com" });
       expect(repositorio.atualizarRefreshToken).toHaveBeenCalledWith(
         "1",
         resultado.refreshToken
