@@ -1,58 +1,54 @@
 export function criarSessaoRepository(prisma) {
-    return {
-        criar({ atividadeId, categoriaId, iniciadoEm, duracaoSegundos, modo, ciclosPomodoro, observacoes }) {
-            return prisma.sessao.create({
-                data: { atividadeId, categoriaId, iniciadoEm, duracaoSegundos, modo, ciclosPomodoro, observacoes },
-            });
-        },
-        listarPorAtividade(atividadeId, { categoriaId, cursor, limite = 20 } = {}) {
-            return prisma.sessao.findMany({
-                where: {
-                    atividadeId,
-                    ...(categoriaId ? { categoriaId } : {}),
-                },
-                orderBy: { iniciadoEm: 'desc' },
-                take: limite,
-                ...(cursor ? { cursor } : {}),
-                include: {
-                    categoria: true
-                },
-            });
-        },
+  return {
+    criar({ atividadeId, categoriaId, iniciadoEm, duracaoSegundos, modo, ciclosPomodoro, observacoes }) {
+      return prisma.sessao.create({
+        data: { atividadeId, categoriaId, iniciadoEm, duracaoSegundos, modo, ciclosPomodoro, observacoes },
+      });
+    },
 
-        buscarPorId(id) {
-            return prisma.sessao.findUnique({
-                where: { id },
-                include: { categoria: true }
-            });
+    listarPorAtividade(atividadeId, { categoriaId, cursor, limite = 20 } = {}) {
+      return prisma.sessao.findMany({
+        where: {
+          atividadeId,
+          ...(categoriaId ? { categoriaId } : {}),
         },
+        orderBy: { iniciadoEm: "desc" },
+        take: limite,
+        ...(cursor ? { cursor } : {}),
+        include: {
+          categoria: true,
+        },
+      });
+    },
 
-        atualizar(id, dados) {
-            return prisma.sessao.update({ where: { id }, data: dados });
-        },
+    buscarPorId(id) {
+      return prisma.sessao.findUnique({
+        where: { id },
+        include: { categoria: true },
+      });
+    },
 
-        deletar(id) {
-            return prisma.sessao.delete({ where: { id } });
-        },
+    atualizar(id, dados) {
+      return prisma.sessao.update({ where: { id }, data: dados });
+    },
 
-        contarPorAtividade(atividadeId) {
-            return prisma.sessao.count({ where: { atividadeId } });
-        },
+    deletar(id) {
+      return prisma.sessao.delete({ where: { id } });
+    },
 
-        contarPorCategoria(categoriaId) {
-            return prisma.sessao.count({ where: { categoriaId } });
-        },
+    contarPorAtividade(atividadeId) {
+      return prisma.sessao.count({ where: { atividadeId } });
+    },
 
-        somarDuracaoPorAtividade(atividadeId) {
-            return prisma.sessao.aggregate({
-                where: { atividadeId },
-                _sum: { duracaoSegundos: true },
-            });
-        },
-    };
+    contarPorCategoria(categoriaId) {
+      return prisma.sessao.count({ where: { categoriaId } });
+    },
+
+    somarDuracaoPorAtividade(atividadeId) {
+      return prisma.sessao.aggregate({
+        where: { atividadeId },
+        _sum: { duracaoSegundos: true },
+      });
+    },
+  };
 }
-
-
-
-
-
