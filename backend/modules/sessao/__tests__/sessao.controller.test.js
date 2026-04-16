@@ -215,4 +215,23 @@ describe("sessao.controller", () => {
             await expect(controller.deletar(req, res)).rejects.toThrow("SESSAO_NAO_ENCONTRADA");
         });
     });
+
+    describe("somarDuracao", () => {
+        it("deve chamar servico.somarDuracao com atividadeId e usuarioId e retornar totalSegundos", async () => {
+            servico.somarDuracao.mockResolvedValue(7200);
+            const req = {
+                usuarioId: "usuario1",
+                params: { atividadeId: "atividade1" },
+            };
+
+            const res = criarRes();
+
+            await controller.somarDuracao(req, res);
+
+            expect(servico.somarDuracao).toHaveBeenCalledWith("atividade1", "usuario1");
+            expect(res.statusCode).toBe(200);
+            expect(res.corpo).toEqual({ totalSegundos: 7200 });
+        });
+
+    });
 });
