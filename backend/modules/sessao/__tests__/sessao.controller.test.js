@@ -41,3 +41,15 @@ const sessaoBase = {
     fim: "2023-01-01T11:00:00.000Z",
     duracao: 3600,
 };
+
+describe("sessao.controller", () => {
+    let servico;
+    let controller;
+
+    beforeEach(() => {
+        servico = criarServicoMock();
+        controller = criarSessaoController(servico);
+    });
+
+
+});
