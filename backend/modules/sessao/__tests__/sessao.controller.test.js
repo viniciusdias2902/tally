@@ -84,5 +84,18 @@ describe("sessao.controller", () => {
             expect(res.corpo).toEqual(sessaoBase);
         });
 
+        it("deve propagar erro do servico", async () => {
+            servico.criar.mockRejectedValue(new Error("ATIVIDADE_NAO_ENCONTRADA"));
+            const req = {
+                usuarioId: "usuario1",
+                params: { atividadeId: "atividade1" },
+                body: { iniciadoEm: "2023-01-01T10:00:00.000Z", duracaoSegundos: 3600, modo: "cronometro" },
+            };
+            const res = criarRes();
+
+
+            await expect(controller.criar(req, res)).rejects.toThrow("ATIVIDADE_NAO_ENCONTRADA");
+        });
     });
+
 });
