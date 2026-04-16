@@ -157,4 +157,23 @@ describe("sessao.controller", () => {
             await expect(controller.buscar(req, res)).rejects.toThrow("SESSAO_NAO_ENCONTRADA");
         });
     });
+
+    describe("atualizar", () => {
+        it("deve chamar servico.atualizar com id, usuarioId e body e retornar 200", async () => {
+            const atualizada = { ...sessaoBase, duracao: 7200 };
+            servico.atualizar.mockResolvedValue(atualizada);
+            const req = {
+                usuarioId: "usuario1",
+                params: { id: "sessao1" },
+                body: { duracaoSegundos: 7200 },
+            };
+            const res = criarRes();
+
+            await controller.atualizar(req, res);
+
+            expect(servico.atualizar).toHaveBeenCalledWith("sessao1", "usuario1", { duracaoSegundos: 7200 });
+            expect(res.statusCode).toBe(200);
+            expect(res.corpo).toEqual(atualizada);
+        });
+    });
 });
