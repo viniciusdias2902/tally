@@ -51,5 +51,38 @@ describe("sessao.controller", () => {
         controller = criarSessaoController(servico);
     });
 
+    describe("criar", () => {
+        it("deve chamar servico.criar com os dados corretos e retornar 201", async () => {
+            servico.criar.mockResolvedValue(sessaoBase);
+            const req = {
+                usuarioId: "usuario1",
+                params: { atividadeId: "atividade1" },
+                body: {
+                    categoriaId: null,
+                    iniciadoEm: "2023-01-01T10:00:00.000Z",
+                    duracaoSegundos: 3600,
+                    modo: "cronometro",
+                    ciclosPomodoro: null,
+                    observacoes: null,
+                },
+            };
+            const res = criarRes();
 
+            await controller.criar(req, res);
+
+            expect(servico.criar).toHaveBeenCalledWith({
+                atividadeId: "atividade1",
+                usuarioId: "usuario1",
+                categoriaId: null,
+                iniciadoEm: "2023-01-01T10:00:00.000Z",
+                duracaoSegundos: 3600,
+                modo: "cronometro",
+                ciclosPomodoro: null,
+                observacoes: null,
+            });
+            expect(res.statusCode).toBe(201);
+            expect(res.corpo).toEqual(sessaoBase);
+        });
+
+    });
 });
