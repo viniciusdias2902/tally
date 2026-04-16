@@ -188,4 +188,31 @@ describe("sessao.controller", () => {
             await expect(controller.atualizar(req, res)).rejects.toThrow("SESSAO_NAO_ENCONTRADA");
         });
     });
+
+    describe("deletar", () => {
+        it("deve chamar servico.deletar com id e usuarioId e retornar 204", async () => {
+            servico.deletar.mockResolvedValue();
+            const req = {
+                usuarioId: "usuario1",
+                params: { id: "sessao1" },
+            };
+            const res = criarRes();
+
+            await controller.deletar(req, res);
+
+            expect(servico.deletar).toHaveBeenCalledWith("sessao1", "usuario1");
+            expect(res.statusCode).toBe(204);
+        });
+
+        it("deve propagar erro do servico", async () => {
+            servico.deletar.mockRejectedValue(new Error("SESSAO_NAO_ENCONTRADA"));
+            const req = {
+                usuarioId: "usuario1",
+                params: { id: "sessao1" },
+            };
+            const res = criarRes();
+
+            await expect(controller.deletar(req, res)).rejects.toThrow("SESSAO_NAO_ENCONTRADA");
+        });
+    });
 });
