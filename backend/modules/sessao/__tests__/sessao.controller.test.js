@@ -98,4 +98,22 @@ describe("sessao.controller", () => {
         });
     });
 
+    describe("listar", () => {
+        it("deve chamar servico.listar com atividadeId, usuarioId e query e retornar 200", async () => {
+            const sessoes = [sessaoBase];
+            servico.listar.mockResolvedValue(sessoes);
+            const req = {
+                usuarioId: "usuario1",
+                params: { atividadeId: "atividade1" },
+                query: { limite: "10" },
+            };
+            const res = criarRes();
+
+            await controller.listar(req, res);
+
+            expect(servico.listar).toHaveBeenCalledWith("atividade1", "usuario1", { limite: "10" });
+            expect(res.statusCode).toBe(200);
+            expect(res.corpo).toEqual(sessoes);
+        });
+    });
 });
