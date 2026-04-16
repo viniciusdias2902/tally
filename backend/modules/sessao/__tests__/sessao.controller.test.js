@@ -233,5 +233,15 @@ describe("sessao.controller", () => {
             expect(res.corpo).toEqual({ totalSegundos: 7200 });
         });
 
+        it("deve propagar erro do servico", async () => {
+            servico.somarDuracao.mockRejectedValue(new Error("ATIVIDADE_NAO_ENCONTRADA"));
+            const req = {
+                usuarioId: "usuario1",
+                params: { atividadeId: "atividade1" },
+            };
+            const res = criarRes();
+
+            await expect(controller.somarDuracao(req, res)).rejects.toThrow("ATIVIDADE_NAO_ENCONTRADA");
+        });
     });
 });
