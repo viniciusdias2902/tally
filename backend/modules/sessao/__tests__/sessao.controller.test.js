@@ -175,5 +175,17 @@ describe("sessao.controller", () => {
             expect(res.statusCode).toBe(200);
             expect(res.corpo).toEqual(atualizada);
         });
+
+        it("deve propagar erro do servico", async () => {
+            servico.atualizar.mockRejectedValue(new Error("SESSAO_NAO_ENCONTRADA"));
+            const req = {
+                usuarioId: "usuario1",
+                params: { id: "sessao1" },
+                body: { duracaoSegundos: 7200 },
+            };
+            const res = criarRes();
+
+            await expect(controller.atualizar(req, res)).rejects.toThrow("SESSAO_NAO_ENCONTRADA");
+        });
     });
 });
