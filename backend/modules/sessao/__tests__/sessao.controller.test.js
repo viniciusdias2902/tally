@@ -127,6 +127,23 @@ describe("sessao.controller", () => {
 
             await expect(controller.listar(req, res)).rejects.toThrow("ATIVIDADE_NAO_ENCONTRADA");
         });
+    });
 
+    describe("buscar", () => {
+        it("deve chamar servico.buscar com id e usuarioId e retornar 200", async () => {
+            servico.buscar.mockResolvedValue(sessaoBase);
+            const req = {
+                usuarioId: "usuario1",
+                params: { id: "sessao1" }
+            };
+
+            const res = criarRes();
+
+            await controller.buscar(req, res);
+
+            expect(servico.buscar).toHaveBeenCalledWith("sessao1", "usuario1");
+            expect(res.statusCode).toBe(200);
+            expect(res.corpo).toEqual(sessaoBase);
+        });
     });
 });
