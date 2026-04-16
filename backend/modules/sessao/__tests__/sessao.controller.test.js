@@ -115,5 +115,18 @@ describe("sessao.controller", () => {
             expect(res.statusCode).toBe(200);
             expect(res.corpo).toEqual(sessoes);
         });
+
+        it("deve propagar erro do serviço", async () => {
+            servico.listar.mockRejectedValue(new Error("ATIVIDADE_NAO_ENCONTRADA"));
+            const req = {
+                usuarioId: "usuario1",
+                params: { atividadeId: "atividade1" },
+                query: {},
+            };
+            const res = criarRes();
+
+            await expect(controller.listar(req, res)).rejects.toThrow("ATIVIDADE_NAO_ENCONTRADA");
+        });
+
     });
 });
