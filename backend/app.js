@@ -64,10 +64,6 @@ app.use(express.json());
 
 app.get("/health", (_req, res) => res.json({ status: "ok" }));
 
-app.get("/api-docs", (_req, res) => {
-  const base = process.env.API_BASE_URL || "";
-  res.redirect(301, `${base}/api-docs/`);
-});
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 
 app.use("/auth", authRoutes);
