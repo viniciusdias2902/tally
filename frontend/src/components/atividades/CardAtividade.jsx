@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import Button from "../ui/Button.jsx";
 
 export default function CardAtividade({ atividade, onEditar, onArquivar, onDeletar }) {
@@ -25,6 +26,14 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
       </div>
 
       <div className="flex items-center gap-1 ml-3 shrink-0">
+        <Link
+          to={`/atividades/${atividade.id}/categorias`}
+          title="Categorias"
+          className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer text-text-secondary hover:bg-bg-secondary hover:text-text-primary px-3 py-1.5 text-sm"
+        >
+          <TagIcon />
+        </Link>
+
         <Button variant="ghost" size="sm" onClick={() => onEditar(atividade)}>
           <EditIcon />
         </Button>
@@ -74,6 +83,15 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
         )}
       </div>
     </div>
+  );
+}
+
+function TagIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6 6h.008v.008H6V6z" />
+    </svg>
   );
 }
 
