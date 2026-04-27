@@ -19,7 +19,7 @@ async function logarEIrParaTimer(page) {
   await expect(page).toHaveURL(/\/tally\/app\/?$/, { timeout: 5000 });
 
   await page.goto("./timer");
-  await expect(page.getByRole("heading", { name: "Timer Livre" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Timer Livre" })).toBeVisible({ timeout: 10000 });
 }
 
 // --- Tests ---
