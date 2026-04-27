@@ -203,7 +203,7 @@ export default function TimerLivre() {
 
         <div className="flex flex-col items-center gap-1 z-10">
           <span
-            className="text-5xl sm:text-6xl font-mono font-bold text-text-primary tabular-nums tracking-wider select-none"
+            className="text-4xl sm:text-5xl font-mono font-bold text-text-primary tabular-nums tracking-wider select-none"
           >
             {timer.tempoFormatado}
           </span>
