@@ -47,7 +47,43 @@ test.describe("Sessões", () => {
     await page.getByRole("button", { name: /registrar como feito/i }).click();
     await expect(page.getByText(/sessão registrada com sucesso/i)).toBeVisible();
   });
+
+  test("registra sessao com categoria selecionada", async ({ page }) => {
+    await garantirCategoria(page, ATIVIDADE_BINARIA, "Saude");
+
+    await abrirRegistro(page, ATIVIDADE_BINARIA);
+    const seletor = page.getByRole("button", { name: /^saude$/i });
+    await seletor.click();
+    await expect(seletor).toHaveClass(/text-accent/);
+
+    await page.getByRole("button", { name: /registrar como feito/i }).click();
+    await expect(page.getByText(/sessão registrada com sucesso/i)).toBeVisible();
+  });
 });
+
+async function garantirCategoria(page, atividadeNome, nomeCategoria) {
+  await page.getByRole("link", { name: /atividades/i }).first().click();
+  const card = page
+    .getByRole("heading", { name: atividadeNome })
+    .locator("xpath=../..");
+  await card.getByTitle("Categorias").click();
+  await expect(page.getByRole("heading", { name: "Categorias" })).toBeVisible();
+
+  if (
+    await page
+      .getByRole("heading", { name: nomeCategoria })
+      .isVisible()
+      .catch(() => false)
+  ) {
+    return;
+  }
+  await page.getByRole("button", { name: /nova categoria/i }).click();
+  await page.getByLabel("Nome").fill(nomeCategoria);
+  await page.getByRole("button", { name: /^criar$/i }).click();
+  await expect(
+    page.getByRole("heading", { name: nomeCategoria }),
+  ).toBeVisible();
+}
 
 async function abrirRegistro(page, atividadeNome) {
   await page.getByRole("link", { name: /atividades/i }).first().click();
