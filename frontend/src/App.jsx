@@ -8,6 +8,7 @@ import Registro from "./pages/Registro.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Atividades from "./pages/Atividades.jsx";
 import Categorias from "./pages/Categorias.jsx";
+import RegistrarSessao from "./pages/RegistrarSessao.jsx";
 import NaoEncontrada from "./pages/NaoEncontrada.jsx";
 
 export default function App() {
@@ -31,6 +32,10 @@ export default function App() {
               <Route
                 path="/atividades/:atividadeId/categorias"
                 element={<Categorias />}
+              />
+              <Route
+                path="/atividades/:atividadeId/registrar"
+                element={<RegistrarSessao />}
               />
             </Route>
 
