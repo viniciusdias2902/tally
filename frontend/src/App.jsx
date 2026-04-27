@@ -7,6 +7,7 @@ import Login from "./pages/Login.jsx";
 import Registro from "./pages/Registro.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import Atividades from "./pages/Atividades.jsx";
+import Timer from "./pages/Timer.jsx";
 import NaoEncontrada from "./pages/NaoEncontrada.jsx";
 
 export default function App() {
@@ -27,6 +28,7 @@ export default function App() {
             >
               <Route path="/" element={<Dashboard />} />
               <Route path="/atividades" element={<Atividades />} />
+              <Route path="/timer" element={<Timer />} />
             </Route>
 
             <Route path="*" element={<NaoEncontrada />} />
