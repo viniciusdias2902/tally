@@ -67,6 +67,25 @@ test.describe("Sessões", () => {
     await expect(display).toHaveText("00:00:00");
   });
 
+  test("cronometro persiste estado ao recarregar a pagina", async ({ page }) => {
+    await abrirRegistro(page, ATIVIDADE_TEMPO);
+
+    await page.getByRole("button", { name: /^iniciar$/i }).click();
+    await expect(page.getByRole("button", { name: /^pausar$/i })).toBeVisible();
+    await page.waitForTimeout(2500);
+
+    await page.reload();
+
+    const display = page.getByText(/^\d{2}:\d{2}:\d{2}$/);
+    await expect(display).toBeVisible({ timeout: 10000 });
+    await expect(display).not.toHaveText("00:00:00");
+    await expect(page.getByRole("button", { name: /^pausar$/i })).toBeVisible();
+
+    await page.getByRole("button", { name: /^pausar$/i }).click();
+    await page.getByRole("button", { name: /descartar/i }).click();
+    await expect(display).toHaveText("00:00:00");
+  });
+
   test("registra sessao com categoria selecionada", async ({ page }) => {
     await garantirCategoria(page, ATIVIDADE_BINARIA, "Saude");
 
