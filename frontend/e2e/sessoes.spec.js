@@ -37,7 +37,29 @@ test.describe("Sessões", () => {
     await criarSeNaoExiste(page, ATIVIDADE_TEMPO, "Cronometrada");
     await criarSeNaoExiste(page, ATIVIDADE_BINARIA, "Binária");
   });
+
+  test("registra sessao binaria como feito", async ({ page }) => {
+    await abrirRegistro(page, ATIVIDADE_BINARIA);
+    await expect(
+      page.getByRole("heading", { name: /registrar conclusão/i }),
+    ).toBeVisible();
+
+    await page.getByRole("button", { name: /registrar como feito/i }).click();
+    await expect(page.getByText(/sessão registrada com sucesso/i)).toBeVisible();
+  });
 });
+
+async function abrirRegistro(page, atividadeNome) {
+  await page.getByRole("link", { name: /atividades/i }).first().click();
+  await expect(page.getByRole("heading", { name: "Atividades" })).toBeVisible();
+  const card = page
+    .getByRole("heading", { name: atividadeNome })
+    .locator("xpath=../..");
+  await card.getByTitle("Registrar sessão").click();
+  await expect(
+    page.getByRole("heading", { name: /registrar sessão/i }),
+  ).toBeVisible();
+}
 
 async function criarSeNaoExiste(page, nome, tipo) {
   if (await page.getByRole("heading", { name: nome }).isVisible().catch(() => false)) {
