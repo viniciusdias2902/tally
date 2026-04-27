@@ -27,6 +27,14 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
 
       <div className="flex items-center gap-1 ml-3 shrink-0">
         <Link
+          to={`/atividades/${atividade.id}/registrar`}
+          title="Registrar sessão"
+          className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer text-accent hover:bg-accent/10 px-3 py-1.5 text-sm"
+        >
+          <PlayIcon />
+        </Link>
+
+        <Link
           to={`/atividades/${atividade.id}/categorias`}
           title="Categorias"
           className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer text-text-secondary hover:bg-bg-secondary hover:text-text-primary px-3 py-1.5 text-sm"
@@ -83,6 +91,14 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
         )}
       </div>
     </div>
+  );
+}
+
+function PlayIcon() {
+  return (
+    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+      <path d="M8 5.14v13.72a1 1 0 001.55.83l10.5-6.86a1 1 0 000-1.66L9.55 4.31A1 1 0 008 5.14z" />
+    </svg>
   );
 }
 
