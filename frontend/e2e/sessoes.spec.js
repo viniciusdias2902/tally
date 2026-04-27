@@ -48,6 +48,25 @@ test.describe("Sessões", () => {
     await expect(page.getByText(/sessão registrada com sucesso/i)).toBeVisible();
   });
 
+  test("cronometro inicia, pausa e registra sessao", async ({ page }) => {
+    await abrirRegistro(page, ATIVIDADE_TEMPO);
+
+    const display = page.getByText(/^\d{2}:\d{2}:\d{2}$/);
+    await expect(display).toHaveText("00:00:00");
+
+    await page.getByRole("button", { name: /^iniciar$/i }).click();
+    await expect(page.getByRole("button", { name: /^pausar$/i })).toBeVisible();
+
+    await page.waitForTimeout(2500);
+    await page.getByRole("button", { name: /^pausar$/i }).click();
+
+    await expect(display).not.toHaveText("00:00:00");
+
+    await page.getByRole("button", { name: /registrar sessão/i }).click();
+    await expect(page.getByText(/sessão registrada com sucesso/i)).toBeVisible();
+    await expect(display).toHaveText("00:00:00");
+  });
+
   test("registra sessao com categoria selecionada", async ({ page }) => {
     await garantirCategoria(page, ATIVIDADE_BINARIA, "Saude");
 
