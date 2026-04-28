@@ -100,7 +100,7 @@ export function usePomodoro(config = {}) {
 
   // --- Transição de estado ---
   const transitarEstado = useCallback(() => {
-    // TODO: adicionar som na transição
+    tocarBeepTransicao();
 
     const estadoAnterior = estadoRef.current;
     const cicloAnterior = cicloRef.current;
