@@ -69,9 +69,18 @@ export default function RegistrarSessao() {
           <ChevronLeftIcon />
           Atividades
         </Link>
-        <div>
-          <h2 className="text-lg font-semibold">Registrar sessão</h2>
-          <p className="text-xs text-text-muted truncate">{atividade.nome}</p>
+        <div className="flex items-start justify-between gap-3">
+          <div className="min-w-0">
+            <h2 className="text-lg font-semibold">Registrar sessão</h2>
+            <p className="text-xs text-text-muted truncate">{atividade.nome}</p>
+          </div>
+          <Link
+            to={`/atividades/${atividadeId}/sessoes`}
+            className="inline-flex items-center gap-1.5 text-xs text-text-secondary hover:text-text-primary transition-colors duration-150 shrink-0 mt-1"
+          >
+            Ver histórico
+            <ChevronRightIcon />
+          </Link>
         </div>
       </div>
 
@@ -119,6 +128,20 @@ function ChevronLeftIcon() {
       strokeWidth={2}
     >
       <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+    </svg>
+  );
+}
+
+function ChevronRightIcon() {
+  return (
+    <svg
+      className="w-3.5 h-3.5"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      strokeWidth={2}
+    >
+      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
     </svg>
   );
 }
