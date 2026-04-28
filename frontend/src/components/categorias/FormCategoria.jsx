@@ -3,14 +3,14 @@ import Input from "../ui/Input.jsx";
 import Button from "../ui/Button.jsx";
 
 const CORES_PADRAO = [
-  "#6366F1",
-  "#EF4444",
-  "#F59E0B",
-  "#10B981",
-  "#3B82F6",
-  "#EC4899",
-  "#8B5CF6",
-  "#14B8A6",
+  "#8839ef", /* Mauve */
+  "#d20f39", /* Red */
+  "#fe640b", /* Peach */
+  "#df8e1d", /* Yellow */
+  "#40a02b", /* Green */
+  "#179299", /* Teal */
+  "#1e66f5", /* Blue */
+  "#ea76cb", /* Pink */
 ];
 
 export default function FormCategoria({ categoria, onSalvar, onCancelar }) {
