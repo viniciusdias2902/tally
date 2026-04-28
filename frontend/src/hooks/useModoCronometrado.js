@@ -2,7 +2,7 @@ import { useCallback, useState } from "react";
 
 const STORAGE_KEY = "tally-modo-cronometrado";
 const PADRAO = "timer";
-const MODOS_VALIDOS = ["timer", "pomodoro"];
+const MODOS_VALIDOS = ["timer", "pomodoro", "manual"];
 
 function ler() {
   try {
