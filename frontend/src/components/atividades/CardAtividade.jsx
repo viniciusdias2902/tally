@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../ui/Button.jsx";
+import MenuKebab from "../ui/MenuKebab.jsx";
 
 export default function CardAtividade({ atividade, onEditar, onArquivar, onDeletar }) {
   const [confirmando, setConfirmando] = useState(null);
@@ -31,14 +32,6 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
           className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer bg-accent text-white shadow-sm hover:bg-accent-hover px-3 py-1.5 text-sm"
         >
           <PlayIcon /> Registrar
-        </Link>
-
-        <Link
-          to={`/atividades/${atividade.id}/categorias`}
-          title="Categorias"
-          className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer text-text-secondary hover:bg-bg-secondary hover:text-text-primary px-3 py-1.5 text-sm"
-        >
-          <TagIcon />
         </Link>
 
         <Button variant="ghost" size="sm" onClick={() => onEditar(atividade)}>
@@ -88,6 +81,15 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
             <XIcon />
           </Button>
         )}
+
+        <MenuKebab>
+          <Link
+            to={`/atividades/${atividade.id}/categorias`}
+            className="flex items-center gap-2 px-3 py-2 text-sm text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-colors duration-150"
+          >
+            <TagIcon /> Categorias
+          </Link>
+        </MenuKebab>
       </div>
     </div>
   );
