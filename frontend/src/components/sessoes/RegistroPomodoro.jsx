@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Button from "../ui/Button.jsx";
+import TimerRing from "./TimerRing.jsx";
 import { usePomodoro } from "../../hooks/usePomodoro.js";
 import { useConfigPomodoro } from "../../hooks/useConfigPomodoro.js";
 import { formatarDuracao } from "../../utils/formatarDuracao.js";
@@ -52,31 +53,21 @@ export default function RegistroPomodoro({ chave, onRegistrar, enviando }) {
 
   let statusLabel = "Pronto";
   let statusTexto = "text-timer-idle";
-  let statusBg = "bg-timer-idle";
-  let digitoCor = "text-text-primary";
-  let barraCor = "bg-timer-idle";
+  let cor = "text-timer-idle";
   let pulsar = false;
-  if (ocioso) {
-    // mantém os defaults
-  } else if (pausado) {
+  if (pausado) {
     statusLabel = `${ROTULOS_FASE[fase]} — pausado`;
     statusTexto = "text-timer-paused";
-    statusBg = "bg-timer-paused";
-    digitoCor = "text-timer-paused";
-    barraCor = "bg-timer-paused";
+    cor = "text-timer-paused";
   } else if (ehFoco) {
     statusLabel = "Em foco";
     statusTexto = "text-timer-running";
-    statusBg = "bg-timer-running";
-    digitoCor = "text-timer-running";
-    barraCor = "bg-timer-running";
+    cor = "text-timer-running";
     pulsar = true;
   } else if (ehPausa) {
     statusLabel = ROTULOS_FASE[fase];
     statusTexto = "text-accent";
-    statusBg = "bg-accent";
-    digitoCor = "text-accent";
-    barraCor = "bg-accent";
+    cor = "text-accent";
     pulsar = true;
   }
 
@@ -94,47 +85,29 @@ export default function RegistroPomodoro({ chave, onRegistrar, enviando }) {
 
   const totalDots = config.ciclosAntesLonga;
   const dotsCompletos = ciclosCompletos % totalDots;
+  const tempoExibido = ocioso
+    ? formatarDuracao(config.minutosFoco * 60)
+    : formatarDuracao(segundosRestantes);
 
   return (
-    <div className="rounded-2xl border border-border bg-bg-elevated p-8 shadow-sm min-h-[28rem] flex flex-col">
-      <div className="flex flex-col items-center gap-5 flex-1">
-        <div className="inline-flex items-center gap-2">
-          <span
-            className={`inline-block w-2 h-2 rounded-full ${statusBg} ${pulsar ? "animate-pulse-soft" : ""}`}
-            aria-hidden="true"
-          />
-          <span className={`text-xs uppercase tracking-wider font-medium ${statusTexto}`}>
-            {statusLabel}
-          </span>
-        </div>
-
+    <div className="rounded-2xl border border-border bg-bg-elevated p-8 shadow-sm flex flex-col items-center gap-6">
+      <TimerRing progresso={progresso} cor={cor} pulsar={pulsar}>
+        <span className={`text-xs uppercase tracking-wider font-medium ${statusTexto}`}>
+          {statusLabel}
+        </span>
         <div
-          className={`font-mono text-7xl font-semibold tabular-nums tracking-tight transition-colors duration-300 ${digitoCor}`}
+          className={`font-mono text-5xl font-semibold tabular-nums tracking-tight transition-colors duration-300 ${cor}`}
           aria-live="polite"
         >
-          {formatarDuracao(segundosRestantes)}
+          {tempoExibido}
         </div>
-
-        <div
-          className="w-full max-w-xs h-1 rounded-full bg-bg-secondary overflow-hidden"
-          role="progressbar"
-          aria-valuenow={Math.round(progresso * 100)}
-          aria-valuemin={0}
-          aria-valuemax={100}
-        >
-          <div
-            className={`h-full rounded-full transition-[width,background-color] duration-500 ease-linear ${barraCor}`}
-            style={{ width: `${progresso * 100}%` }}
-          />
-        </div>
-
-        <div className="flex items-center gap-2" aria-label="Ciclos do pomodoro atual">
+        <div className="flex items-center gap-1.5 mt-1" aria-label="Ciclos da rodada">
           {Array.from({ length: totalDots }).map((_, i) => {
             const preenchido = i < dotsCompletos;
             return (
               <span
                 key={i}
-                className={`w-2.5 h-2.5 rounded-full transition-colors duration-300 ${
+                className={`w-2 h-2 rounded-full transition-colors duration-300 ${
                   preenchido ? "bg-accent" : "bg-bg-secondary border border-border"
                 }`}
                 aria-hidden="true"
@@ -142,44 +115,44 @@ export default function RegistroPomodoro({ chave, onRegistrar, enviando }) {
             );
           })}
         </div>
+      </TimerRing>
 
-        <div className="flex items-center justify-center gap-6 text-xs text-text-muted">
-          <span>
-            Ciclos: <strong className="text-text-secondary">{ciclosCompletos}</strong>
-          </span>
-          <span>
-            Foco total:{" "}
-            <strong className="text-text-secondary">
-              {formatarDuracao(segundosFocoTotal)}
-            </strong>
-          </span>
-        </div>
-
-        <div className="flex items-center justify-center gap-2">
-          {ocioso && (
-            <Button onClick={iniciar} size="lg">
-              <PlayIcon /> Iniciar foco
-            </Button>
-          )}
-          {rodando && (
-            <Button onClick={pausar} variant="secondary" size="lg">
-              <PauseIcon /> Pausar
-            </Button>
-          )}
-          {pausado && (
-            <Button onClick={retomar} size="lg">
-              <PlayIcon /> Continuar
-            </Button>
-          )}
-          {!ocioso && (
-            <Button onClick={resetar} variant="ghost" size="lg">
-              Resetar
-            </Button>
-          )}
-        </div>
+      <div className="flex items-center justify-center gap-6 text-xs text-text-muted">
+        <span>
+          Ciclos: <strong className="text-text-secondary">{ciclosCompletos}</strong>
+        </span>
+        <span>
+          Foco total:{" "}
+          <strong className="text-text-secondary">
+            {formatarDuracao(segundosFocoTotal)}
+          </strong>
+        </span>
       </div>
 
-      <div className="space-y-3 pt-4">
+      <div className="flex items-center justify-center gap-2">
+        {ocioso && (
+          <Button onClick={iniciar} size="lg">
+            <PlayIcon /> Iniciar foco
+          </Button>
+        )}
+        {rodando && (
+          <Button onClick={pausar} variant="secondary" size="lg">
+            <PauseIcon /> Pausar
+          </Button>
+        )}
+        {pausado && (
+          <Button onClick={retomar} size="lg">
+            <PlayIcon /> Continuar
+          </Button>
+        )}
+        {!ocioso && (
+          <Button onClick={resetar} variant="ghost" size="lg">
+            Resetar
+          </Button>
+        )}
+      </div>
+
+      <div className="w-full space-y-3">
         <Button
           onClick={handleRegistrar}
           disabled={!podeRegistrar || enviando}
