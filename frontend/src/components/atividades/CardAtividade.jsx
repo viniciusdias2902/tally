@@ -6,29 +6,25 @@ import Modal from "../ui/Modal.jsx";
 
 export default function CardAtividade({ atividade, onEditar, onArquivar, onDeletar }) {
   const [confirmando, setConfirmando] = useState(null);
+  const ehCronometrada = atividade.tipoMedicao === "cronometrada";
 
   function fechar() {
     setConfirmando(null);
   }
 
   return (
-    <div className="flex items-center justify-between rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-bg-elevated p-4 shadow-sm transition-all duration-150 hover:shadow-md">
-      <div className="min-w-0 flex-1">
-        <h3 className="text-sm font-semibold text-text-primary truncate">
-          {atividade.nome}
-        </h3>
-        <span className="text-xs text-text-muted">
-          {atividade.tipoMedicao === "cronometrada" ? "Cronometrada" : "Binária"}
-        </span>
-      </div>
-
-      <div className="flex items-center gap-1 ml-3 shrink-0">
-        <Link
-          to={`/atividades/${atividade.id}/registrar`}
-          className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer bg-accent text-white shadow-sm hover:bg-accent-hover px-3 py-1.5 text-sm"
+    <div className="flex flex-col rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-bg-elevated p-5 shadow-sm transition-all duration-150 hover:shadow-md">
+      <div className="flex items-start justify-between mb-4">
+        <div
+          className={`inline-flex items-center justify-center w-10 h-10 rounded-lg ${
+            ehCronometrada
+              ? "bg-accent/10 text-accent"
+              : "bg-success/10 text-success"
+          }`}
+          aria-hidden="true"
         >
-          <PlayIcon /> Registrar
-        </Link>
+          {ehCronometrada ? <ClockIcon /> : <CheckIcon />}
+        </div>
 
         <MenuKebab>
           <Link
@@ -60,6 +56,22 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
           </button>
         </MenuKebab>
       </div>
+
+      <div className="flex-1 mb-4 min-w-0">
+        <h3 className="text-base font-semibold text-text-primary line-clamp-2 break-words">
+          {atividade.nome}
+        </h3>
+        <p className="text-xs text-text-muted mt-1">
+          {ehCronometrada ? "Cronometrada" : "Binária"}
+        </p>
+      </div>
+
+      <Link
+        to={`/atividades/${atividade.id}/registrar`}
+        className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer bg-accent text-white shadow-sm hover:bg-accent-hover px-4 py-2 text-sm w-full"
+      >
+        <PlayIcon /> Registrar
+      </Link>
 
       <Modal
         aberto={confirmando === "arquivar"}
@@ -121,6 +133,23 @@ function PlayIcon() {
   );
 }
 
+function ClockIcon() {
+  return (
+    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.75} aria-hidden="true">
+      <circle cx="12" cy="12" r="9" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
+    </svg>
+  );
+}
+
+function CheckIcon() {
+  return (
+    <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
+      <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+  );
+}
+
 function TagIcon() {
   return (
     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
@@ -153,4 +182,3 @@ function TrashIcon() {
     </svg>
   );
 }
-
