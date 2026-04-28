@@ -28,6 +28,7 @@
   --color-bg-primary: #F8FAFC;
   --color-bg-secondary: #F1F5F9;
   --color-bg-elevated: #FFFFFF;
+  --color-bg-popover: #FFFFFF;
   --color-border: #E2E8F0;
   --color-text-primary: #334155;
   --color-text-secondary: #64748B;
@@ -46,6 +47,7 @@
   --color-bg-primary: #0F172A;
   --color-bg-secondary: #1E293B;
   --color-bg-elevated: #1E293B;
+  --color-bg-popover: #334155;
   --color-border: #334155;
   --color-text-primary: #E2E8F0;
   --color-text-secondary: #94A3B8;
