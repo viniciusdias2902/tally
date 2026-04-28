@@ -247,8 +247,8 @@ test.describe("Timer Livre", () => {
     test("deve acessar timer pelo link da sidebar", async ({ page }) => {
       await irParaTimerLivre(page);
 
-      // Volta ao dashboard
-      await page.goto("./");
+      // Volta ao dashboard via SPA (evita hard reload que perde token)
+      await page.getByRole("link", { name: /dashboard/i }).click();
       await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
 
       // Clica no link do Timer na sidebar
