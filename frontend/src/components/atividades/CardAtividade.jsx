@@ -34,10 +34,6 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
           <PlayIcon /> Registrar
         </Link>
 
-        <Button variant="ghost" size="sm" onClick={() => onEditar(atividade)}>
-          <EditIcon />
-        </Button>
-
         {confirmando === "arquivar" ? (
           <Button
             variant="secondary"
@@ -89,6 +85,13 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
           >
             <TagIcon /> Categorias
           </Link>
+          <button
+            type="button"
+            onClick={() => onEditar(atividade)}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-colors duration-150 cursor-pointer"
+          >
+            <EditIcon /> Editar
+          </button>
         </MenuKebab>
       </div>
     </div>
