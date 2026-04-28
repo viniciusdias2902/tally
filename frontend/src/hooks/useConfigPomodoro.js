@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import * as configPomodoroApi from "../api/configPomodoro.js";
 
-const PADRAO = {
+export const PADRAO = {
   minutosFoco: 25,
   minutosPausaCurta: 5,
   minutosPausaLonga: 15,
