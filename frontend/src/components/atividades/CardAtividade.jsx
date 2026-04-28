@@ -28,10 +28,9 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
       <div className="flex items-center gap-1 ml-3 shrink-0">
         <Link
           to={`/atividades/${atividade.id}/registrar`}
-          title="Registrar sessão"
-          className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer text-accent hover:bg-accent/10 px-3 py-1.5 text-sm"
+          className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer bg-accent text-white shadow-sm hover:bg-accent-hover px-3 py-1.5 text-sm"
         >
-          <PlayIcon />
+          <PlayIcon /> Registrar
         </Link>
 
         <Link
