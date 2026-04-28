@@ -77,6 +77,22 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
+/* Select dropdown options */
+select option {
+  background-color: var(--color-bg-elevated);
+  color: var(--color-text-primary);
+  padding: 8px 12px;
+}
+
+select option:checked {
+  background-color: var(--color-accent-subtle);
+  color: var(--color-accent);
+}
+
+select option:hover {
+  background-color: var(--color-bg-secondary);
+}
+
 /* Toast slide-up animation */
 @keyframes slideUp {
   from {
