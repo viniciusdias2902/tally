@@ -1,4 +1,4 @@
-export default function Header({ onAbrirMenu }) {
+export default function Topbar({ onAbrirMenu }) {
   return (
     <header className="sticky top-0 z-30 flex items-center justify-between bg-bg-primary/80 backdrop-blur-md px-4 py-3 lg:px-6">
       <button
