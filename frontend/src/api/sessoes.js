@@ -1,8 +1,8 @@
 import { api } from "./client.js";
 
-export function criar(atividadeId, { categoriaId, iniciadoEm, duracaoSegundos, modo }) {
+export function criar(atividadeId, { categoriaId, iniciadoEm, duracaoSegundos, modo, ciclosPomodoro }) {
   return api(`/atividades/${atividadeId}/sessoes`, {
-    body: { categoriaId, iniciadoEm, duracaoSegundos, modo },
+    body: { categoriaId, iniciadoEm, duracaoSegundos, modo, ciclosPomodoro },
   });
 }
 
