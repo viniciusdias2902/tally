@@ -47,29 +47,103 @@ export default function RegistroPomodoro({ chave, onRegistrar, enviando }) {
   }
 
   const podeRegistrar = !rodando && segundosFocoTotal > 0;
-  const corCronometro =
+  const ehFoco = fase === "foco";
+  const ehPausa = fase === "pausa_curta" || fase === "pausa_longa";
+
+  let statusLabel = "Pronto";
+  let statusTexto = "text-timer-idle";
+  let statusBg = "bg-timer-idle";
+  let digitoCor = "text-text-primary";
+  let barraCor = "bg-timer-idle";
+  let pulsar = false;
+  if (ocioso) {
+    // mantém os defaults
+  } else if (pausado) {
+    statusLabel = `${ROTULOS_FASE[fase]} — pausado`;
+    statusTexto = "text-timer-paused";
+    statusBg = "bg-timer-paused";
+    digitoCor = "text-timer-paused";
+    barraCor = "bg-timer-paused";
+  } else if (ehFoco) {
+    statusLabel = "Em foco";
+    statusTexto = "text-timer-running";
+    statusBg = "bg-timer-running";
+    digitoCor = "text-timer-running";
+    barraCor = "bg-timer-running";
+    pulsar = true;
+  } else if (ehPausa) {
+    statusLabel = ROTULOS_FASE[fase];
+    statusTexto = "text-accent";
+    statusBg = "bg-accent";
+    digitoCor = "text-accent";
+    barraCor = "bg-accent";
+    pulsar = true;
+  }
+
+  const duracaoFase =
     fase === "foco"
-      ? "text-timer-running"
-      : fase
-      ? "text-timer-paused"
-      : "text-text-primary";
+      ? config.minutosFoco * 60
+      : fase === "pausa_curta"
+      ? config.minutosPausaCurta * 60
+      : fase === "pausa_longa"
+      ? config.minutosPausaLonga * 60
+      : 1;
+  const progresso = fase
+    ? Math.min(1, Math.max(0, (duracaoFase - segundosRestantes) / duracaoFase))
+    : 0;
+
+  const totalDots = config.ciclosAntesLonga;
+  const dotsCompletos = ciclosCompletos % totalDots;
 
   return (
-    <div className="rounded-2xl border border-border bg-bg-elevated p-8 shadow-sm">
-      <div className="text-center space-y-6">
-        <div className="space-y-1">
-          <p className="text-xs uppercase tracking-wider text-text-muted">
-            {fase ? ROTULOS_FASE[fase] : "Pronto"}
-          </p>
-          <div
-            className={`font-mono text-6xl font-semibold tabular-nums tracking-tight transition-colors duration-150 ${corCronometro}`}
-            aria-live="polite"
-          >
-            {formatarDuracao(segundosRestantes)}
-          </div>
+    <div className="rounded-2xl border border-border bg-bg-elevated p-8 shadow-sm min-h-[28rem] flex flex-col">
+      <div className="flex flex-col items-center gap-5 flex-1">
+        <div className="inline-flex items-center gap-2">
+          <span
+            className={`inline-block w-2 h-2 rounded-full ${statusBg} ${pulsar ? "animate-pulse-soft" : ""}`}
+            aria-hidden="true"
+          />
+          <span className={`text-xs uppercase tracking-wider font-medium ${statusTexto}`}>
+            {statusLabel}
+          </span>
         </div>
 
-        <div className="flex items-center justify-center gap-4 text-xs text-text-muted">
+        <div
+          className={`font-mono text-7xl font-semibold tabular-nums tracking-tight transition-colors duration-300 ${digitoCor}`}
+          aria-live="polite"
+        >
+          {formatarDuracao(segundosRestantes)}
+        </div>
+
+        <div
+          className="w-full max-w-xs h-1 rounded-full bg-bg-secondary overflow-hidden"
+          role="progressbar"
+          aria-valuenow={Math.round(progresso * 100)}
+          aria-valuemin={0}
+          aria-valuemax={100}
+        >
+          <div
+            className={`h-full rounded-full transition-[width,background-color] duration-500 ease-linear ${barraCor}`}
+            style={{ width: `${progresso * 100}%` }}
+          />
+        </div>
+
+        <div className="flex items-center gap-2" aria-label="Ciclos do pomodoro atual">
+          {Array.from({ length: totalDots }).map((_, i) => {
+            const preenchido = i < dotsCompletos;
+            return (
+              <span
+                key={i}
+                className={`w-2.5 h-2.5 rounded-full transition-colors duration-300 ${
+                  preenchido ? "bg-accent" : "bg-bg-secondary border border-border"
+                }`}
+                aria-hidden="true"
+              />
+            );
+          })}
+        </div>
+
+        <div className="flex items-center justify-center gap-6 text-xs text-text-muted">
           <span>
             Ciclos: <strong className="text-text-secondary">{ciclosCompletos}</strong>
           </span>
@@ -103,34 +177,31 @@ export default function RegistroPomodoro({ chave, onRegistrar, enviando }) {
             </Button>
           )}
         </div>
+      </div>
 
-        <div className="pt-2">
-          <Button
-            onClick={handleRegistrar}
-            disabled={!podeRegistrar || enviando}
-            size="lg"
-            className="min-w-[14rem]"
-          >
-            {enviando ? "Registrando..." : "Registrar sessão"}
-          </Button>
+      <div className="space-y-3 pt-4">
+        <Button
+          onClick={handleRegistrar}
+          disabled={!podeRegistrar || enviando}
+          size="lg"
+          className="w-full"
+        >
+          {enviando ? "Registrando..." : "Registrar sessão"}
+        </Button>
+
+        <div className="text-center h-4 text-sm">
+          {confirmacao === "ok" && (
+            <span className="text-success">Sessão registrada com sucesso.</span>
+          )}
+          {confirmacao === "erro" && (
+            <span className="text-danger">Erro ao registrar. Tente novamente.</span>
+          )}
+          {!confirmacao && ocioso && (
+            <span className="text-xs text-text-muted">
+              {config.minutosFoco}/{config.minutosPausaCurta} min · {totalDots} ciclos por rodada
+            </span>
+          )}
         </div>
-
-        {confirmacao === "ok" && (
-          <p className="text-sm text-success">Sessão registrada com sucesso.</p>
-        )}
-        {confirmacao === "erro" && (
-          <p className="text-sm text-danger">
-            Erro ao registrar. Tente novamente.
-          </p>
-        )}
-        {ocioso && (
-          <p className="text-xs text-text-muted">
-            {config.minutosFoco} min foco / {config.minutosPausaCurta} min pausa.
-          </p>
-        )}
-        {rodando && (
-          <p className="text-xs text-text-muted">Pause para registrar.</p>
-        )}
       </div>
     </div>
   );
