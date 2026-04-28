@@ -28,6 +28,12 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
 
         <MenuKebab>
           <Link
+            to={`/atividades/${atividade.id}/sessoes`}
+            className="flex items-center gap-2 px-3 py-2 text-sm text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-colors duration-150"
+          >
+            <HistoryIcon /> Histórico
+          </Link>
+          <Link
             to={`/atividades/${atividade.id}/categorias`}
             className="flex items-center gap-2 px-3 py-2 text-sm text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-colors duration-150"
           >
@@ -146,6 +152,16 @@ function CheckIcon() {
   return (
     <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2} aria-hidden="true">
       <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+    </svg>
+  );
+}
+
+function HistoryIcon() {
+  return (
+    <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3 4v4h4" />
+      <path strokeLinecap="round" strokeLinejoin="round" d="M12 7v5l3 2" />
     </svg>
   );
 }
