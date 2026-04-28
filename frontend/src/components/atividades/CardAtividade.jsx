@@ -30,34 +30,6 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
           <PlayIcon /> Registrar
         </Link>
 
-        {confirmando === "deletar" ? (
-          <Button
-            variant="danger"
-            size="sm"
-            onClick={() => {
-              onDeletar(atividade.id);
-              fechar();
-            }}
-          >
-            Confirmar
-          </Button>
-        ) : (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setConfirmando("deletar")}
-            title="Deletar"
-          >
-            <TrashIcon />
-          </Button>
-        )}
-
-        {confirmando === "deletar" && (
-          <Button variant="ghost" size="sm" onClick={fechar}>
-            <XIcon />
-          </Button>
-        )}
-
         <MenuKebab>
           <Link
             to={`/atividades/${atividade.id}/categorias`}
@@ -78,6 +50,13 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
             className="w-full flex items-center gap-2 px-3 py-2 text-sm text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-colors duration-150 cursor-pointer"
           >
             <ArchiveIcon /> Arquivar
+          </button>
+          <button
+            type="button"
+            onClick={() => setConfirmando("deletar")}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-danger hover:bg-danger/10 transition-colors duration-150 cursor-pointer"
+          >
+            <TrashIcon /> Deletar
           </button>
         </MenuKebab>
       </div>
@@ -102,6 +81,31 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
             }}
           >
             Arquivar
+          </Button>
+        </div>
+      </Modal>
+
+      <Modal
+        aberto={confirmando === "deletar"}
+        onFechar={fechar}
+        titulo="Deletar atividade"
+      >
+        <p className="text-sm text-text-secondary mb-6">
+          Deletar <strong className="text-text-primary">{atividade.nome}</strong>?
+          Esta ação não pode ser desfeita.
+        </p>
+        <div className="flex justify-end gap-2">
+          <Button variant="secondary" onClick={fechar}>
+            Cancelar
+          </Button>
+          <Button
+            variant="danger"
+            onClick={() => {
+              onDeletar(atividade.id);
+              fechar();
+            }}
+          >
+            Deletar
           </Button>
         </div>
       </Modal>
