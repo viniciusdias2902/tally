@@ -34,5 +34,11 @@ export function useConfigPomodoro(atividadeId) {
     };
   }, [atividadeId]);
 
-  return { config, carregando };
+  async function atualizar(dados) {
+    const atualizada = await configPomodoroApi.upsert(atividadeId, dados);
+    setConfig(atualizada);
+    return atualizada;
+  }
+
+  return { config, carregando, atualizar };
 }
