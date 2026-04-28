@@ -3,6 +3,17 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
+  /* Catppuccin Latte — superficies (light defaults) */
+  --color-bg-primary: #e6e9ef;     /* Mantle */
+  --color-bg-secondary: #dce0e8;   /* Crust */
+  --color-bg-elevated: #eff1f5;    /* Base */
+  --color-bg-popover: #ffffff;     /* white — acima de cards */
+  --color-border: #ccd0da;         /* Surface0 */
+  --color-text-primary: #4c4f69;   /* Text */
+  --color-text-secondary: #5c5f77; /* Subtext1 */
+  --color-text-muted: #8c8fa1;     /* Overlay1 */
+  --color-input-bg: #eff1f5;       /* Base */
+
   /* Catppuccin Latte — Mauve accent */
   --color-accent: #8839ef;
   --color-accent-hover: #7c1ce3;
@@ -55,19 +66,6 @@
   to {
     transform: rotate(0deg);
   }
-}
-
-/* ── Light mode — Catppuccin Latte ── */
-:root {
-  --color-bg-primary: #e6e9ef;     /* Mantle */
-  --color-bg-secondary: #dce0e8;   /* Crust */
-  --color-bg-elevated: #eff1f5;    /* Base */
-  --color-bg-popover: #ffffff;     /* white — acima de cards */
-  --color-border: #ccd0da;         /* Surface0 */
-  --color-text-primary: #4c4f69;   /* Text */
-  --color-text-secondary: #5c5f77; /* Subtext1 */
-  --color-text-muted: #8c8fa1;     /* Overlay1 */
-  --color-input-bg: #eff1f5;       /* Base */
 }
 
 /* ── Dark mode ── */
