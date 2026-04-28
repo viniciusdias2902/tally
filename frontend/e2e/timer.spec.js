@@ -16,9 +16,12 @@ async function logarEIrParaTimer(page) {
   await page.getByLabel("E-mail").fill(USUARIO_SEED.email);
   await page.getByLabel("Senha").fill(USUARIO_SEED.senha);
   await page.getByRole("button", { name: /entrar/i }).click();
-  await expect(page).toHaveURL(/\/tally\/app\/?$/, { timeout: 5000 });
 
-  await page.goto("./timer");
+  // Espera o dashboard carregar (auth totalmente estabelecido)
+  await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible({ timeout: 10000 });
+
+  // Navega via sidebar (SPA, preserva o accessToken em memória)
+  await page.getByRole("link", { name: /timer livre/i }).click();
   await expect(page.getByRole("heading", { name: "Timer Livre" })).toBeVisible({ timeout: 10000 });
 }
 
