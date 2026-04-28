@@ -40,7 +40,7 @@ export default function MenuKebab({ children, label = "Mais ações" }) {
       {aberto && (
         <div
           role="menu"
-          className="absolute right-0 mt-1 min-w-[180px] z-20 rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-bg-elevated shadow-lg py-1"
+          className="absolute right-0 mt-1 min-w-[180px] z-20 rounded-xl border border-border bg-bg-popover shadow-xl py-1"
           onClick={() => setAberto(false)}
         >
           {children}
