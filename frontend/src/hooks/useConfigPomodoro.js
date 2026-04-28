@@ -40,5 +40,14 @@ export function useConfigPomodoro(atividadeId) {
     return atualizada;
   }
 
-  return { config, carregando, atualizar };
+  async function restaurarPadrao() {
+    try {
+      await configPomodoroApi.deletar(atividadeId);
+    } catch (err) {
+      if (err.status !== 404) throw err;
+    }
+    setConfig(PADRAO);
+  }
+
+  return { config, carregando, atualizar, restaurarPadrao };
 }
