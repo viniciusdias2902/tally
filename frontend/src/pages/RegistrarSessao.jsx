@@ -87,19 +87,21 @@ export default function RegistrarSessao() {
         ) : (
           <>
             <SeletorModoCronometrado modo={modo} onMudar={setModo} />
-            {modo === "pomodoro" ? (
-              <RegistroPomodoro
-                chave={atividadeId}
-                onRegistrar={handleRegistrar}
-                enviando={enviando}
-              />
-            ) : (
-              <RegistroCronometrado
-                chave={atividadeId}
-                onRegistrar={handleRegistrar}
-                enviando={enviando}
-              />
-            )}
+            <div key={modo} className="animate-fade-slide-in">
+              {modo === "pomodoro" ? (
+                <RegistroPomodoro
+                  chave={atividadeId}
+                  onRegistrar={handleRegistrar}
+                  enviando={enviando}
+                />
+              ) : (
+                <RegistroCronometrado
+                  chave={atividadeId}
+                  onRegistrar={handleRegistrar}
+                  enviando={enviando}
+                />
+              )}
+            </div>
           </>
         )}
       </div>
