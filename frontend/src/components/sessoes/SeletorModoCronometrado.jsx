@@ -1,40 +1,27 @@
+import Button from "../ui/Button.jsx";
+
 const opcoes = [
   { id: "timer", label: "Timer", Icon: ClockIcon },
   { id: "pomodoro", label: "Pomodoro", Icon: TomatoIcon },
 ];
 
 export default function SeletorModoCronometrado({ modo, onMudar }) {
-  const indice = opcoes.findIndex((o) => o.id === modo);
-
   return (
-    <div
-      role="tablist"
-      aria-label="Modo de cronômetro"
-      className="relative inline-grid grid-cols-2 rounded-xl bg-bg-secondary p-1 shadow-inner"
-    >
-      <span
-        aria-hidden="true"
-        className="absolute top-1 bottom-1 left-1 w-[calc(50%-4px)] rounded-lg bg-bg-elevated shadow-sm transition-transform duration-300 ease-out"
-        style={{ transform: `translateX(${indice * 100}%)` }}
-      />
+    <div role="tablist" aria-label="Modo de cronômetro" className="flex gap-2">
       {opcoes.map(({ id, label, Icon }) => {
         const ativo = modo === id;
         return (
-          <button
+          <Button
             key={id}
             role="tab"
-            type="button"
             aria-selected={ativo}
+            variant={ativo ? "primary" : "secondary"}
             onClick={() => onMudar(id)}
-            className={`relative z-10 inline-flex items-center justify-center gap-2 px-5 py-2 rounded-lg text-sm font-medium transition-colors duration-200 cursor-pointer ${
-              ativo
-                ? "text-text-primary"
-                : "text-text-secondary hover:text-text-primary"
-            }`}
+            className="flex-1"
           >
             <Icon />
             {label}
-          </button>
+          </Button>
         );
       })}
     </div>
