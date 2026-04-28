@@ -21,8 +21,19 @@ async function logarEIrParaTimer(page) {
   await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible({ timeout: 10000 });
 
   // Navega via sidebar (SPA, preserva o accessToken em memória)
-  await page.getByRole("link", { name: /timer livre/i }).click();
-  await expect(page.getByRole("heading", { name: "Timer Livre" })).toBeVisible({ timeout: 10000 });
+  await page.getByRole("link", { name: /^timer$/i }).click();
+
+  // Espera a tab Timer Livre estar visível (página carregou)
+  await expect(page.getByRole("button", { name: /timer livre/i })).toBeVisible({ timeout: 10000 });
+}
+
+/**
+ * Navega até a aba Timer Livre dentro da página de Timer.
+ */
+async function irParaTimerLivre(page) {
+  await logarEIrParaTimer(page);
+  await page.getByRole("button", { name: /timer livre/i }).click();
+  await expect(page.getByRole("heading", { name: "Timer Livre" })).toBeVisible();
 }
 
 // --- Tests ---
@@ -30,7 +41,7 @@ async function logarEIrParaTimer(page) {
 test.describe("Timer Livre", () => {
   test.describe("Renderização da página", () => {
     test("deve exibir título, seletores e timer zerado", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       // Título e subtítulo
       await expect(page.getByRole("heading", { name: "Timer Livre" })).toBeVisible();
@@ -49,24 +60,24 @@ test.describe("Timer Livre", () => {
     });
 
     test("botão Iniciar deve estar desabilitado sem atividade selecionada", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
       await expect(page.getByRole("button", { name: /iniciar/i })).toBeDisabled();
     });
 
     test("select de categoria deve estar desabilitado sem atividade", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
       await expect(page.getByLabel(/Categoria/)).toBeDisabled();
     });
 
-    test("deve exibir link Timer Livre na sidebar", async ({ page }) => {
-      await logarEIrParaTimer(page);
-      await expect(page.getByRole("link", { name: /timer livre/i })).toBeVisible();
+    test("deve exibir link Timer na sidebar", async ({ page }) => {
+      await irParaTimerLivre(page);
+      await expect(page.getByRole("link", { name: /^timer$/i })).toBeVisible();
     });
   });
 
   test.describe("Seleção de atividade e categoria", () => {
     test("deve carregar atividades no select", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       const selectAtividade = page.getByLabel("Atividade");
       const opcoes = selectAtividade.locator("option");
@@ -77,7 +88,7 @@ test.describe("Timer Livre", () => {
     });
 
     test("deve habilitar botão Iniciar ao selecionar atividade", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       const selectAtividade = page.getByLabel("Atividade");
       // Seleciona a primeira atividade (não a opção padrão)
@@ -89,7 +100,7 @@ test.describe("Timer Livre", () => {
     });
 
     test("deve carregar categorias ao selecionar atividade com categorias", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       // Selecionar "Faculdade" que tem 6 categorias no seed
       const selectAtividade = page.getByLabel("Atividade");
@@ -105,7 +116,7 @@ test.describe("Timer Livre", () => {
     });
 
     test("deve resetar categoria ao trocar atividade", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       const selectAtividade = page.getByLabel("Atividade");
       const selectCategoria = page.getByLabel(/Categoria/);
@@ -127,7 +138,7 @@ test.describe("Timer Livre", () => {
 
   test.describe("Controles do timer", () => {
     test("deve iniciar o timer e mostrar botões Pausar e Parar", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       const selectAtividade = page.getByLabel("Atividade");
       await selectAtividade.selectOption({ label: "Faculdade" });
@@ -144,7 +155,7 @@ test.describe("Timer Livre", () => {
     });
 
     test("deve pausar e retomar o timer", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       const selectAtividade = page.getByLabel("Atividade");
       await selectAtividade.selectOption({ label: "Faculdade" });
@@ -165,7 +176,7 @@ test.describe("Timer Livre", () => {
     });
 
     test("selects devem ficar desabilitados com timer ativo", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       const selectAtividade = page.getByLabel("Atividade");
       await selectAtividade.selectOption({ label: "Faculdade" });
@@ -177,7 +188,7 @@ test.describe("Timer Livre", () => {
     });
 
     test("deve parar o timer e salvar sessão com sucesso", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       const selectAtividade = page.getByLabel("Atividade");
       await selectAtividade.selectOption({ label: "Faculdade" });
@@ -199,7 +210,7 @@ test.describe("Timer Livre", () => {
     });
 
     test("deve salvar sessão com categoria selecionada", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       // Selecionar atividade e categoria
       await page.getByLabel("Atividade").selectOption({ label: "Faculdade" });
@@ -215,7 +226,7 @@ test.describe("Timer Livre", () => {
     });
 
     test("deve voltar a habilitar selects após parar", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       const selectAtividade = page.getByLabel("Atividade");
       await selectAtividade.selectOption({ label: "Faculdade" });
@@ -234,16 +245,16 @@ test.describe("Timer Livre", () => {
 
   test.describe("Navegação", () => {
     test("deve acessar timer pelo link da sidebar", async ({ page }) => {
-      await logarEIrParaTimer(page);
+      await irParaTimerLivre(page);
 
       // Volta ao dashboard
       await page.goto("./");
       await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
 
       // Clica no link do Timer na sidebar
-      await page.getByRole("link", { name: /timer livre/i }).click();
+      await page.getByRole("link", { name: /^timer$/i }).click();
       await expect(page).toHaveURL(/\/timer$/);
-      await expect(page.getByRole("heading", { name: "Timer Livre" })).toBeVisible();
+      await expect(page.getByRole("button", { name: /timer livre/i })).toBeVisible();
     });
   });
 });
