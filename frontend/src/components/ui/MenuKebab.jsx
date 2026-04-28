@@ -32,7 +32,11 @@ export default function MenuKebab({ children, label = "Mais ações" }) {
         aria-haspopup="menu"
         aria-expanded={aberto}
         aria-label={label}
-        className="inline-flex items-center justify-center p-1.5 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-all duration-150 cursor-pointer"
+        className={`inline-flex items-center justify-center p-1.5 rounded-xl transition-all duration-150 cursor-pointer ${
+          aberto
+            ? "bg-bg-secondary text-text-primary"
+            : "text-text-secondary hover:bg-bg-secondary hover:text-text-primary"
+        }`}
       >
         <KebabIcon />
       </button>
