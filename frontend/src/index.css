@@ -3,20 +3,20 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme {
-  /* Indigo accent — modern, friendly */
-  --color-accent: #6366F1;
-  --color-accent-hover: #4F46E5;
-  --color-accent-subtle: #EEF2FF;
+  /* Catppuccin Latte — Mauve accent */
+  --color-accent: #8839ef;
+  --color-accent-hover: #7c1ce3;
+  --color-accent-subtle: rgba(136, 57, 239, 0.1);
 
   /* Semantic */
-  --color-danger: #EF4444;
-  --color-danger-hover: #DC2626;
-  --color-success: #10B981;
+  --color-danger: #d20f39;
+  --color-danger-hover: #a90b2e;
+  --color-success: #40a02b;
 
   /* Timer states */
-  --color-timer-running: #10B981;
-  --color-timer-paused: #F59E0B;
-  --color-timer-idle: #94A3B8;
+  --color-timer-running: #40a02b;
+  --color-timer-paused: #df8e1d;
+  --color-timer-idle: #8c8fa1;
 
   /* Font families */
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
@@ -47,17 +47,17 @@
   }
 }
 
-/* ── Light mode (default) ── */
+/* ── Light mode — Catppuccin Latte ── */
 :root {
-  --color-bg-primary: #F8FAFC;
-  --color-bg-secondary: #F1F5F9;
-  --color-bg-elevated: #FFFFFF;
-  --color-bg-popover: #FFFFFF;
-  --color-border: #E2E8F0;
-  --color-text-primary: #334155;
-  --color-text-secondary: #64748B;
-  --color-text-muted: #94A3B8;
-  --color-input-bg: #FFFFFF;
+  --color-bg-primary: #e6e9ef;     /* Mantle */
+  --color-bg-secondary: #dce0e8;   /* Crust */
+  --color-bg-elevated: #eff1f5;    /* Base */
+  --color-bg-popover: #eff1f5;     /* Base */
+  --color-border: #ccd0da;         /* Surface0 */
+  --color-text-primary: #4c4f69;   /* Text */
+  --color-text-secondary: #5c5f77; /* Subtext1 */
+  --color-text-muted: #8c8fa1;     /* Overlay1 */
+  --color-input-bg: #eff1f5;       /* Base */
 }
 
 /* ── Dark mode ── */
