@@ -14,7 +14,7 @@ export default function CardSessao({ sessao, onDeletar }) {
   const ehBinaria = sessao.modo === "check_binario";
 
   return (
-    <div className="flex items-center gap-4 rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-bg-elevated p-4 shadow-sm transition-all duration-150 hover:shadow-md">
+    <div className="flex items-start gap-4 rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-bg-elevated p-4 shadow-sm transition-all duration-150 hover:shadow-md">
       <div className="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-bg-secondary text-text-secondary shrink-0">
         <Icone />
       </div>
@@ -44,6 +44,11 @@ export default function CardSessao({ sessao, onDeletar }) {
             </span>
           )}
         </div>
+        {sessao.observacoes && (
+          <p className="mt-2 text-xs italic text-text-secondary line-clamp-3 break-words">
+            {sessao.observacoes}
+          </p>
+        )}
       </div>
 
       <MenuKebab>
