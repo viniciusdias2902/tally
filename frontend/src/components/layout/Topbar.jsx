@@ -1,4 +1,5 @@
-import { NavLink } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 
@@ -10,57 +11,117 @@ const links = [
 export default function Topbar() {
   const { theme, toggleTheme } = useTheme();
   const { sair, usuario } = useAuth();
+  const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [location.pathname]);
 
   return (
-    <header className="sticky top-0 z-30 flex items-center gap-6 bg-bg-primary/80 backdrop-blur-md px-4 py-3 lg:px-6">
-      <h1 className="text-xl font-bold tracking-tight text-text-primary">
-        <span className="text-accent">||||</span> Tally
-      </h1>
+    <header className="sticky top-0 z-30 bg-bg-primary/80 backdrop-blur-md">
 
-      <nav className="flex items-center gap-1">
-        {links.map(({ to, label, end }) => (
-          <NavLink
-            key={to}
-            to={to}
-            end={end}
-            className={({ isActive }) =>
-              `px-3 py-1.5 rounded-xl text-sm font-medium transition-all duration-150 ${
-                isActive
+      <div className="flex items-center gap-4 px-4 py-3 lg:gap-6 lg:px-6">
+        <h1 className="text-xl font-bold tracking-tight text-text-primary">
+          <span className="text-accent">||||</span> Tally
+        </h1>
+
+
+        <nav className="hidden md:flex items-center gap-1">
+          {links.map(({ to, label, end }) => (
+            <NavLink
+              key={to}
+              to={to}
+              end={end}
+              className={({ isActive }) =>
+                `px-3 py-1.5 rounded-xl text-sm font-medium transition-all duration-150 ${isActive
                   ? "bg-accent/10 text-accent"
                   : "text-text-secondary hover:bg-bg-secondary hover:text-text-primary"
-              }`
-            }
-          >
-            {label}
-          </NavLink>
-        ))}
-      </nav>
+                }`
+              }
+            >
+              {label}
+            </NavLink>
+          ))}
+        </nav>
 
-      <div className="flex-1" />
+        <div className="flex-1" />
 
-      <button
-        onClick={toggleTheme}
-        aria-label={theme === "dark" ? "Modo claro" : "Modo escuro"}
-        title={theme === "dark" ? "Modo claro" : "Modo escuro"}
-        className="p-2 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-all duration-150"
-      >
-        {theme === "dark" ? <SunIcon /> : <MoonIcon />}
-      </button>
 
-      {usuario && (
-        <span className="text-sm text-text-secondary truncate max-w-[160px]">
-          {usuario.nome}
-        </span>
+        <button
+          onClick={toggleTheme}
+          aria-label={theme === "dark" ? "Modo claro" : "Modo escuro"}
+          title={theme === "dark" ? "Modo claro" : "Modo escuro"}
+          className="p-2 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-all duration-150"
+        >
+          {theme === "dark" ? <SunIcon /> : <MoonIcon />}
+        </button>
+
+
+        {usuario && (
+          <span className="hidden md:inline text-sm text-text-secondary truncate max-w-[160px]">
+            {usuario.nome}
+          </span>
+        )}
+
+
+        <button
+          onClick={sair}
+          aria-label="Sair"
+          title="Sair"
+          className="hidden md:flex p-2 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-danger transition-all duration-150"
+        >
+          <LogoutIcon />
+        </button>
+
+
+        <button
+          onClick={() => setMenuOpen((prev) => !prev)}
+          aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+          className="md:hidden p-2 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-all duration-150"
+        >
+          {menuOpen ? <CloseIcon /> : <MenuIcon />}
+        </button>
+      </div>
+
+
+      {menuOpen && (
+        <div className="md:hidden animate-fade-slide-in border-t border-border">
+          <div className="flex flex-col gap-1 px-4 pb-4 pt-2">
+            {links.map(({ to, label, end }) => (
+              <NavLink
+                key={to}
+                to={to}
+                end={end}
+                className={({ isActive }) =>
+                  `px-3 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 ${isActive
+                    ? "bg-accent/10 text-accent"
+                    : "text-text-secondary hover:bg-bg-secondary hover:text-text-primary"
+                  }`
+                }
+              >
+                {label}
+              </NavLink>
+            ))}
+
+            <div className="h-px bg-border my-1" />
+
+            {usuario && (
+              <span className="px-3 py-1 text-sm text-text-muted truncate">
+                {usuario.nome}
+              </span>
+            )}
+
+            <button
+              onClick={sair}
+              className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-danger hover:bg-bg-secondary transition-all duration-150"
+            >
+              <LogoutIcon />
+              Sair
+            </button>
+          </div>
+        </div>
       )}
-
-      <button
-        onClick={sair}
-        aria-label="Sair"
-        title="Sair"
-        className="p-2 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-danger transition-all duration-150"
-      >
-        <LogoutIcon />
-      </button>
     </header>
   );
 }
@@ -85,6 +146,22 @@ function MoonIcon() {
   return (
     <svg className="w-[18px] h-[18px] animate-spin-once" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
       <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
+    </svg>
+  );
+}
+
+function MenuIcon() {
+  return (
+    <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+    </svg>
+  );
+}
+
+function CloseIcon() {
+  return (
+    <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
     </svg>
   );
 }
