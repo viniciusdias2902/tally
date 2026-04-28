@@ -5,7 +5,7 @@ import { useTheme } from "../../contexts/ThemeContext.jsx";
 const links = [
   { to: "/", label: "Dashboard", icon: LayoutIcon },
   { to: "/atividades", label: "Atividades", icon: ListIcon },
-  { to: "/timer", label: "Timer Livre", icon: TimerIcon },
+  { to: "/timer", label: "Timer", icon: TimerIcon },
 ];
 
 export default function Sidebar({ aberto, colapsada, onFechar, onColapsar }) {
