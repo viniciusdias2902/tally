@@ -1,4 +1,5 @@
 import { NavLink } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext.jsx";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 
 const links = [
@@ -8,6 +9,7 @@ const links = [
 
 export default function Topbar() {
   const { theme, toggleTheme } = useTheme();
+  const { sair, usuario } = useAuth();
 
   return (
     <header className="sticky top-0 z-30 flex items-center gap-6 bg-bg-primary/80 backdrop-blur-md px-4 py-3 lg:px-6">
@@ -44,7 +46,30 @@ export default function Topbar() {
       >
         {theme === "dark" ? <SunIcon /> : <MoonIcon />}
       </button>
+
+      {usuario && (
+        <span className="text-sm text-text-secondary truncate max-w-[160px]">
+          {usuario.nome}
+        </span>
+      )}
+
+      <button
+        onClick={sair}
+        aria-label="Sair"
+        title="Sair"
+        className="p-2 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-danger transition-all duration-150"
+      >
+        <LogoutIcon />
+      </button>
     </header>
+  );
+}
+
+function LogoutIcon() {
+  return (
+    <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9" />
+    </svg>
   );
 }
 
