@@ -2,17 +2,13 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Button from "../ui/Button.jsx";
 import MenuKebab from "../ui/MenuKebab.jsx";
+import Modal from "../ui/Modal.jsx";
 
 export default function CardAtividade({ atividade, onEditar, onArquivar, onDeletar }) {
   const [confirmando, setConfirmando] = useState(null);
 
-  function handleAcao(acao, callback) {
-    if (confirmando === acao) {
-      callback();
-      setConfirmando(null);
-    } else {
-      setConfirmando(acao);
-    }
+  function fechar() {
+    setConfirmando(null);
   }
 
   return (
@@ -34,30 +30,14 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
           <PlayIcon /> Registrar
         </Link>
 
-        {confirmando === "arquivar" ? (
-          <Button
-            variant="secondary"
-            size="sm"
-            onClick={() => handleAcao("arquivar", () => onArquivar(atividade.id))}
-          >
-            Confirmar
-          </Button>
-        ) : (
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => handleAcao("arquivar", () => onArquivar(atividade.id))}
-            title="Arquivar"
-          >
-            <ArchiveIcon />
-          </Button>
-        )}
-
         {confirmando === "deletar" ? (
           <Button
             variant="danger"
             size="sm"
-            onClick={() => handleAcao("deletar", () => onDeletar(atividade.id))}
+            onClick={() => {
+              onDeletar(atividade.id);
+              fechar();
+            }}
           >
             Confirmar
           </Button>
@@ -65,15 +45,15 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
           <Button
             variant="ghost"
             size="sm"
-            onClick={() => handleAcao("deletar", () => onDeletar(atividade.id))}
+            onClick={() => setConfirmando("deletar")}
             title="Deletar"
           >
             <TrashIcon />
           </Button>
         )}
 
-        {confirmando && (
-          <Button variant="ghost" size="sm" onClick={() => setConfirmando(null)}>
+        {confirmando === "deletar" && (
+          <Button variant="ghost" size="sm" onClick={fechar}>
             <XIcon />
           </Button>
         )}
@@ -92,8 +72,39 @@ export default function CardAtividade({ atividade, onEditar, onArquivar, onDelet
           >
             <EditIcon /> Editar
           </button>
+          <button
+            type="button"
+            onClick={() => setConfirmando("arquivar")}
+            className="w-full flex items-center gap-2 px-3 py-2 text-sm text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-colors duration-150 cursor-pointer"
+          >
+            <ArchiveIcon /> Arquivar
+          </button>
         </MenuKebab>
       </div>
+
+      <Modal
+        aberto={confirmando === "arquivar"}
+        onFechar={fechar}
+        titulo="Arquivar atividade"
+      >
+        <p className="text-sm text-text-secondary mb-6">
+          Arquivar <strong className="text-text-primary">{atividade.nome}</strong>?
+          Você poderá restaurar depois.
+        </p>
+        <div className="flex justify-end gap-2">
+          <Button variant="secondary" onClick={fechar}>
+            Cancelar
+          </Button>
+          <Button
+            onClick={() => {
+              onArquivar(atividade.id);
+              fechar();
+            }}
+          >
+            Arquivar
+          </Button>
+        </div>
+      </Modal>
     </div>
   );
 }
