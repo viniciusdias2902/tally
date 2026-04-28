@@ -18,6 +18,11 @@
   --color-timer-paused: #F59E0B;
   --color-timer-idle: #94A3B8;
 
+  /* Pomodoro states */
+  --color-pomodoro-foco: #EF4444;
+  --color-pomodoro-pausa-curta: #10B981;
+  --color-pomodoro-pausa-longa: #6366F1;
+
   /* Font families */
   --font-display: "Inter", ui-sans-serif, system-ui, sans-serif;
   --font-mono: ui-monospace, "Cascadia Code", "Fira Code", monospace;
@@ -61,6 +66,10 @@
   --color-timer-running: #34D399;
   --color-timer-paused: #FBBF24;
   --color-timer-idle: #64748B;
+
+  --color-pomodoro-foco: #F87171;
+  --color-pomodoro-pausa-curta: #34D399;
+  --color-pomodoro-pausa-longa: #818CF8;
 }
 
 /* ── Base ── */
