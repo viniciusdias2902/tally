@@ -267,6 +267,8 @@ export default function TimerPomodoro() {
           </div>
         </div>
 
+        {/* Info da config */}
+        {atividadeId && !carregandoConfig && (
           <div className="flex items-center gap-4 justify-center text-xs text-text-muted pt-1">
             <span>{configPomodoro.minutosFoco}min foco</span>
             <span>·</span>
@@ -277,6 +279,10 @@ export default function TimerPomodoro() {
             <span>{configPomodoro.ciclosAntesLonga} ciclos</span>
           </div>
         )}
+        {carregandoConfig && (
+          <div className="flex justify-center pt-1">
+            <Spinner className="h-4 w-4" />
+          </div>
         )}
       </div>
 
