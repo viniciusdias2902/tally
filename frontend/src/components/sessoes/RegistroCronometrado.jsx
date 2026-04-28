@@ -30,16 +30,48 @@ export default function RegistroCronometrado({ chave, onRegistrar, enviando }) {
 
   const podeRegistrar = !rodando && segundos > 0;
 
+  let statusLabel = "Pronto";
+  let statusTexto = "text-timer-idle";
+  let statusBg = "bg-timer-idle";
+  let digitoCor = "text-text-primary";
+  let pulsar = false;
+  if (rodando) {
+    statusLabel = "Em curso";
+    statusTexto = "text-timer-running";
+    statusBg = "bg-timer-running";
+    digitoCor = "text-timer-running";
+    pulsar = true;
+  } else if (segundos > 0) {
+    statusLabel = "Pausado";
+    statusTexto = "text-timer-paused";
+    statusBg = "bg-timer-paused";
+    digitoCor = "text-timer-paused";
+  }
+
   return (
-    <div className="rounded-2xl border border-border bg-bg-elevated p-8 shadow-sm">
-      <div className="text-center space-y-6">
+    <div className="rounded-2xl border border-border bg-bg-elevated p-8 shadow-sm min-h-[28rem] flex flex-col">
+      <div className="flex flex-col items-center gap-6 flex-1">
+        <div className="inline-flex items-center gap-2">
+          <span
+            className={`inline-block w-2 h-2 rounded-full ${statusBg} ${pulsar ? "animate-pulse-soft" : ""}`}
+            aria-hidden="true"
+          />
+          <span className={`text-xs uppercase tracking-wider font-medium ${statusTexto}`}>
+            {statusLabel}
+          </span>
+        </div>
+
         <div
-          className={`font-mono text-6xl font-semibold tabular-nums tracking-tight transition-colors duration-150 ${
-            rodando ? "text-timer-running" : "text-text-primary"
-          }`}
+          className={`font-mono text-7xl font-semibold tabular-nums tracking-tight transition-colors duration-300 ${digitoCor}`}
           aria-live="polite"
         >
           {formatarDuracao(segundos)}
+        </div>
+
+        <div className="text-xs text-text-muted h-4">
+          {segundos === 0 && !rodando && "Inicie o cronômetro para começar"}
+          {rodando && "Sessão em andamento"}
+          {segundos > 0 && !rodando && "Continue ou registre o tempo acumulado"}
         </div>
 
         <div className="flex items-center justify-center gap-2">
@@ -61,36 +93,26 @@ export default function RegistroCronometrado({ chave, onRegistrar, enviando }) {
             </Button>
           )}
         </div>
+      </div>
 
-        <div className="pt-2">
-          <Button
-            onClick={handleRegistrar}
-            disabled={!podeRegistrar || enviando}
-            size="lg"
-            className="min-w-[14rem]"
-          >
-            {enviando ? "Registrando..." : "Registrar sessão"}
-          </Button>
+      <div className="space-y-3 pt-4">
+        <Button
+          onClick={handleRegistrar}
+          disabled={!podeRegistrar || enviando}
+          size="lg"
+          className="w-full"
+        >
+          {enviando ? "Registrando..." : "Registrar sessão"}
+        </Button>
+
+        <div className="text-center h-4 text-sm">
+          {confirmacao === "ok" && (
+            <span className="text-success">Sessão registrada com sucesso.</span>
+          )}
+          {confirmacao === "erro" && (
+            <span className="text-danger">Erro ao registrar. Tente novamente.</span>
+          )}
         </div>
-
-        {confirmacao === "ok" && (
-          <p className="text-sm text-success">Sessão registrada com sucesso.</p>
-        )}
-        {confirmacao === "erro" && (
-          <p className="text-sm text-danger">
-            Erro ao registrar. Tente novamente.
-          </p>
-        )}
-        {!podeRegistrar && segundos === 0 && (
-          <p className="text-xs text-text-muted">
-            Inicie o cronômetro para registrar uma sessão.
-          </p>
-        )}
-        {rodando && (
-          <p className="text-xs text-text-muted">
-            Pause o cronômetro para registrar.
-          </p>
-        )}
       </div>
     </div>
   );
