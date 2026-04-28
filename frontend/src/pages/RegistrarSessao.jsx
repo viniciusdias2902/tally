@@ -8,6 +8,7 @@ import Spinner from "../components/ui/Spinner.jsx";
 import SeletorCategoria from "../components/sessoes/SeletorCategoria.jsx";
 import RegistroBinario from "../components/sessoes/RegistroBinario.jsx";
 import RegistroCronometrado from "../components/sessoes/RegistroCronometrado.jsx";
+import RegistroManual from "../components/sessoes/RegistroManual.jsx";
 import RegistroPomodoro from "../components/sessoes/RegistroPomodoro.jsx";
 import SeletorModoCronometrado from "../components/sessoes/SeletorModoCronometrado.jsx";
 
@@ -97,13 +98,20 @@ export default function RegistrarSessao() {
           <>
             <SeletorModoCronometrado modo={modo} onMudar={setModo} />
             <div key={modo} className="animate-fade-slide-in">
-              {modo === "pomodoro" ? (
+              {modo === "pomodoro" && (
                 <RegistroPomodoro
                   chave={atividadeId}
                   onRegistrar={handleRegistrar}
                   enviando={enviando}
                 />
-              ) : (
+              )}
+              {modo === "manual" && (
+                <RegistroManual
+                  onRegistrar={handleRegistrar}
+                  enviando={enviando}
+                />
+              )}
+              {modo === "timer" && (
                 <RegistroCronometrado
                   chave={atividadeId}
                   onRegistrar={handleRegistrar}
