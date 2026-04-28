@@ -2,11 +2,13 @@ import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import * as atividadesApi from "../api/atividades.js";
 import { useCategorias } from "../hooks/useCategorias.js";
+import { useModoCronometrado } from "../hooks/useModoCronometrado.js";
 import { useRegistroSessao } from "../hooks/useRegistroSessao.js";
 import Spinner from "../components/ui/Spinner.jsx";
 import SeletorCategoria from "../components/sessoes/SeletorCategoria.jsx";
 import RegistroBinario from "../components/sessoes/RegistroBinario.jsx";
 import RegistroCronometrado from "../components/sessoes/RegistroCronometrado.jsx";
+import RegistroPomodoro from "../components/sessoes/RegistroPomodoro.jsx";
 
 export default function RegistrarSessao() {
   const { atividadeId } = useParams();
@@ -17,6 +19,7 @@ export default function RegistrarSessao() {
   const { categorias, carregando: carregandoCategorias } =
     useCategorias(atividadeId);
   const { registrar, enviando } = useRegistroSessao(atividadeId);
+  const { modo, setModo } = useModoCronometrado();
 
   useEffect(() => {
     let cancelado = false;
@@ -81,13 +84,57 @@ export default function RegistrarSessao() {
         {ehBinaria ? (
           <RegistroBinario onRegistrar={handleRegistrar} enviando={enviando} />
         ) : (
-          <RegistroCronometrado
-            chave={atividadeId}
-            onRegistrar={handleRegistrar}
-            enviando={enviando}
-          />
+          <>
+            <SeletorModo modo={modo} onMudar={setModo} />
+            {modo === "pomodoro" ? (
+              <RegistroPomodoro
+                chave={atividadeId}
+                onRegistrar={handleRegistrar}
+                enviando={enviando}
+              />
+            ) : (
+              <RegistroCronometrado
+                chave={atividadeId}
+                onRegistrar={handleRegistrar}
+                enviando={enviando}
+              />
+            )}
+          </>
         )}
       </div>
+    </div>
+  );
+}
+
+function SeletorModo({ modo, onMudar }) {
+  const opcoes = [
+    { id: "timer", label: "Timer" },
+    { id: "pomodoro", label: "Pomodoro" },
+  ];
+  return (
+    <div
+      role="tablist"
+      aria-label="Modo de cronômetro"
+      className="inline-flex rounded-xl bg-bg-secondary p-1"
+    >
+      {opcoes.map(({ id, label }) => {
+        const ativo = modo === id;
+        return (
+          <button
+            key={id}
+            role="tab"
+            aria-selected={ativo}
+            onClick={() => onMudar(id)}
+            className={`px-4 py-1.5 rounded-lg text-sm font-medium transition-all duration-150 cursor-pointer ${
+              ativo
+                ? "bg-bg-elevated text-text-primary shadow-sm"
+                : "text-text-secondary hover:text-text-primary"
+            }`}
+          >
+            {label}
+          </button>
+        );
+      })}
     </div>
   );
 }
