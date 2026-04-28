@@ -9,6 +9,7 @@ import Dashboard from "./pages/Dashboard.jsx";
 import Atividades from "./pages/Atividades.jsx";
 import Categorias from "./pages/Categorias.jsx";
 import RegistrarSessao from "./pages/RegistrarSessao.jsx";
+import Sessoes from "./pages/Sessoes.jsx";
 import NaoEncontrada from "./pages/NaoEncontrada.jsx";
 
 export default function App() {
@@ -36,6 +37,10 @@ export default function App() {
               <Route
                 path="/atividades/:atividadeId/registrar"
                 element={<RegistrarSessao />}
+              />
+              <Route
+                path="/atividades/:atividadeId/sessoes"
+                element={<Sessoes />}
               />
             </Route>
 
