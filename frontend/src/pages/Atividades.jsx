@@ -1,4 +1,5 @@
 import { useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { useAtividades } from "../hooks/useAtividades.js";
 import { usePastas } from "../hooks/usePastas.js";
 import Modal from "../components/ui/Modal.jsx";
@@ -131,6 +132,7 @@ export default function Atividades() {
               <SecaoPasta
                 key={pasta.id}
                 titulo={pasta.nome}
+                pastaId={pasta.id}
                 atividades={itens}
                 nomePorPastaId={nomePorPastaId}
                 onEditar={abrirEdicao}
@@ -185,12 +187,22 @@ export default function Atividades() {
   );
 }
 
-function SecaoPasta({ titulo, atividades, nomePorPastaId, onEditar, onArquivar, onDeletar }) {
+function SecaoPasta({ titulo, pastaId, atividades, nomePorPastaId, onEditar, onArquivar, onDeletar }) {
   return (
     <section>
-      <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wide mb-3">
-        {titulo}
-      </h3>
+      <div className="mb-3 flex items-baseline justify-between gap-2">
+        <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wide">
+          {titulo}
+        </h3>
+        {pastaId ? (
+          <Link
+            to={`/pastas/${pastaId}/dashboard`}
+            className="text-xs text-text-muted hover:text-accent"
+          >
+            Ver dashboard →
+          </Link>
+        ) : null}
+      </div>
       <GradeAtividades
         atividades={atividades}
         nomePorPastaId={nomePorPastaId}

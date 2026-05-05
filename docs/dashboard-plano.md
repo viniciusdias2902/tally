@@ -243,7 +243,7 @@ Implementação:
 - [x] `feat(pages/DashboardPasta): cria página vazia com lookup do nome da pasta`
 - [x] `feat(App): registra rota /pastas/:pastaId/dashboard`
 - [x] `feat(pages/DashboardPasta): reusa componentes do geral filtrando por pastaId`
-- [ ] `feat(components/atividades): adiciona link "Ver dashboard" no header da pasta`
+- [x] `feat(pages/Atividades): adiciona link "Ver dashboard" no header da pasta` (scope ajustado: `SecaoPasta` é função inline em `pages/Atividades.jsx`, não componente extraído)
 
 ### Fase 15 — Frontend: dashboard por atividade
 
