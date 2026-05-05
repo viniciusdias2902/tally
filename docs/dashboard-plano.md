@@ -147,7 +147,7 @@ Implementação:
 - [x] `feat(dashboard.repository): adiciona somarPorAtividadeNaPasta`
 - [x] `test(dashboard.repository): cobre somarPorAtividadeNaPasta`
 - [x] `feat(dashboard.repository): adiciona somarPorCategoriaNaAtividade`
-- [ ] `test(dashboard.repository): cobre somarPorCategoriaNaAtividade`
+- [x] `test(dashboard.repository): cobre somarPorCategoriaNaAtividade`
 - [ ] `feat(dashboard.service): adiciona obterDistribuicao (decide nível pelo escopo)`
 - [ ] `test(dashboard.service): cobre obterDistribuicao (3 escopos)`
 - [ ] `feat(dashboard.controller): adiciona handler distribuicao`
