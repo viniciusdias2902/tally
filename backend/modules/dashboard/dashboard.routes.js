@@ -207,6 +207,7 @@ export function criarDashboardRoutes(dashboardController) {
     dashboardController.distribuicao,
   );
   router.get("/evolucao", validar(evolucaoQuerySchema), dashboardController.evolucao);
+  router.get("/por-hora", validar(kpisQuerySchema), dashboardController.porHora);
 
   return router;
 }
