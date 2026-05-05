@@ -192,7 +192,7 @@ Implementação:
 
 ### Fase 7 — Frontend: API client e infraestrutura
 
-- [ ] `feat(api/dashboard): adiciona heatmap()`
+- [x] `feat(api/dashboard): adiciona heatmap()`
 - [ ] `feat(api/dashboard): adiciona kpis()`
 - [ ] `feat(api/dashboard): adiciona distribuicao()`
 - [ ] `feat(api/dashboard): adiciona evolucao()`
