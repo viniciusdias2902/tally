@@ -1,0 +1,21 @@
+meta {
+  name: Evolução
+  type: http
+  seq: 4
+}
+
+get {
+  url: {{baseUrl}}/dashboard/evolucao
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+params:query {
+  ~pastaId:
+  ~atividadeId:
+  ~dias: 30
+}

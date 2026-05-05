@@ -1,0 +1,21 @@
+meta {
+  name: Heatmap
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/dashboard/heatmap
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+params:query {
+  ~pastaId:
+  ~atividadeId:
+  ~desdeDias: 365
+}

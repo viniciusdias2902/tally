@@ -1,0 +1,20 @@
+meta {
+  name: Por Modo
+  type: http
+  seq: 7
+}
+
+get {
+  url: {{baseUrl}}/dashboard/por-modo
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+params:query {
+  ~pastaId:
+  ~atividadeId:
+}

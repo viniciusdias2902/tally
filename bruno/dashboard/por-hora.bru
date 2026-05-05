@@ -1,0 +1,20 @@
+meta {
+  name: Por Hora
+  type: http
+  seq: 5
+}
+
+get {
+  url: {{baseUrl}}/dashboard/por-hora
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+params:query {
+  ~pastaId:
+  ~atividadeId:
+}

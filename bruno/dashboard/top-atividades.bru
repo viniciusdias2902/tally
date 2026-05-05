@@ -1,0 +1,19 @@
+meta {
+  name: Top Atividades
+  type: http
+  seq: 8
+}
+
+get {
+  url: {{baseUrl}}/dashboard/top-atividades
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+params:query {
+  ~limite: 8
+}

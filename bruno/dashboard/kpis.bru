@@ -1,0 +1,20 @@
+meta {
+  name: KPIs
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseUrl}}/dashboard/kpis
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+params:query {
+  ~pastaId:
+  ~atividadeId:
+}
