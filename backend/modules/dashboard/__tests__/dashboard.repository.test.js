@@ -135,6 +135,38 @@ describe("dashboard.repository", () => {
     });
   });
 
+  describe("somarPorAtividadeNaPasta", () => {
+    it("deve mapear atividade_id e total_segundos para camelCase", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([
+        { atividade_id: "a1", nome: "Inglês", total_segundos: 5400 },
+        { atividade_id: "a2", nome: "Matemática", total_segundos: 3600 },
+      ]);
+
+      const resultado = await repositorio.somarPorAtividadeNaPasta({
+        usuarioId: "u1",
+        pastaId: "p1",
+      });
+
+      expect(resultado).toEqual([
+        { atividadeId: "a1", nome: "Inglês", totalSegundos: 5400 },
+        { atividadeId: "a2", nome: "Matemática", totalSegundos: 3600 },
+      ]);
+    });
+
+    it("deve passar usuarioId e pastaId como filtros", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([]);
+
+      await repositorio.somarPorAtividadeNaPasta({
+        usuarioId: "u1",
+        pastaId: "p1",
+      });
+
+      const [, ...valores] = prismaMock.$queryRaw.mock.calls[0];
+      expect(valores).toContain("u1");
+      expect(valores).toContain("p1");
+    });
+  });
+
   describe("calcularStreaks", () => {
     it("deve retornar zero quando não há sessões", async () => {
       prismaMock.$queryRaw.mockResolvedValue([]);
