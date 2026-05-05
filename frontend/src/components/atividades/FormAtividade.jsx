@@ -7,10 +7,11 @@ const TIPOS_MEDICAO = [
   { value: "binaria", label: "Binária" },
 ];
 
-export default function FormAtividade({ atividade, onSalvar, onCancelar }) {
+export default function FormAtividade({ atividade, pastas = [], onSalvar, onCancelar }) {
   const editando = Boolean(atividade);
   const [nome, setNome] = useState(atividade?.nome ?? "");
   const [tipoMedicao, setTipoMedicao] = useState(atividade?.tipoMedicao ?? "cronometrada");
+  const [pastaId, setPastaId] = useState(atividade?.pastaId ?? "");
   const [erro, setErro] = useState("");
   const [enviando, setEnviando] = useState(false);
 
@@ -20,10 +21,11 @@ export default function FormAtividade({ atividade, onSalvar, onCancelar }) {
     setEnviando(true);
 
     try {
+      const pastaIdFinal = pastaId || null;
       if (editando) {
-        await onSalvar({ nome });
+        await onSalvar({ nome, pastaId: pastaIdFinal });
       } else {
-        await onSalvar({ nome, tipoMedicao });
+        await onSalvar({ nome, tipoMedicao, pastaId: pastaIdFinal });
       }
     } catch (err) {
       if (err.message === "ATIVIDADE_JA_EXISTE") {
@@ -77,6 +79,25 @@ export default function FormAtividade({ atividade, onSalvar, onCancelar }) {
           </p>
         </div>
       )}
+
+      <div className="flex flex-col gap-1.5">
+        <label htmlFor="pasta-atividade" className="text-sm font-medium text-text-secondary">
+          Pasta
+        </label>
+        <select
+          id="pasta-atividade"
+          value={pastaId}
+          onChange={(e) => setPastaId(e.target.value)}
+          className="rounded-xl border border-border bg-input-bg px-3.5 py-2.5 text-sm text-text-primary shadow-sm transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-accent/30 focus:border-accent cursor-pointer"
+        >
+          <option value="">— Sem pasta —</option>
+          {pastas.map((pasta) => (
+            <option key={pasta.id} value={pasta.id}>
+              {pasta.nome}
+            </option>
+          ))}
+        </select>
+      </div>
 
       {erro && <p className="text-sm text-danger text-center">{erro}</p>}
 
