@@ -50,6 +50,27 @@ export function criarDashboardRepository(prisma) {
       };
     },
 
+    async somarPorPastaDoUsuario({ usuarioId }) {
+      const linhas = await prisma.$queryRaw`
+        SELECT
+          p.id AS pasta_id,
+          COALESCE(p.nome, 'Sem pasta') AS nome,
+          COALESCE(SUM(s.duracao_segundos), 0)::int AS total_segundos
+        FROM atividades a
+        LEFT JOIN pastas p ON p.id = a.pasta_id
+        LEFT JOIN sessoes s ON s.atividade_id = a.id
+        WHERE a.usuario_id = ${usuarioId}::uuid
+        GROUP BY p.id, p.nome
+        HAVING COALESCE(SUM(s.duracao_segundos), 0) > 0
+        ORDER BY total_segundos DESC
+      `;
+      return linhas.map((linha) => ({
+        pastaId: linha.pasta_id,
+        nome: linha.nome,
+        totalSegundos: linha.total_segundos,
+      }));
+    },
+
     async calcularStreaks({
       usuarioId,
       pastaId = null,

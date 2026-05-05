@@ -142,7 +142,7 @@ Implementação:
 
 ### Fase 3 — Backend: distribuição (donut)
 
-- [ ] `feat(dashboard.repository): adiciona somarPorPastaDoUsuario`
+- [x] `feat(dashboard.repository): adiciona somarPorPastaDoUsuario`
 - [ ] `test(dashboard.repository): cobre somarPorPastaDoUsuario`
 - [ ] `feat(dashboard.repository): adiciona somarPorAtividadeNaPasta`
 - [ ] `test(dashboard.repository): cobre somarPorAtividadeNaPasta`
