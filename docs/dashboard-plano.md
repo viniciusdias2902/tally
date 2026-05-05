@@ -166,7 +166,7 @@ Implementação:
 - [x] `feat(dashboard.controller): adiciona handler evolucao`
 - [x] `feat(dashboard.routes): registra GET /dashboard/evolucao`
 - [x] `test(dashboard.routes): cobre GET /dashboard/evolucao`
-- [ ] `docs(swagger): documenta GET /dashboard/evolucao`
+- [x] `docs(swagger): documenta GET /dashboard/evolucao`
 
 ### Fase 5 — Backend: por hora / por dia da semana / por modo
 

@@ -151,6 +151,51 @@ import {
  *         $ref: '#/components/responses/NaoAutorizado'
  */
 
+/**
+ * @swagger
+ * /dashboard/evolucao:
+ *   get:
+ *     summary: Retorna minutos por dia (em segundos) para o gráfico de evolução temporal
+ *     tags: [Dashboard]
+ *     parameters:
+ *       - in: query
+ *         name: pastaId
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *       - in: query
+ *         name: atividadeId
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *       - in: query
+ *         name: dias
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 365
+ *           default: 30
+ *     responses:
+ *       200:
+ *         description: Lista de dias com total em segundos
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   data:
+ *                     type: string
+ *                     format: date
+ *                     example: "2026-04-01"
+ *                   totalSegundos:
+ *                     type: integer
+ *                     example: 1800
+ *       401:
+ *         $ref: '#/components/responses/NaoAutorizado'
+ */
+
 export function criarDashboardRoutes(dashboardController) {
   const router = Router();
 
