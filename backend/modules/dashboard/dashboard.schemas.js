@@ -14,3 +14,10 @@ export const kpisQuerySchema = {
     atividadeId: z.uuid().optional(),
   }),
 };
+
+export const distribuicaoQuerySchema = {
+  query: z.object({
+    pastaId: z.uuid().optional(),
+    atividadeId: z.uuid().optional(),
+  }),
+};
