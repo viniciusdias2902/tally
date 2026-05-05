@@ -164,7 +164,7 @@ Implementação:
 - [x] `test(dashboard.service): cobre obterEvolucao`
 - [x] `feat(dashboard.schemas): adiciona evolucaoQuerySchema`
 - [x] `feat(dashboard.controller): adiciona handler evolucao`
-- [ ] `feat(dashboard.routes): registra GET /dashboard/evolucao`
+- [x] `feat(dashboard.routes): registra GET /dashboard/evolucao`
 - [ ] `test(dashboard.routes): cobre GET /dashboard/evolucao`
 - [ ] `docs(swagger): documenta GET /dashboard/evolucao`
 

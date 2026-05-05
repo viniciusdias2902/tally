@@ -4,6 +4,7 @@ import {
   heatmapQuerySchema,
   kpisQuerySchema,
   distribuicaoQuerySchema,
+  evolucaoQuerySchema,
 } from "./dashboard.schemas.js";
 
 /**
@@ -160,6 +161,7 @@ export function criarDashboardRoutes(dashboardController) {
     validar(distribuicaoQuerySchema),
     dashboardController.distribuicao,
   );
+  router.get("/evolucao", validar(evolucaoQuerySchema), dashboardController.evolucao);
 
   return router;
 }
