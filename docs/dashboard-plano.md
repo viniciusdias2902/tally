@@ -152,7 +152,7 @@ Implementação:
 - [x] `test(dashboard.service): cobre obterDistribuicao (3 escopos)`
 - [x] `feat(dashboard.schemas): adiciona distribuicaoQuerySchema`
 - [x] `feat(dashboard.controller): adiciona handler distribuicao`
-- [ ] `feat(dashboard.routes): registra GET /dashboard/distribuicao`
+- [x] `feat(dashboard.routes): registra GET /dashboard/distribuicao`
 - [ ] `test(dashboard.routes): cobre GET /dashboard/distribuicao`
 - [ ] `docs(swagger): documenta GET /dashboard/distribuicao`
 

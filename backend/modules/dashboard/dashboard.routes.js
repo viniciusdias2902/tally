@@ -1,6 +1,10 @@
 import { Router } from "express";
 import { validar } from "../../middlewares/validar.js";
-import { heatmapQuerySchema, kpisQuerySchema } from "./dashboard.schemas.js";
+import {
+  heatmapQuerySchema,
+  kpisQuerySchema,
+  distribuicaoQuerySchema,
+} from "./dashboard.schemas.js";
 
 /**
  * @swagger
@@ -105,6 +109,11 @@ export function criarDashboardRoutes(dashboardController) {
 
   router.get("/heatmap", validar(heatmapQuerySchema), dashboardController.heatmap);
   router.get("/kpis", validar(kpisQuerySchema), dashboardController.kpis);
+  router.get(
+    "/distribuicao",
+    validar(distribuicaoQuerySchema),
+    dashboardController.distribuicao,
+  );
 
   return router;
 }
