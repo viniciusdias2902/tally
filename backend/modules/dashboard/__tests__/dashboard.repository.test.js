@@ -259,6 +259,36 @@ describe("dashboard.repository", () => {
     });
   });
 
+  describe("somarPorModo", () => {
+    it("deve mapear modo, total_segundos e total_sessoes para camelCase", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([
+        { modo: "timer", total_segundos: 7200, total_sessoes: 5 },
+        { modo: "pomodoro", total_segundos: 3600, total_sessoes: 2 },
+      ]);
+
+      const resultado = await repositorio.somarPorModo({ usuarioId: "u1" });
+
+      expect(resultado).toEqual([
+        { modo: "timer", totalSegundos: 7200, totalSessoes: 5 },
+        { modo: "pomodoro", totalSegundos: 3600, totalSessoes: 2 },
+      ]);
+    });
+
+    it("deve passar pastaId e atividadeId como filtros", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([]);
+
+      await repositorio.somarPorModo({
+        usuarioId: "u1",
+        pastaId: "p1",
+        atividadeId: "a1",
+      });
+
+      const [, ...valores] = prismaMock.$queryRaw.mock.calls[0];
+      expect(valores).toContain("p1");
+      expect(valores).toContain("a1");
+    });
+  });
+
   describe("calcularStreaks", () => {
     it("deve retornar zero quando não há sessões", async () => {
       prismaMock.$queryRaw.mockResolvedValue([]);

@@ -175,7 +175,7 @@ Implementação:
 - [x] `feat(dashboard.repository): adiciona somarPorDiaDaSemana`
 - [x] `test(dashboard.repository): cobre somarPorDiaDaSemana`
 - [x] `feat(dashboard.repository): adiciona somarPorModo`
-- [ ] `test(dashboard.repository): cobre somarPorModo`
+- [x] `test(dashboard.repository): cobre somarPorModo`
 - [ ] `feat(dashboard.service+controller+routes): expõe por-hora`
 - [ ] `feat(dashboard.service+controller+routes): expõe por-dia-semana`
 - [ ] `feat(dashboard.service+controller+routes): expõe por-modo`
