@@ -121,7 +121,7 @@ Implementação:
 - [x] `test(dashboard.service): cobre gerarHeatmap (preenchimento de dias zerados)`
 - [x] `feat(dashboard.schemas): adiciona heatmapQuerySchema (Zod)`
 - [x] `feat(dashboard.controller): adiciona handler heatmap`
-- [ ] `feat(dashboard.routes): registra GET /dashboard/heatmap`
+- [x] `feat(dashboard.routes): registra GET /dashboard/heatmap`
 - [ ] `feat(app): wireup do módulo dashboard em app.js`
 - [ ] `test(dashboard.routes): cobre GET /dashboard/heatmap (integração)`
 - [ ] `docs(swagger): documenta GET /dashboard/heatmap`
