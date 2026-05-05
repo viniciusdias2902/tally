@@ -226,7 +226,7 @@ Implementação:
 ### Fase 12 — Frontend: gráficos secundários
 
 - [x] `feat(components/dashboard): cria EvolucaoArea (Area chart 30 dias)`
-- [ ] `feat(components/dashboard): cria PorHoraBar (24 barras)`
+- [x] `feat(components/dashboard): cria PorHoraBar (24 barras)`
 - [ ] `feat(components/dashboard): cria PorDiaSemanaBar (7 barras)`
 - [ ] `feat(components/dashboard): cria PorModoDonut (donut pequeno)`
 - [ ] `feat(components/dashboard): cria TopAtividadesBar (horizontal)`
