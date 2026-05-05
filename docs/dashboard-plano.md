@@ -162,6 +162,7 @@ Implementação:
 - [~] `test(dashboard.repository): cobre somarSegundosPorDiaRecentes` — absorvido pelos testes existentes de `somarSegundosPorDia`.
 - [x] `feat(dashboard.service): adiciona obterEvolucao`
 - [x] `test(dashboard.service): cobre obterEvolucao`
+- [x] `feat(dashboard.schemas): adiciona evolucaoQuerySchema`
 - [ ] `feat(dashboard.controller): adiciona handler evolucao`
 - [ ] `feat(dashboard.routes): registra GET /dashboard/evolucao`
 - [ ] `test(dashboard.routes): cobre GET /dashboard/evolucao`

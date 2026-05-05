@@ -21,3 +21,11 @@ export const distribuicaoQuerySchema = {
     atividadeId: z.uuid().optional(),
   }),
 };
+
+export const evolucaoQuerySchema = {
+  query: z.object({
+    pastaId: z.uuid().optional(),
+    atividadeId: z.uuid().optional(),
+    dias: z.coerce.number().int().min(1).max(365).optional(),
+  }),
+};
