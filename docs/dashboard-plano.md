@@ -197,7 +197,7 @@ Implementação:
 - [x] `feat(api/dashboard): adiciona distribuicao()`
 - [x] `feat(api/dashboard): adiciona evolucao()`
 - [x] `feat(api/dashboard): adiciona porHora() porDiaSemana() porModo()`
-- [ ] `feat(api/dashboard): adiciona topAtividades()`
+- [x] `feat(api/dashboard): adiciona topAtividades()`
 
 ### Fase 8 — Frontend: tema dos gráficos (Recharts + Catppuccin)
 

@@ -57,3 +57,10 @@ export function porModo({ pastaId, atividadeId } = {}) {
   const query = params.toString();
   return api(`/dashboard/por-modo${query ? `?${query}` : ""}`);
 }
+
+export function topAtividades({ limite } = {}) {
+  const params = new URLSearchParams();
+  if (limite) params.set("limite", String(limite));
+  const query = params.toString();
+  return api(`/dashboard/top-atividades${query ? `?${query}` : ""}`);
+}
