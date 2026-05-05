@@ -26,12 +26,22 @@ import { criarConfigPomodoroRepository } from "./modules/config-pomodoro/configP
 import { criarConfigPomodoroService } from "./modules/config-pomodoro/configPomodoro.service.js";
 import { criarConfigPomodoroController } from "./modules/config-pomodoro/configPomodoro.controller.js";
 import { criarConfigPomodoroRoutes } from "./modules/config-pomodoro/configPomodoro.routes.js";
+import { criarPastaRepository } from "./modules/pastas/pasta.repository.js";
+import { criarPastaService } from "./modules/pastas/pasta.service.js";
+import { criarPastaController } from "./modules/pastas/pasta.controller.js";
+import { criarPastaRoutes } from "./modules/pastas/pasta.routes.js";
 
 // --- Auth ---
 const usuarioRepository = criarUsuarioRepository(prisma);
 const authService = criarAuthService(usuarioRepository);
 const authController = criarAuthController(authService);
 const authRoutes = criarAuthRoutes(authController);
+
+// --- Pastas ---
+const pastaRepository = criarPastaRepository(prisma);
+const pastaService = criarPastaService(pastaRepository);
+const pastaController = criarPastaController(pastaService);
+const pastaRoutes = criarPastaRoutes(pastaController);
 
 // --- Atividades ---
 const atividadeRepository = criarAtividadeRepository(prisma);
@@ -69,6 +79,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/auth", authRoutes);
 app.use(autenticar);
 
+app.use("/pastas", pastaRoutes);
 app.use("/atividades", atividadeRoutes);
 app.use("/atividades/:atividadeId/categorias", categoriaRoutes);
 app.use("/atividades/:atividadeId/sessoes", sessaoRoutes);
