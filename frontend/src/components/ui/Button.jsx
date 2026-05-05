@@ -1,10 +1,10 @@
 const variants = {
   primary:
-    "bg-accent text-white shadow-sm hover:bg-accent-hover focus-visible:ring-accent/40",
+    "bg-accent text-accent-foreground shadow-sm hover:bg-accent-hover focus-visible:ring-accent/40",
   secondary:
     "bg-bg-elevated text-text-primary border border-border shadow-sm hover:bg-bg-secondary focus-visible:ring-border",
   danger:
-    "bg-danger text-white shadow-sm hover:bg-danger-hover focus-visible:ring-danger/40",
+    "bg-danger text-danger-foreground shadow-sm hover:bg-danger-hover focus-visible:ring-danger/40",
   ghost:
     "text-text-secondary hover:bg-bg-secondary hover:text-text-primary",
 };

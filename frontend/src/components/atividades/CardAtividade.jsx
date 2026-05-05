@@ -80,7 +80,7 @@ export default function CardAtividade({ atividade, nomePasta, onEditar, onArquiv
 
       <Link
         to={`/atividades/${atividade.id}/registrar`}
-        className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer bg-accent text-white shadow-sm hover:bg-accent-hover px-4 py-2 text-sm w-full"
+        className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer bg-accent text-accent-foreground shadow-sm hover:bg-accent-hover px-4 py-2 text-sm w-full"
       >
         <PlayIcon /> Registrar
       </Link>
