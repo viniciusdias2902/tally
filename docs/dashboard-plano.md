@@ -170,7 +170,7 @@ Implementação:
 
 ### Fase 5 — Backend: por hora / por dia da semana / por modo
 
-- [ ] `feat(dashboard.repository): adiciona somarPorHoraDoDia`
+- [x] `feat(dashboard.repository): adiciona somarPorHoraDoDia`
 - [ ] `test(dashboard.repository): cobre somarPorHoraDoDia`
 - [ ] `feat(dashboard.repository): adiciona somarPorDiaDaSemana`
 - [ ] `test(dashboard.repository): cobre somarPorDiaDaSemana`

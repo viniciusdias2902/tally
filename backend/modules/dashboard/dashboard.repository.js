@@ -116,6 +116,25 @@ export function criarDashboardRepository(prisma) {
       }));
     },
 
+    async somarPorHoraDoDia({ usuarioId, pastaId = null, atividadeId = null }) {
+      const linhas = await prisma.$queryRaw`
+        SELECT
+          EXTRACT(HOUR FROM (s.iniciado_em AT TIME ZONE 'America/Sao_Paulo'))::int AS hora,
+          SUM(s.duracao_segundos)::int AS total_segundos
+        FROM sessoes s
+        JOIN atividades a ON a.id = s.atividade_id
+        WHERE a.usuario_id = ${usuarioId}::uuid
+          AND (${pastaId}::uuid IS NULL OR a.pasta_id = ${pastaId}::uuid)
+          AND (${atividadeId}::uuid IS NULL OR s.atividade_id = ${atividadeId}::uuid)
+        GROUP BY hora
+        ORDER BY hora ASC
+      `;
+      return linhas.map((linha) => ({
+        hora: linha.hora,
+        totalSegundos: linha.total_segundos,
+      }));
+    },
+
     async calcularStreaks({
       usuarioId,
       pastaId = null,
