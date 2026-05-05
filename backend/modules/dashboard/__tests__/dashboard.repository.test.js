@@ -110,4 +110,76 @@ describe("dashboard.repository", () => {
       expect(valores).toContain("p1");
     });
   });
+
+  describe("calcularStreaks", () => {
+    it("deve retornar zero quando não há sessões", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([]);
+
+      const resultado = await repositorio.calcularStreaks({ usuarioId: "u1" });
+
+      expect(resultado).toEqual({ streakAtual: 0, melhorStreak: 0 });
+    });
+
+    it("deve identificar streak contínuo terminando hoje", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([
+        { dia: new Date("2026-04-03T00:00:00Z") },
+        { dia: new Date("2026-04-04T00:00:00Z") },
+        { dia: new Date("2026-04-05T00:00:00Z") },
+      ]);
+
+      const resultado = await repositorio.calcularStreaks({
+        usuarioId: "u1",
+        agora: new Date("2026-04-05T12:00:00Z"),
+      });
+
+      expect(resultado).toEqual({ streakAtual: 3, melhorStreak: 3 });
+    });
+
+    it("deve calcular melhor streak distinto do atual", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([
+        { dia: new Date("2026-04-01T00:00:00Z") },
+        { dia: new Date("2026-04-02T00:00:00Z") },
+        { dia: new Date("2026-04-03T00:00:00Z") },
+        { dia: new Date("2026-04-04T00:00:00Z") },
+        { dia: new Date("2026-04-09T00:00:00Z") },
+        { dia: new Date("2026-04-10T00:00:00Z") },
+      ]);
+
+      const resultado = await repositorio.calcularStreaks({
+        usuarioId: "u1",
+        agora: new Date("2026-04-10T12:00:00Z"),
+      });
+
+      expect(resultado).toEqual({ streakAtual: 2, melhorStreak: 4 });
+    });
+
+    it("deve zerar streak atual se último dia não for hoje nem ontem", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([
+        { dia: new Date("2026-04-01T00:00:00Z") },
+        { dia: new Date("2026-04-02T00:00:00Z") },
+      ]);
+
+      const resultado = await repositorio.calcularStreaks({
+        usuarioId: "u1",
+        agora: new Date("2026-04-10T12:00:00Z"),
+      });
+
+      expect(resultado.streakAtual).toBe(0);
+      expect(resultado.melhorStreak).toBe(2);
+    });
+
+    it("deve aceitar streak atual quando último dia foi ontem", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([
+        { dia: new Date("2026-04-04T00:00:00Z") },
+        { dia: new Date("2026-04-05T00:00:00Z") },
+      ]);
+
+      const resultado = await repositorio.calcularStreaks({
+        usuarioId: "u1",
+        agora: new Date("2026-04-06T12:00:00Z"),
+      });
+
+      expect(resultado.streakAtual).toBe(2);
+    });
+  });
 });
