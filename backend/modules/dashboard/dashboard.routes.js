@@ -196,6 +196,96 @@ import {
  *         $ref: '#/components/responses/NaoAutorizado'
  */
 
+/**
+ * @swagger
+ * /dashboard/por-hora:
+ *   get:
+ *     summary: Retorna total de segundos agrupado por hora do dia (0-23, fuso America/Sao_Paulo)
+ *     tags: [Dashboard]
+ *     parameters:
+ *       - in: query
+ *         name: pastaId
+ *         schema: { type: string, format: uuid }
+ *       - in: query
+ *         name: atividadeId
+ *         schema: { type: string, format: uuid }
+ *     responses:
+ *       200:
+ *         description: Total por hora
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   hora: { type: integer, minimum: 0, maximum: 23 }
+ *                   totalSegundos: { type: integer }
+ *       401:
+ *         $ref: '#/components/responses/NaoAutorizado'
+ */
+
+/**
+ * @swagger
+ * /dashboard/por-dia-semana:
+ *   get:
+ *     summary: Retorna total de segundos agrupado por dia da semana (0=domingo)
+ *     tags: [Dashboard]
+ *     parameters:
+ *       - in: query
+ *         name: pastaId
+ *         schema: { type: string, format: uuid }
+ *       - in: query
+ *         name: atividadeId
+ *         schema: { type: string, format: uuid }
+ *     responses:
+ *       200:
+ *         description: Total por dia da semana
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   diaSemana: { type: integer, minimum: 0, maximum: 6 }
+ *                   totalSegundos: { type: integer }
+ *       401:
+ *         $ref: '#/components/responses/NaoAutorizado'
+ */
+
+/**
+ * @swagger
+ * /dashboard/por-modo:
+ *   get:
+ *     summary: Retorna total de segundos e número de sessões por modo
+ *     tags: [Dashboard]
+ *     parameters:
+ *       - in: query
+ *         name: pastaId
+ *         schema: { type: string, format: uuid }
+ *       - in: query
+ *         name: atividadeId
+ *         schema: { type: string, format: uuid }
+ *     responses:
+ *       200:
+ *         description: Total por modo
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   modo:
+ *                     type: string
+ *                     enum: [timer, pomodoro, manual, check_binario]
+ *                   totalSegundos: { type: integer }
+ *                   totalSessoes: { type: integer }
+ *       401:
+ *         $ref: '#/components/responses/NaoAutorizado'
+ */
+
 export function criarDashboardRoutes(dashboardController) {
   const router = Router();
 
