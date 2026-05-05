@@ -247,7 +247,7 @@ Implementação:
 
 ### Fase 15 — Frontend: dashboard por atividade
 
-- [ ] `feat(pages/DashboardAtividade): cria página com header (nome da atividade + pasta)`
+- [x] `feat(pages/DashboardAtividade): cria página com header (nome da atividade + pasta)`
 - [ ] `feat(App): registra rota /atividades/:atividadeId/dashboard`
 - [ ] `feat(pages/DashboardAtividade): reusa componentes filtrando por atividadeId`
 - [ ] `feat(pages/Sessoes ou CardAtividade): adiciona link "Ver dashboard" da atividade`
