@@ -6,7 +6,7 @@ const SENHA_HASH = await bcrypt.hash("senha1234", 12);
 
 async function main() {
   console.log("🌱 Limpando banco...");
-  await prisma.$executeRaw`TRUNCATE TABLE sessoes, config_pomodoro, categorias, atividades, usuarios CASCADE`;
+  await prisma.$executeRaw`TRUNCATE TABLE sessoes, config_pomodoro, categorias, atividades, pastas, usuarios CASCADE`;
 
   console.log("👤 Criando usuário...");
   const usuario = await prisma.usuario.create({
@@ -16,6 +16,13 @@ async function main() {
       senhaHash: SENHA_HASH,
     },
   });
+
+  console.log("📁 Criando pastas...");
+  const [estudos, saude, hobbies] = await Promise.all([
+    prisma.pasta.create({ data: { usuarioId: usuario.id, nome: "Estudos", ordem: 0 } }),
+    prisma.pasta.create({ data: { usuarioId: usuario.id, nome: "Saúde", ordem: 1 } }),
+    prisma.pasta.create({ data: { usuarioId: usuario.id, nome: "Hobbies", ordem: 2 } }),
+  ]);
 
   console.log("🏃 Criando atividades...");
 
@@ -38,50 +45,50 @@ async function main() {
     inglesBasico,
   ] = await Promise.all([
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Faculdade", tipoMedicao: "cronometrada" },
+      data: { usuarioId: usuario.id, pastaId: estudos.id, nome: "Faculdade", tipoMedicao: "cronometrada" },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Programação", tipoMedicao: "cronometrada" },
+      data: { usuarioId: usuario.id, pastaId: estudos.id, nome: "Programação", tipoMedicao: "cronometrada" },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Idiomas", tipoMedicao: "cronometrada" },
+      data: { usuarioId: usuario.id, pastaId: estudos.id, nome: "Idiomas", tipoMedicao: "cronometrada" },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Concurso", tipoMedicao: "cronometrada" },
+      data: { usuarioId: usuario.id, pastaId: estudos.id, nome: "Concurso", tipoMedicao: "cronometrada" },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Exercício", tipoMedicao: "cronometrada" },
+      data: { usuarioId: usuario.id, pastaId: saude.id, nome: "Exercício", tipoMedicao: "cronometrada" },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Leitura", tipoMedicao: "cronometrada" },
+      data: { usuarioId: usuario.id, pastaId: hobbies.id, nome: "Leitura", tipoMedicao: "cronometrada" },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Meditação", tipoMedicao: "binaria" },
+      data: { usuarioId: usuario.id, pastaId: saude.id, nome: "Meditação", tipoMedicao: "binaria" },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Alimentação saudável", tipoMedicao: "binaria" },
+      data: { usuarioId: usuario.id, pastaId: saude.id, nome: "Alimentação saudável", tipoMedicao: "binaria" },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Dormir no horário", tipoMedicao: "binaria" },
+      data: { usuarioId: usuario.id, pastaId: saude.id, nome: "Dormir no horário", tipoMedicao: "binaria" },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Beber 2L de água", tipoMedicao: "binaria" },
+      data: { usuarioId: usuario.id, pastaId: saude.id, nome: "Beber 2L de água", tipoMedicao: "binaria" },
     }),
     prisma.atividade.create({
       data: { usuarioId: usuario.id, nome: "Journaling", tipoMedicao: "binaria" },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Violão", tipoMedicao: "cronometrada" },
+      data: { usuarioId: usuario.id, pastaId: hobbies.id, nome: "Violão", tipoMedicao: "cronometrada" },
     }),
     // arquivadas
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Cursinho", tipoMedicao: "cronometrada", arquivada: true },
+      data: { usuarioId: usuario.id, pastaId: estudos.id, nome: "Cursinho", tipoMedicao: "cronometrada", arquivada: true },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "TCC", tipoMedicao: "cronometrada", arquivada: true },
+      data: { usuarioId: usuario.id, pastaId: estudos.id, nome: "TCC", tipoMedicao: "cronometrada", arquivada: true },
     }),
     prisma.atividade.create({
-      data: { usuarioId: usuario.id, nome: "Inglês básico", tipoMedicao: "cronometrada", arquivada: true },
+      data: { usuarioId: usuario.id, pastaId: estudos.id, nome: "Inglês básico", tipoMedicao: "cronometrada", arquivada: true },
     }),
   ]);
 
@@ -183,6 +190,7 @@ async function main() {
   console.log("  Email:  teste@email.com");
   console.log("  Senha:  senha1234");
   console.log("─────────────────────────────────────────");
+  console.log("  Pastas (3): Estudos, Saúde, Hobbies");
   console.log("  Atividades ativas (12):");
   console.log("    Cronometradas:");
   console.log("    • Faculdade         — 6 categorias, pomodoro 50/10");
