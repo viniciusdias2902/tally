@@ -208,6 +208,11 @@ export function criarDashboardRoutes(dashboardController) {
   );
   router.get("/evolucao", validar(evolucaoQuerySchema), dashboardController.evolucao);
   router.get("/por-hora", validar(kpisQuerySchema), dashboardController.porHora);
+  router.get(
+    "/por-dia-semana",
+    validar(kpisQuerySchema),
+    dashboardController.porDiaSemana,
+  );
 
   return router;
 }

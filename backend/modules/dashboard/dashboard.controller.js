@@ -46,5 +46,14 @@ export function criarDashboardController(dashboardService) {
       });
       res.json(dados);
     },
+
+    async porDiaSemana(req, res) {
+      const dados = await dashboardService.obterPorDiaSemana({
+        usuarioId: req.usuarioId,
+        pastaId: req.query.pastaId,
+        atividadeId: req.query.atividadeId,
+      });
+      res.json(dados);
+    },
   };
 }
