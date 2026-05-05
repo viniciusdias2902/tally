@@ -206,7 +206,7 @@ Implementação:
 
 ### Fase 9 — Frontend: heatmap
 
-- [ ] `feat(components/dashboard): cria HeatmapAnual com react-activity-calendar`
+- [x] `feat(components/dashboard): cria HeatmapAnual com react-activity-calendar`
 - [ ] `feat(components/dashboard): aplica theme Catppuccin (Latte/Mocha) no HeatmapAnual`
 - [ ] `feat(components/dashboard): tooltips + label do total no HeatmapAnual`
 
