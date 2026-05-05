@@ -1,6 +1,12 @@
 export function criarDashboardRepository(prisma) {
   return {
-    async somarSegundosPorDia({ usuarioId, pastaId = null, dataInicio, dataFim }) {
+    async somarSegundosPorDia({
+      usuarioId,
+      pastaId = null,
+      atividadeId = null,
+      dataInicio,
+      dataFim,
+    }) {
       const linhas = await prisma.$queryRaw`
         SELECT
           (s.iniciado_em AT TIME ZONE 'America/Sao_Paulo')::date AS dia,
@@ -9,6 +15,7 @@ export function criarDashboardRepository(prisma) {
         JOIN atividades a ON a.id = s.atividade_id
         WHERE a.usuario_id = ${usuarioId}::uuid
           AND (${pastaId}::uuid IS NULL OR a.pasta_id = ${pastaId}::uuid)
+          AND (${atividadeId}::uuid IS NULL OR s.atividade_id = ${atividadeId}::uuid)
           AND s.iniciado_em >= ${dataInicio}
           AND s.iniciado_em < ${dataFim}
         GROUP BY dia
