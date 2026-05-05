@@ -144,7 +144,7 @@ Implementação:
 
 - [x] `feat(dashboard.repository): adiciona somarPorPastaDoUsuario`
 - [x] `test(dashboard.repository): cobre somarPorPastaDoUsuario`
-- [ ] `feat(dashboard.repository): adiciona somarPorAtividadeNaPasta`
+- [x] `feat(dashboard.repository): adiciona somarPorAtividadeNaPasta`
 - [ ] `test(dashboard.repository): cobre somarPorAtividadeNaPasta`
 - [ ] `feat(dashboard.repository): adiciona somarPorCategoriaNaAtividade`
 - [ ] `test(dashboard.repository): cobre somarPorCategoriaNaAtividade`
