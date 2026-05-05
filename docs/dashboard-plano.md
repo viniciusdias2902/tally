@@ -186,7 +186,7 @@ Implementação:
 
 - [x] `feat(dashboard.repository): adiciona topAtividadesDoUsuario`
 - [x] `test(dashboard.repository): cobre topAtividadesDoUsuario`
-- [ ] `feat(dashboard.service+controller+routes): expõe top-atividades`
+- [x] `feat(dashboard.service+controller+routes): expõe top-atividades`
 - [ ] `test(dashboard.routes): cobre GET /dashboard/top-atividades`
 - [ ] `docs(swagger): documenta GET /dashboard/top-atividades`
 

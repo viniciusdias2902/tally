@@ -64,5 +64,13 @@ export function criarDashboardController(dashboardService) {
       });
       res.json(dados);
     },
+
+    async topAtividades(req, res) {
+      const dados = await dashboardService.obterTopAtividades({
+        usuarioId: req.usuarioId,
+        limite: req.query.limite,
+      });
+      res.json(dados);
+    },
   };
 }

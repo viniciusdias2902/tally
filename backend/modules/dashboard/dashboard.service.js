@@ -108,6 +108,10 @@ export function criarDashboardService(dashboardRepository) {
       return dashboardRepository.somarPorModo({ usuarioId, pastaId, atividadeId });
     },
 
+    async obterTopAtividades({ usuarioId, limite = 8 }) {
+      return dashboardRepository.topAtividadesDoUsuario({ usuarioId, limite });
+    },
+
     async obterDistribuicao({ usuarioId, pastaId = null, atividadeId = null }) {
       if (atividadeId) {
         const itens = await dashboardRepository.somarPorCategoriaNaAtividade({

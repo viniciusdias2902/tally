@@ -29,3 +29,9 @@ export const evolucaoQuerySchema = {
     dias: z.coerce.number().int().min(1).max(365).optional(),
   }),
 };
+
+export const topAtividadesQuerySchema = {
+  query: z.object({
+    limite: z.coerce.number().int().min(1).max(50).optional(),
+  }),
+};

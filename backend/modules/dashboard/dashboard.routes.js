@@ -5,6 +5,7 @@ import {
   kpisQuerySchema,
   distribuicaoQuerySchema,
   evolucaoQuerySchema,
+  topAtividadesQuerySchema,
 } from "./dashboard.schemas.js";
 
 /**
@@ -304,6 +305,11 @@ export function criarDashboardRoutes(dashboardController) {
     dashboardController.porDiaSemana,
   );
   router.get("/por-modo", validar(kpisQuerySchema), dashboardController.porModo);
+  router.get(
+    "/top-atividades",
+    validar(topAtividadesQuerySchema),
+    dashboardController.topAtividades,
+  );
 
   return router;
 }
