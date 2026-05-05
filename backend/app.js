@@ -45,7 +45,7 @@ const pastaRoutes = criarPastaRoutes(pastaController);
 
 // --- Atividades ---
 const atividadeRepository = criarAtividadeRepository(prisma);
-const atividadeService = criarAtividadeService(atividadeRepository);
+const atividadeService = criarAtividadeService(atividadeRepository, pastaService);
 const atividadeController = criarAtividadeController(atividadeService);
 const atividadeRoutes = criarAtividadeRoutes(atividadeController);
 
