@@ -228,7 +228,7 @@ Implementação:
 - [x] `feat(components/dashboard): cria EvolucaoArea (Area chart 30 dias)`
 - [x] `feat(components/dashboard): cria PorHoraBar (24 barras)`
 - [x] `feat(components/dashboard): cria PorDiaSemanaBar (7 barras)`
-- [ ] `feat(components/dashboard): cria PorModoDonut (donut pequeno)`
+- [x] `feat(components/dashboard): cria PorModoDonut (donut pequeno)`
 - [ ] `feat(components/dashboard): cria TopAtividadesBar (horizontal)`
 
 ### Fase 13 — Frontend: layout do Dashboard geral
