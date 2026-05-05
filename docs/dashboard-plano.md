@@ -194,7 +194,7 @@ Implementação:
 
 - [x] `feat(api/dashboard): adiciona heatmap()`
 - [x] `feat(api/dashboard): adiciona kpis()`
-- [ ] `feat(api/dashboard): adiciona distribuicao()`
+- [x] `feat(api/dashboard): adiciona distribuicao()`
 - [ ] `feat(api/dashboard): adiciona evolucao()`
 - [ ] `feat(api/dashboard): adiciona porHora() porDiaSemana() porModo()`
 - [ ] `feat(api/dashboard): adiciona topAtividades()`
