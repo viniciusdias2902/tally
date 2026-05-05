@@ -33,3 +33,27 @@ export function evolucao({ pastaId, atividadeId, dias } = {}) {
   const query = params.toString();
   return api(`/dashboard/evolucao${query ? `?${query}` : ""}`);
 }
+
+export function porHora({ pastaId, atividadeId } = {}) {
+  const params = new URLSearchParams();
+  if (pastaId) params.set("pastaId", pastaId);
+  if (atividadeId) params.set("atividadeId", atividadeId);
+  const query = params.toString();
+  return api(`/dashboard/por-hora${query ? `?${query}` : ""}`);
+}
+
+export function porDiaSemana({ pastaId, atividadeId } = {}) {
+  const params = new URLSearchParams();
+  if (pastaId) params.set("pastaId", pastaId);
+  if (atividadeId) params.set("atividadeId", atividadeId);
+  const query = params.toString();
+  return api(`/dashboard/por-dia-semana${query ? `?${query}` : ""}`);
+}
+
+export function porModo({ pastaId, atividadeId } = {}) {
+  const params = new URLSearchParams();
+  if (pastaId) params.set("pastaId", pastaId);
+  if (atividadeId) params.set("atividadeId", atividadeId);
+  const query = params.toString();
+  return api(`/dashboard/por-modo${query ? `?${query}` : ""}`);
+}
