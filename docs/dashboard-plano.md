@@ -133,7 +133,7 @@ Implementação:
 - [x] `feat(dashboard.repository): adiciona calcularStreaks (atual e melhor)`
 - [x] `test(dashboard.repository): cobre calcularStreaks com sessões espaçadas`
 - [x] `feat(dashboard.service): adiciona obterKpis`
-- [ ] `test(dashboard.service): cobre obterKpis nos 3 escopos`
+- [x] `test(dashboard.service): cobre obterKpis nos 3 escopos`
 - [ ] `feat(dashboard.schemas): adiciona kpisQuerySchema`
 - [ ] `feat(dashboard.controller): adiciona handler kpis`
 - [ ] `feat(dashboard.routes): registra GET /dashboard/kpis`
