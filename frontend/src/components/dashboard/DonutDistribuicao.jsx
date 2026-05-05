@@ -3,6 +3,26 @@ import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { corCategorica } from "./paleta-graficos.js";
 import { formatarDuracaoHumana } from "../../utils/formatarDuracaoHumana.js";
 
+function ConteudoTooltip({ active, payload }) {
+  if (!active || !payload || payload.length === 0) return null;
+  const item = payload[0];
+  return (
+    <div className="rounded-lg border border-border bg-bg-popover px-3 py-2 text-sm shadow-md">
+      <p className="flex items-center gap-2 font-medium text-text-primary">
+        <span
+          aria-hidden
+          className="h-2.5 w-2.5 rounded-sm"
+          style={{ backgroundColor: item.payload.fill ?? item.color }}
+        />
+        {item.name}
+      </p>
+      <p className="mt-0.5 tabular-nums text-text-secondary">
+        {formatarDuracaoHumana(item.value)}
+      </p>
+    </div>
+  );
+}
+
 export function DonutDistribuicao({ itens }) {
   const { theme } = useTheme();
   const cores = itens.map((item, indice) => item.cor ?? corCategorica(indice, theme));
@@ -27,7 +47,7 @@ export function DonutDistribuicao({ itens }) {
                 <Cell key={item.id ?? item.nome} fill={cores[indice]} />
               ))}
             </Pie>
-            <Tooltip />
+            <Tooltip content={<ConteudoTooltip />} />
           </PieChart>
         </ResponsiveContainer>
       </div>
