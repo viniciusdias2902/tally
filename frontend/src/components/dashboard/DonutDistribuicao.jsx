@@ -1,4 +1,5 @@
 import { Cell, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
+import { useNavigate } from "react-router-dom";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
 import { corCategorica } from "./paleta-graficos.js";
 import { formatarDuracaoHumana } from "../../utils/formatarDuracaoHumana.js";
@@ -23,9 +24,16 @@ function ConteudoTooltip({ active, payload }) {
   );
 }
 
-export function DonutDistribuicao({ itens }) {
+export function DonutDistribuicao({ itens, rotaParaItem }) {
   const { theme } = useTheme();
+  const navigate = useNavigate();
   const cores = itens.map((item, indice) => item.cor ?? corCategorica(indice, theme));
+
+  function navegarPara(item) {
+    if (!rotaParaItem) return;
+    const rota = rotaParaItem(item);
+    if (rota) navigate(rota);
+  }
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
@@ -42,6 +50,8 @@ export function DonutDistribuicao({ itens }) {
               outerRadius="85%"
               paddingAngle={2}
               stroke="none"
+              onClick={(_, indice) => navegarPara(itens[indice])}
+              cursor={rotaParaItem ? "pointer" : "default"}
             >
               {itens.map((item, indice) => (
                 <Cell key={item.id ?? item.nome} fill={cores[indice]} />
@@ -52,24 +62,42 @@ export function DonutDistribuicao({ itens }) {
         </ResponsiveContainer>
       </div>
       <ul className="space-y-1.5 text-sm sm:min-w-44">
-        {itens.map((item, indice) => (
-          <li
-            key={item.id ?? item.nome}
-            className="flex items-center justify-between gap-3"
-          >
-            <span className="flex min-w-0 items-center gap-2">
-              <span
-                aria-hidden
-                className="h-3 w-3 shrink-0 rounded-sm"
-                style={{ backgroundColor: cores[indice] }}
-              />
-              <span className="truncate text-text-primary">{item.nome}</span>
-            </span>
-            <span className="tabular-nums text-text-secondary">
-              {formatarDuracaoHumana(item.totalSegundos)}
-            </span>
-          </li>
-        ))}
+        {itens.map((item, indice) => {
+          const rota = rotaParaItem ? rotaParaItem(item) : null;
+          const conteudo = (
+            <>
+              <span className="flex min-w-0 items-center gap-2">
+                <span
+                  aria-hidden
+                  className="h-3 w-3 shrink-0 rounded-sm"
+                  style={{ backgroundColor: cores[indice] }}
+                />
+                <span className="truncate text-text-primary">{item.nome}</span>
+              </span>
+              <span className="tabular-nums text-text-secondary">
+                {formatarDuracaoHumana(item.totalSegundos)}
+              </span>
+            </>
+          );
+          return (
+            <li
+              key={item.id ?? item.nome}
+              className="flex items-center justify-between gap-3"
+            >
+              {rota ? (
+                <button
+                  type="button"
+                  onClick={() => navigate(rota)}
+                  className="flex w-full items-center justify-between gap-3 rounded text-left hover:text-accent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent/40"
+                >
+                  {conteudo}
+                </button>
+              ) : (
+                conteudo
+              )}
+            </li>
+          );
+        })}
       </ul>
     </div>
   );

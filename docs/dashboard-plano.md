@@ -221,7 +221,7 @@ Implementação:
 - [x] `feat(components/dashboard): cria DonutDistribuicao (Recharts PieChart)`
 - [x] `feat(components/dashboard): adiciona legenda lateral com totais`
 - [x] `feat(components/dashboard): tooltip customizado com h/min`
-- [ ] `feat(components/dashboard): drill-down on click (recebe rotaParaItem como prop)`
+- [x] `feat(components/dashboard): drill-down on click (recebe rotaParaItem como prop)`
 
 ### Fase 12 — Frontend: gráficos secundários
 
