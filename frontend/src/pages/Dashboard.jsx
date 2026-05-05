@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { GradeKpis } from "../components/dashboard/GradeKpis.jsx";
 import { HeatmapAnual } from "../components/dashboard/HeatmapAnual.jsx";
 import { DonutDistribuicao } from "../components/dashboard/DonutDistribuicao.jsx";
+import Spinner from "../components/ui/Spinner.jsx";
+import * as dashboardApi from "../api/dashboard.js";
 
 const KPIS_VAZIOS = {
   totalSegundos: 0,
@@ -11,9 +13,51 @@ const KPIS_VAZIOS = {
 };
 
 export default function Dashboard() {
-  const [kpis] = useState(KPIS_VAZIOS);
-  const [heatmap] = useState([]);
-  const [distribuicao] = useState({ nivel: "pasta", itens: [] });
+  const [kpis, setKpis] = useState(KPIS_VAZIOS);
+  const [heatmap, setHeatmap] = useState([]);
+  const [distribuicao, setDistribuicao] = useState({ nivel: "pasta", itens: [] });
+  const [carregando, setCarregando] = useState(true);
+  const [erro, setErro] = useState("");
+
+  useEffect(() => {
+    let cancelado = false;
+    Promise.all([
+      dashboardApi.kpis(),
+      dashboardApi.heatmap(),
+      dashboardApi.distribuicao(),
+    ])
+      .then(([kpisRes, heatmapRes, distribuicaoRes]) => {
+        if (cancelado) return;
+        setKpis(kpisRes);
+        setHeatmap(heatmapRes);
+        setDistribuicao(distribuicaoRes);
+      })
+      .catch(() => {
+        if (!cancelado) setErro("Erro ao carregar dashboard.");
+      })
+      .finally(() => {
+        if (!cancelado) setCarregando(false);
+      });
+    return () => {
+      cancelado = true;
+    };
+  }, []);
+
+  if (carregando) {
+    return (
+      <div className="flex items-center justify-center py-20">
+        <Spinner className="h-8 w-8" />
+      </div>
+    );
+  }
+
+  if (erro) {
+    return (
+      <div className="py-20 text-center">
+        <p className="text-sm text-danger">{erro}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="mx-auto max-w-6xl space-y-6">
@@ -31,7 +75,12 @@ export default function Dashboard() {
         </Cartao>
         <Cartao titulo="Distribuição">
           {distribuicao.itens.length > 0 ? (
-            <DonutDistribuicao itens={distribuicao.itens} />
+            <DonutDistribuicao
+              itens={distribuicao.itens}
+              rotaParaItem={(item) =>
+                item.pastaId ? `/pastas/${item.pastaId}/dashboard` : null
+              }
+            />
           ) : (
             <PlaceholderVazio />
           )}
