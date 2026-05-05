@@ -1,9 +1,10 @@
 import { CardKpi } from "./CardKpi.jsx";
+import { formatarDuracaoHumana } from "../../utils/formatarDuracaoHumana.js";
 
 export function GradeKpis({ kpis }) {
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-      <CardKpi titulo="Tempo total" valor={kpis.totalSegundos} sufixo="s" />
+      <CardKpi titulo="Tempo total" valor={formatarDuracaoHumana(kpis.totalSegundos)} />
       <CardKpi titulo="Sessões" valor={kpis.totalSessoes} />
       <CardKpi titulo="Sequência atual" valor={kpis.streakAtual} sufixo="dias" />
       <CardKpi titulo="Melhor sequência" valor={kpis.melhorStreak} sufixo="dias" />
