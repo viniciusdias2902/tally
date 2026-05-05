@@ -130,7 +130,7 @@ Implementação:
 
 - [x] `feat(dashboard.repository): adiciona somarTotaisGerais (segundos+sessoes)`
 - [x] `test(dashboard.repository): cobre somarTotaisGerais`
-- [ ] `feat(dashboard.repository): adiciona calcularStreaks (atual e melhor)`
+- [x] `feat(dashboard.repository): adiciona calcularStreaks (atual e melhor)`
 - [ ] `test(dashboard.repository): cobre calcularStreaks com sessões espaçadas`
 - [ ] `feat(dashboard.service): adiciona obterKpis`
 - [ ] `test(dashboard.service): cobre obterKpis nos 3 escopos`
