@@ -6,12 +6,14 @@ export const criarAtividadeSchema = {
   body: z.object({
     nome: z.string().min(1).max(100),
     tipoMedicao,
+    pastaId: z.uuid().nullish(),
   }),
 };
 
 export const atualizarAtividadeSchema = {
   body: z.object({
     nome: z.string().min(1).max(100).optional(),
+    pastaId: z.uuid().nullish(),
   }),
 };
 
