@@ -131,6 +131,61 @@ describe("dashboard.service", () => {
     });
   });
 
+  describe("obterEvolucao", () => {
+    it("deve preencher dias sem sessões com totalSegundos zero", async () => {
+      const agora = new Date("2026-04-05T12:00:00Z");
+      repositorioMock.somarSegundosPorDia.mockResolvedValue([
+        { dia: new Date("2026-04-03T00:00:00Z"), totalSegundos: 1800 },
+        { dia: new Date("2026-04-05T00:00:00Z"), totalSegundos: 3600 },
+      ]);
+
+      const evolucao = await servico.obterEvolucao({
+        usuarioId: "u1",
+        dias: 5,
+        agora,
+      });
+
+      expect(evolucao).toEqual([
+        { data: "2026-04-01", totalSegundos: 0 },
+        { data: "2026-04-02", totalSegundos: 0 },
+        { data: "2026-04-03", totalSegundos: 1800 },
+        { data: "2026-04-04", totalSegundos: 0 },
+        { data: "2026-04-05", totalSegundos: 3600 },
+      ]);
+    });
+
+    it("deve usar 30 dias por padrão", async () => {
+      repositorioMock.somarSegundosPorDia.mockResolvedValue([]);
+
+      const evolucao = await servico.obterEvolucao({
+        usuarioId: "u1",
+        agora: new Date("2026-04-30T12:00:00Z"),
+      });
+
+      expect(evolucao).toHaveLength(30);
+    });
+
+    it("deve repassar pastaId e atividadeId ao repositório", async () => {
+      repositorioMock.somarSegundosPorDia.mockResolvedValue([]);
+
+      await servico.obterEvolucao({
+        usuarioId: "u1",
+        pastaId: "p1",
+        atividadeId: "a1",
+        dias: 1,
+        agora: new Date("2026-04-01T12:00:00Z"),
+      });
+
+      expect(repositorioMock.somarSegundosPorDia).toHaveBeenCalledWith(
+        expect.objectContaining({
+          usuarioId: "u1",
+          pastaId: "p1",
+          atividadeId: "a1",
+        }),
+      );
+    });
+  });
+
   describe("obterDistribuicao", () => {
     it("deve retornar nível pasta no escopo geral", async () => {
       const itens = [{ pastaId: "p1", nome: "Estudos", totalSegundos: 7200 }];

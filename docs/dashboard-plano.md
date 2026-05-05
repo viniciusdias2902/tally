@@ -161,7 +161,7 @@ Implementação:
 - [~] `feat(dashboard.repository): adiciona somarSegundosPorDiaRecentes (limite N dias)` — absorvido por `somarSegundosPorDia` (já recebe `dataInicio/dataFim`); o service calcula as datas a partir do parâmetro `dias`.
 - [~] `test(dashboard.repository): cobre somarSegundosPorDiaRecentes` — absorvido pelos testes existentes de `somarSegundosPorDia`.
 - [x] `feat(dashboard.service): adiciona obterEvolucao`
-- [ ] `test(dashboard.service): cobre obterEvolucao`
+- [x] `test(dashboard.service): cobre obterEvolucao`
 - [ ] `feat(dashboard.controller): adiciona handler evolucao`
 - [ ] `feat(dashboard.routes): registra GET /dashboard/evolucao`
 - [ ] `test(dashboard.routes): cobre GET /dashboard/evolucao`
