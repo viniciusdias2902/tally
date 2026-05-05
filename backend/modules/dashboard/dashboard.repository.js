@@ -175,6 +175,30 @@ export function criarDashboardRepository(prisma) {
       }));
     },
 
+    async topAtividadesDoUsuario({ usuarioId, limite = 8 }) {
+      const linhas = await prisma.$queryRaw`
+        SELECT
+          a.id AS atividade_id,
+          a.nome AS nome,
+          p.nome AS pasta_nome,
+          SUM(s.duracao_segundos)::int AS total_segundos
+        FROM sessoes s
+        JOIN atividades a ON a.id = s.atividade_id
+        LEFT JOIN pastas p ON p.id = a.pasta_id
+        WHERE a.usuario_id = ${usuarioId}::uuid
+        GROUP BY a.id, a.nome, p.nome
+        HAVING SUM(s.duracao_segundos) > 0
+        ORDER BY total_segundos DESC
+        LIMIT ${limite}
+      `;
+      return linhas.map((linha) => ({
+        atividadeId: linha.atividade_id,
+        nome: linha.nome,
+        pastaNome: linha.pasta_nome,
+        totalSegundos: linha.total_segundos,
+      }));
+    },
+
     async calcularStreaks({
       usuarioId,
       pastaId = null,

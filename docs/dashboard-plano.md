@@ -184,7 +184,7 @@ Implementação:
 
 ### Fase 6 — Backend: top atividades
 
-- [ ] `feat(dashboard.repository): adiciona topAtividadesDoUsuario`
+- [x] `feat(dashboard.repository): adiciona topAtividadesDoUsuario`
 - [ ] `test(dashboard.repository): cobre topAtividadesDoUsuario`
 - [ ] `feat(dashboard.service+controller+routes): expõe top-atividades`
 - [ ] `test(dashboard.routes): cobre GET /dashboard/top-atividades`
