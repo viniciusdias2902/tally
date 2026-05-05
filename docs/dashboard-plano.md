@@ -132,7 +132,7 @@ Implementação:
 - [x] `test(dashboard.repository): cobre somarTotaisGerais`
 - [x] `feat(dashboard.repository): adiciona calcularStreaks (atual e melhor)`
 - [x] `test(dashboard.repository): cobre calcularStreaks com sessões espaçadas`
-- [ ] `feat(dashboard.service): adiciona obterKpis`
+- [x] `feat(dashboard.service): adiciona obterKpis`
 - [ ] `test(dashboard.service): cobre obterKpis nos 3 escopos`
 - [ ] `feat(dashboard.schemas): adiciona kpisQuerySchema`
 - [ ] `feat(dashboard.controller): adiciona handler kpis`

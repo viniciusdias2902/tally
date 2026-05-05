@@ -43,5 +43,18 @@ export function criarDashboardService(dashboardRepository) {
       }
       return resultado;
     },
+
+    async obterKpis({
+      usuarioId,
+      pastaId = null,
+      atividadeId = null,
+      agora = new Date(),
+    }) {
+      const [totais, streaks] = await Promise.all([
+        dashboardRepository.somarTotaisGerais({ usuarioId, pastaId, atividadeId }),
+        dashboardRepository.calcularStreaks({ usuarioId, pastaId, atividadeId, agora }),
+      ]);
+      return { ...totais, ...streaks };
+    },
   };
 }
