@@ -27,5 +27,15 @@ export function criarDashboardController(dashboardService) {
       });
       res.json(dados);
     },
+
+    async evolucao(req, res) {
+      const dados = await dashboardService.obterEvolucao({
+        usuarioId: req.usuarioId,
+        pastaId: req.query.pastaId,
+        atividadeId: req.query.atividadeId,
+        dias: req.query.dias,
+      });
+      res.json(dados);
+    },
   };
 }
