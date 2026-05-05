@@ -47,5 +47,32 @@ describe("dashboard.repository", () => {
 
       expect(resultado).toEqual([]);
     });
+
+    it("deve passar pastaId como parâmetro do filtro quando fornecido", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([]);
+
+      await repositorio.somarSegundosPorDia({
+        usuarioId: "u1",
+        pastaId: "p1",
+        dataInicio: new Date("2026-04-01"),
+        dataFim: new Date("2026-05-01"),
+      });
+
+      const [, ...valores] = prismaMock.$queryRaw.mock.calls[0];
+      expect(valores).toContain("p1");
+    });
+
+    it("deve passar pastaId nulo por padrão", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([]);
+
+      await repositorio.somarSegundosPorDia({
+        usuarioId: "u1",
+        dataInicio: new Date("2026-04-01"),
+        dataFim: new Date("2026-05-01"),
+      });
+
+      const [, ...valores] = prismaMock.$queryRaw.mock.calls[0];
+      expect(valores).toContain(null);
+    });
   });
 });
