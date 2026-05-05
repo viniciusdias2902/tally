@@ -213,6 +213,7 @@ export function criarDashboardRoutes(dashboardController) {
     validar(kpisQuerySchema),
     dashboardController.porDiaSemana,
   );
+  router.get("/por-modo", validar(kpisQuerySchema), dashboardController.porModo);
 
   return router;
 }

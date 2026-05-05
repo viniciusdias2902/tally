@@ -178,7 +178,7 @@ Implementação:
 - [x] `test(dashboard.repository): cobre somarPorModo`
 - [x] `feat(dashboard.service+controller+routes): expõe por-hora`
 - [x] `feat(dashboard.service+controller+routes): expõe por-dia-semana`
-- [ ] `feat(dashboard.service+controller+routes): expõe por-modo`
+- [x] `feat(dashboard.service+controller+routes): expõe por-modo`
 - [ ] `test(dashboard.routes): cobre os três endpoints novos`
 - [ ] `docs(swagger): documenta os três endpoints novos`
 

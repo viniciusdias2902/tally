@@ -104,6 +104,10 @@ export function criarDashboardService(dashboardRepository) {
       return dashboardRepository.somarPorDiaDaSemana({ usuarioId, pastaId, atividadeId });
     },
 
+    async obterPorModo({ usuarioId, pastaId = null, atividadeId = null }) {
+      return dashboardRepository.somarPorModo({ usuarioId, pastaId, atividadeId });
+    },
+
     async obterDistribuicao({ usuarioId, pastaId = null, atividadeId = null }) {
       if (atividadeId) {
         const itens = await dashboardRepository.somarPorCategoriaNaAtividade({
