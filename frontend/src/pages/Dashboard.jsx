@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { GradeKpis } from "../components/dashboard/GradeKpis.jsx";
 import { HeatmapAnual } from "../components/dashboard/HeatmapAnual.jsx";
 import { DonutDistribuicao } from "../components/dashboard/DonutDistribuicao.jsx";
+import { EvolucaoArea } from "../components/dashboard/EvolucaoArea.jsx";
+import { TopAtividadesBar } from "../components/dashboard/TopAtividadesBar.jsx";
 import Spinner from "../components/ui/Spinner.jsx";
 import * as dashboardApi from "../api/dashboard.js";
 
@@ -16,6 +18,8 @@ export default function Dashboard() {
   const [kpis, setKpis] = useState(KPIS_VAZIOS);
   const [heatmap, setHeatmap] = useState([]);
   const [distribuicao, setDistribuicao] = useState({ nivel: "pasta", itens: [] });
+  const [evolucao, setEvolucao] = useState([]);
+  const [topAtividades, setTopAtividades] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState("");
 
@@ -25,12 +29,16 @@ export default function Dashboard() {
       dashboardApi.kpis(),
       dashboardApi.heatmap(),
       dashboardApi.distribuicao(),
+      dashboardApi.evolucao(),
+      dashboardApi.topAtividades(),
     ])
-      .then(([kpisRes, heatmapRes, distribuicaoRes]) => {
+      .then(([kpisRes, heatmapRes, distribuicaoRes, evolucaoRes, topRes]) => {
         if (cancelado) return;
         setKpis(kpisRes);
         setHeatmap(heatmapRes);
         setDistribuicao(distribuicaoRes);
+        setEvolucao(evolucaoRes);
+        setTopAtividades(topRes);
       })
       .catch(() => {
         if (!cancelado) setErro("Erro ao carregar dashboard.");
@@ -81,6 +89,23 @@ export default function Dashboard() {
                 item.pastaId ? `/pastas/${item.pastaId}/dashboard` : null
               }
             />
+          ) : (
+            <PlaceholderVazio />
+          )}
+        </Cartao>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[2fr_1fr]">
+        <Cartao titulo="Evolução (últimos 30 dias)">
+          {evolucao.length > 0 ? (
+            <EvolucaoArea dados={evolucao} />
+          ) : (
+            <PlaceholderVazio />
+          )}
+        </Cartao>
+        <Cartao titulo="Top atividades">
+          {topAtividades.length > 0 ? (
+            <TopAtividadesBar dados={topAtividades} />
           ) : (
             <PlaceholderVazio />
           )}
