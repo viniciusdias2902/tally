@@ -1,5 +1,11 @@
 import { useMemo } from "react";
 import { ActivityCalendar } from "react-activity-calendar";
+import { useTheme } from "../../contexts/ThemeContext.jsx";
+
+const TEMA_HEATMAP = {
+  light: ["#ccd0da", "#8839ef"],
+  dark: ["#313244", "#cba6f7"],
+};
 
 function calcularLevel(count, maximo) {
   if (count <= 0) return 0;
@@ -12,6 +18,7 @@ function calcularLevel(count, maximo) {
 }
 
 export function HeatmapAnual({ dados }) {
+  const { theme } = useTheme();
   const data = useMemo(() => {
     if (!dados || dados.length === 0) return [];
     const maximo = Math.max(...dados.map((d) => d.count));
@@ -31,6 +38,8 @@ export function HeatmapAnual({ dados }) {
       blockSize={12}
       blockMargin={3}
       blockRadius={2}
+      colorScheme={theme}
+      theme={TEMA_HEATMAP}
     />
   );
 }
