@@ -287,6 +287,40 @@ import {
  *         $ref: '#/components/responses/NaoAutorizado'
  */
 
+/**
+ * @swagger
+ * /dashboard/top-atividades:
+ *   get:
+ *     summary: Retorna as atividades com maior tempo total (escopo geral)
+ *     tags: [Dashboard]
+ *     parameters:
+ *       - in: query
+ *         name: limite
+ *         schema:
+ *           type: integer
+ *           minimum: 1
+ *           maximum: 50
+ *           default: 8
+ *     responses:
+ *       200:
+ *         description: Top atividades por tempo total
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   atividadeId: { type: string, format: uuid }
+ *                   nome: { type: string }
+ *                   pastaNome:
+ *                     type: string
+ *                     nullable: true
+ *                   totalSegundos: { type: integer }
+ *       401:
+ *         $ref: '#/components/responses/NaoAutorizado'
+ */
+
 export function criarDashboardRoutes(dashboardController) {
   const router = Router();
 

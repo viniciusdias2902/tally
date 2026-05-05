@@ -188,7 +188,7 @@ Implementação:
 - [x] `test(dashboard.repository): cobre topAtividadesDoUsuario`
 - [x] `feat(dashboard.service+controller+routes): expõe top-atividades`
 - [x] `test(dashboard.routes): cobre GET /dashboard/top-atividades`
-- [ ] `docs(swagger): documenta GET /dashboard/top-atividades`
+- [x] `docs(swagger): documenta GET /dashboard/top-atividades`
 
 ### Fase 7 — Frontend: API client e infraestrutura
 
