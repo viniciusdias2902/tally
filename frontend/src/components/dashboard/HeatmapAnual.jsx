@@ -7,6 +7,48 @@ const TEMA_HEATMAP = {
   dark: ["#313244", "#cba6f7"],
 };
 
+const LABELS = {
+  months: [
+    "jan",
+    "fev",
+    "mar",
+    "abr",
+    "mai",
+    "jun",
+    "jul",
+    "ago",
+    "set",
+    "out",
+    "nov",
+    "dez",
+  ],
+  weekdays: ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"],
+  totalCount: "{{count}} minutos rastreados em {{year}}",
+  legend: { less: "menos", more: "mais" },
+};
+
+const FORMATADOR_DATA = new Intl.DateTimeFormat("pt-BR", {
+  day: "numeric",
+  month: "short",
+});
+
+function formatarDataCurta(iso) {
+  const [ano, mes, dia] = iso.split("-").map(Number);
+  return FORMATADOR_DATA.format(new Date(ano, mes - 1, dia));
+}
+
+function formatarMinutos(min) {
+  if (!min) return "0 min";
+  if (min < 60) return `${min} min`;
+  const horas = Math.floor(min / 60);
+  const resto = min % 60;
+  return resto === 0 ? `${horas}h` : `${horas}h ${resto}min`;
+}
+
+function textoTooltip({ count, date }) {
+  return `${formatarMinutos(count)} em ${formatarDataCurta(date)}`;
+}
+
 function calcularLevel(count, maximo) {
   if (count <= 0) return 0;
   if (maximo <= 0) return 0;
@@ -40,6 +82,8 @@ export function HeatmapAnual({ dados }) {
       blockRadius={2}
       colorScheme={theme}
       theme={TEMA_HEATMAP}
+      labels={LABELS}
+      tooltips={{ activity: { text: textoTooltip } }}
     />
   );
 }

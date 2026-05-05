@@ -208,7 +208,7 @@ Implementação:
 
 - [x] `feat(components/dashboard): cria HeatmapAnual com react-activity-calendar`
 - [x] `feat(components/dashboard): aplica theme Catppuccin (Latte/Mocha) no HeatmapAnual`
-- [ ] `feat(components/dashboard): tooltips + label do total no HeatmapAnual`
+- [x] `feat(components/dashboard): tooltips + label do total no HeatmapAnual`
 
 ### Fase 10 — Frontend: KPI cards
 
