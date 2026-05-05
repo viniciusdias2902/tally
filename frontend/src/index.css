@@ -18,7 +18,12 @@
   --color-accent: #8839ef;
   --color-accent-hover: #7c1ce3;
   --color-accent-subtle: rgba(136, 57, 239, 0.1);
-  --color-accent-foreground: #ffffff;
+
+  /* Botão primário — filled no Latte, outline no Mocha */
+  --color-button-primary-bg: #8839ef;
+  --color-button-primary-bg-hover: #7c1ce3;
+  --color-button-primary-fg: #ffffff;
+  --color-button-primary-border: #8839ef;
 
   /* Semantic */
   --color-danger: #d20f39;
@@ -92,7 +97,13 @@
   --color-accent: #cba6f7;          /* Mauve */
   --color-accent-hover: #b88ef3;
   --color-accent-subtle: rgba(203, 166, 247, 0.15);
-  --color-accent-foreground: #1e1e2e; /* Base — texto escuro sobre Mauve pastel */
+
+  /* Botão primário em estilo outline — bg em Surface1, accent em Mauve */
+  --color-button-primary-bg: #45475a;       /* Surface1 */
+  --color-button-primary-bg-hover: #585b70; /* Surface2 */
+  --color-button-primary-fg: #cba6f7;       /* Mauve */
+  --color-button-primary-border: #cba6f7;   /* Mauve */
+
   --color-danger: #f38ba8;          /* Red */
   --color-danger-hover: #ec6d92;
   --color-danger-foreground: #1e1e2e; /* Base */
