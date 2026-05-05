@@ -128,7 +128,7 @@ Implementação:
 
 ### Fase 2 — Backend: KPIs
 
-- [ ] `feat(dashboard.repository): adiciona somarTotaisGerais (segundos+sessoes)`
+- [x] `feat(dashboard.repository): adiciona somarTotaisGerais (segundos+sessoes)`
 - [ ] `test(dashboard.repository): cobre somarTotaisGerais`
 - [ ] `feat(dashboard.repository): adiciona calcularStreaks (atual e melhor)`
 - [ ] `test(dashboard.repository): cobre calcularStreaks com sessões espaçadas`

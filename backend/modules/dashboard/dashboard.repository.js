@@ -26,5 +26,22 @@ export function criarDashboardRepository(prisma) {
         totalSegundos: linha.total_segundos,
       }));
     },
+
+    async somarTotaisGerais({ usuarioId, pastaId = null, atividadeId = null }) {
+      const linhas = await prisma.$queryRaw`
+        SELECT
+          COALESCE(SUM(s.duracao_segundos), 0)::int AS total_segundos,
+          COUNT(s.id)::int AS total_sessoes
+        FROM sessoes s
+        JOIN atividades a ON a.id = s.atividade_id
+        WHERE a.usuario_id = ${usuarioId}::uuid
+          AND (${pastaId}::uuid IS NULL OR a.pasta_id = ${pastaId}::uuid)
+          AND (${atividadeId}::uuid IS NULL OR s.atividade_id = ${atividadeId}::uuid)
+      `;
+      return {
+        totalSegundos: linhas[0].total_segundos,
+        totalSessoes: linhas[0].total_sessoes,
+      };
+    },
   };
 }
