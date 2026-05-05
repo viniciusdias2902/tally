@@ -22,6 +22,7 @@ model Usuario {
   atualizadoEm DateTime @updatedAt @map("atualizado_em") @db.Timestamptz
 
   atividades Atividade[]
+  pastas     Pasta[]
 
   @@map("usuarios")
 }
@@ -29,6 +30,7 @@ model Usuario {
 model Atividade {
   id           String      @id @default(uuid()) @db.Uuid
   usuarioId    String      @map("usuario_id") @db.Uuid
+  pastaId      String?     @map("pasta_id") @db.Uuid
   nome         String      @db.VarChar(100)
   tipoMedicao  TipoMedicao @map("tipo_medicao")
   arquivada    Boolean     @default(false)
@@ -36,13 +38,31 @@ model Atividade {
   atualizadoEm DateTime    @updatedAt @map("atualizado_em") @db.Timestamptz
 
   usuario        Usuario         @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  pasta          Pasta?          @relation(fields: [pastaId], references: [id], onDelete: SetNull)
   categorias     Categoria[]
   sessoes        Sessao[]
   configPomodoro ConfigPomodoro?
 
   @@index([usuarioId])
+  @@index([pastaId])
   @@unique([usuarioId, nome], map: "idx_atividades_nome_unico")
   @@map("atividades")
+}
+
+model Pasta {
+  id           String   @id @default(uuid()) @db.Uuid
+  usuarioId    String   @map("usuario_id") @db.Uuid
+  nome         String   @db.VarChar(100)
+  ordem        Int      @default(0)
+  criadoEm     DateTime @default(now()) @map("criado_em") @db.Timestamptz
+  atualizadoEm DateTime @updatedAt @map("atualizado_em") @db.Timestamptz
+
+  usuario    Usuario     @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
+  atividades Atividade[]
+
+  @@index([usuarioId])
+  @@unique([usuarioId, nome], map: "idx_pastas_nome_unico")
+  @@map("pastas")
 }
 
 model Categoria {
