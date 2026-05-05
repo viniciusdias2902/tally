@@ -236,7 +236,7 @@ Implementação:
 - [x] `refactor(pages/Dashboard): substitui placeholder por layout em grid (KPI + heatmap + donut)`
 - [x] `feat(pages/Dashboard): conecta com API (loading/erro)`
 - [x] `feat(pages/Dashboard): adiciona sessão "Evolução + Top atividades"`
-- [ ] `feat(pages/Dashboard): adiciona sessão "Por hora / Por dia / Por modo"`
+- [x] `feat(pages/Dashboard): adiciona sessão "Por hora / Por dia / Por modo"`
 
 ### Fase 14 — Frontend: dashboard por pasta
 

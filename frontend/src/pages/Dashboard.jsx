@@ -4,6 +4,9 @@ import { HeatmapAnual } from "../components/dashboard/HeatmapAnual.jsx";
 import { DonutDistribuicao } from "../components/dashboard/DonutDistribuicao.jsx";
 import { EvolucaoArea } from "../components/dashboard/EvolucaoArea.jsx";
 import { TopAtividadesBar } from "../components/dashboard/TopAtividadesBar.jsx";
+import { PorHoraBar } from "../components/dashboard/PorHoraBar.jsx";
+import { PorDiaSemanaBar } from "../components/dashboard/PorDiaSemanaBar.jsx";
+import { PorModoDonut } from "../components/dashboard/PorModoDonut.jsx";
 import Spinner from "../components/ui/Spinner.jsx";
 import * as dashboardApi from "../api/dashboard.js";
 
@@ -20,6 +23,9 @@ export default function Dashboard() {
   const [distribuicao, setDistribuicao] = useState({ nivel: "pasta", itens: [] });
   const [evolucao, setEvolucao] = useState([]);
   const [topAtividades, setTopAtividades] = useState([]);
+  const [porHora, setPorHora] = useState([]);
+  const [porDiaSemana, setPorDiaSemana] = useState([]);
+  const [porModo, setPorModo] = useState([]);
   const [carregando, setCarregando] = useState(true);
   const [erro, setErro] = useState("");
 
@@ -31,15 +37,32 @@ export default function Dashboard() {
       dashboardApi.distribuicao(),
       dashboardApi.evolucao(),
       dashboardApi.topAtividades(),
+      dashboardApi.porHora(),
+      dashboardApi.porDiaSemana(),
+      dashboardApi.porModo(),
     ])
-      .then(([kpisRes, heatmapRes, distribuicaoRes, evolucaoRes, topRes]) => {
-        if (cancelado) return;
-        setKpis(kpisRes);
-        setHeatmap(heatmapRes);
-        setDistribuicao(distribuicaoRes);
-        setEvolucao(evolucaoRes);
-        setTopAtividades(topRes);
-      })
+      .then(
+        ([
+          kpisRes,
+          heatmapRes,
+          distribuicaoRes,
+          evolucaoRes,
+          topRes,
+          porHoraRes,
+          porDiaSemanaRes,
+          porModoRes,
+        ]) => {
+          if (cancelado) return;
+          setKpis(kpisRes);
+          setHeatmap(heatmapRes);
+          setDistribuicao(distribuicaoRes);
+          setEvolucao(evolucaoRes);
+          setTopAtividades(topRes);
+          setPorHora(porHoraRes);
+          setPorDiaSemana(porDiaSemanaRes);
+          setPorModo(porModoRes);
+        },
+      )
       .catch(() => {
         if (!cancelado) setErro("Erro ao carregar dashboard.");
       })
@@ -106,6 +129,30 @@ export default function Dashboard() {
         <Cartao titulo="Top atividades">
           {topAtividades.length > 0 ? (
             <TopAtividadesBar dados={topAtividades} />
+          ) : (
+            <PlaceholderVazio />
+          )}
+        </Cartao>
+      </div>
+
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+        <Cartao titulo="Por hora do dia">
+          {porHora.length > 0 ? (
+            <PorHoraBar dados={porHora} />
+          ) : (
+            <PlaceholderVazio />
+          )}
+        </Cartao>
+        <Cartao titulo="Por dia da semana">
+          {porDiaSemana.length > 0 ? (
+            <PorDiaSemanaBar dados={porDiaSemana} />
+          ) : (
+            <PlaceholderVazio />
+          )}
+        </Cartao>
+        <Cartao titulo="Por modo">
+          {porModo.length > 0 ? (
+            <PorModoDonut dados={porModo} />
           ) : (
             <PlaceholderVazio />
           )}
