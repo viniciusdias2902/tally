@@ -154,7 +154,7 @@ Implementação:
 - [x] `feat(dashboard.controller): adiciona handler distribuicao`
 - [x] `feat(dashboard.routes): registra GET /dashboard/distribuicao`
 - [x] `test(dashboard.routes): cobre GET /dashboard/distribuicao`
-- [ ] `docs(swagger): documenta GET /dashboard/distribuicao`
+- [x] `docs(swagger): documenta GET /dashboard/distribuicao`
 
 ### Fase 4 — Backend: evolução temporal
 

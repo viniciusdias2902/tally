@@ -104,6 +104,52 @@ import {
  *         $ref: '#/components/responses/NaoAutorizado'
  */
 
+/**
+ * @swagger
+ * /dashboard/distribuicao:
+ *   get:
+ *     summary: Retorna distribuição de tempo no escopo informado (pasta, atividade ou categoria)
+ *     description: |
+ *       O nível retornado é definido pelo escopo:
+ *       - Sem filtro: por pasta (atividades sem pasta agrupadas como "Sem pasta")
+ *       - Com pastaId: por atividade dentro da pasta
+ *       - Com atividadeId: por categoria dentro da atividade ("Sem categoria" quando aplicável)
+ *     tags: [Dashboard]
+ *     parameters:
+ *       - in: query
+ *         name: pastaId
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *       - in: query
+ *         name: atividadeId
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *     responses:
+ *       200:
+ *         description: Distribuição com nível e itens
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 nivel:
+ *                   type: string
+ *                   enum: [pasta, atividade, categoria]
+ *                 itens:
+ *                   type: array
+ *                   items:
+ *                     type: object
+ *                     properties:
+ *                       nome:
+ *                         type: string
+ *                       totalSegundos:
+ *                         type: integer
+ *       401:
+ *         $ref: '#/components/responses/NaoAutorizado'
+ */
+
 export function criarDashboardRoutes(dashboardController) {
   const router = Router();
 
