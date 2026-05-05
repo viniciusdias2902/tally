@@ -10,6 +10,9 @@ describe("dashboard.service", () => {
       somarSegundosPorDia: vi.fn(),
       somarTotaisGerais: vi.fn(),
       calcularStreaks: vi.fn(),
+      somarPorPastaDoUsuario: vi.fn(),
+      somarPorAtividadeNaPasta: vi.fn(),
+      somarPorCategoriaNaAtividade: vi.fn(),
     };
     servico = criarDashboardService(repositorioMock);
   });
@@ -125,6 +128,70 @@ describe("dashboard.service", () => {
       expect(repositorioMock.somarTotaisGerais).toHaveBeenCalledWith(
         expect.objectContaining({ atividadeId: "a1" }),
       );
+    });
+  });
+
+  describe("obterDistribuicao", () => {
+    it("deve retornar nível pasta no escopo geral", async () => {
+      const itens = [{ pastaId: "p1", nome: "Estudos", totalSegundos: 7200 }];
+      repositorioMock.somarPorPastaDoUsuario.mockResolvedValue(itens);
+
+      const distribuicao = await servico.obterDistribuicao({ usuarioId: "u1" });
+
+      expect(distribuicao).toEqual({ nivel: "pasta", itens });
+      expect(repositorioMock.somarPorPastaDoUsuario).toHaveBeenCalledWith({
+        usuarioId: "u1",
+      });
+      expect(repositorioMock.somarPorAtividadeNaPasta).not.toHaveBeenCalled();
+      expect(repositorioMock.somarPorCategoriaNaAtividade).not.toHaveBeenCalled();
+    });
+
+    it("deve retornar nível atividade quando há pastaId", async () => {
+      const itens = [{ atividadeId: "a1", nome: "Inglês", totalSegundos: 3600 }];
+      repositorioMock.somarPorAtividadeNaPasta.mockResolvedValue(itens);
+
+      const distribuicao = await servico.obterDistribuicao({
+        usuarioId: "u1",
+        pastaId: "p1",
+      });
+
+      expect(distribuicao).toEqual({ nivel: "atividade", itens });
+      expect(repositorioMock.somarPorAtividadeNaPasta).toHaveBeenCalledWith({
+        usuarioId: "u1",
+        pastaId: "p1",
+      });
+      expect(repositorioMock.somarPorPastaDoUsuario).not.toHaveBeenCalled();
+    });
+
+    it("deve retornar nível categoria quando há atividadeId", async () => {
+      const itens = [
+        { categoriaId: "c1", nome: "Leitura", cor: "#FF0000", totalSegundos: 1800 },
+      ];
+      repositorioMock.somarPorCategoriaNaAtividade.mockResolvedValue(itens);
+
+      const distribuicao = await servico.obterDistribuicao({
+        usuarioId: "u1",
+        atividadeId: "a1",
+      });
+
+      expect(distribuicao).toEqual({ nivel: "categoria", itens });
+      expect(repositorioMock.somarPorCategoriaNaAtividade).toHaveBeenCalledWith({
+        usuarioId: "u1",
+        atividadeId: "a1",
+      });
+    });
+
+    it("deve priorizar atividadeId sobre pastaId", async () => {
+      repositorioMock.somarPorCategoriaNaAtividade.mockResolvedValue([]);
+
+      await servico.obterDistribuicao({
+        usuarioId: "u1",
+        pastaId: "p1",
+        atividadeId: "a1",
+      });
+
+      expect(repositorioMock.somarPorCategoriaNaAtividade).toHaveBeenCalledOnce();
+      expect(repositorioMock.somarPorAtividadeNaPasta).not.toHaveBeenCalled();
     });
   });
 });

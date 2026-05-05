@@ -149,7 +149,7 @@ Implementação:
 - [x] `feat(dashboard.repository): adiciona somarPorCategoriaNaAtividade`
 - [x] `test(dashboard.repository): cobre somarPorCategoriaNaAtividade`
 - [x] `feat(dashboard.service): adiciona obterDistribuicao (decide nível pelo escopo)`
-- [ ] `test(dashboard.service): cobre obterDistribuicao (3 escopos)`
+- [x] `test(dashboard.service): cobre obterDistribuicao (3 escopos)`
 - [ ] `feat(dashboard.controller): adiciona handler distribuicao`
 - [ ] `feat(dashboard.routes): registra GET /dashboard/distribuicao`
 - [ ] `test(dashboard.routes): cobre GET /dashboard/distribuicao`
