@@ -18,10 +18,12 @@
   --color-accent: #8839ef;
   --color-accent-hover: #7c1ce3;
   --color-accent-subtle: rgba(136, 57, 239, 0.1);
+  --color-accent-foreground: #ffffff;
 
   /* Semantic */
   --color-danger: #d20f39;
   --color-danger-hover: #a90b2e;
+  --color-danger-foreground: #ffffff;
   --color-success: #40a02b;
 
   /* Timer states */
@@ -90,8 +92,10 @@
   --color-accent: #cba6f7;          /* Mauve */
   --color-accent-hover: #b88ef3;
   --color-accent-subtle: rgba(203, 166, 247, 0.15);
+  --color-accent-foreground: #1e1e2e; /* Base — texto escuro sobre Mauve pastel */
   --color-danger: #f38ba8;          /* Red */
   --color-danger-hover: #ec6d92;
+  --color-danger-foreground: #1e1e2e; /* Base */
   --color-success: #a6e3a1;         /* Green */
   --color-timer-running: #a6e3a1;   /* Green */
   --color-timer-paused: #f9e2af;    /* Yellow */
