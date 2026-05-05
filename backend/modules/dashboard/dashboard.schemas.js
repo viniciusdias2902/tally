@@ -7,3 +7,10 @@ export const heatmapQuerySchema = {
     desdeDias: z.coerce.number().int().min(1).max(730).optional(),
   }),
 };
+
+export const kpisQuerySchema = {
+  query: z.object({
+    pastaId: z.uuid().optional(),
+    atividadeId: z.uuid().optional(),
+  }),
+};
