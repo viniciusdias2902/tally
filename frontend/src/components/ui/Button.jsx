@@ -1,6 +1,6 @@
 const variants = {
   primary:
-    "bg-accent text-accent-foreground shadow-sm hover:bg-accent-hover focus-visible:ring-accent/40",
+    "bg-button-primary-bg text-button-primary-fg border border-button-primary-border shadow-sm hover:bg-button-primary-bg-hover focus-visible:ring-accent/40",
   secondary:
     "bg-bg-elevated text-text-primary border border-border shadow-sm hover:bg-bg-secondary focus-visible:ring-border",
   danger:
