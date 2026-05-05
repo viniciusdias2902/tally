@@ -1,7 +1,7 @@
 export function criarAtividadeRepository(prisma) {
   return {
-    criar({ usuarioId, nome, tipoMedicao }) {
-      return prisma.atividade.create({ data: { usuarioId, nome, tipoMedicao } });
+    criar({ usuarioId, nome, tipoMedicao, pastaId }) {
+      return prisma.atividade.create({ data: { usuarioId, nome, tipoMedicao, pastaId } });
     },
 
     listarPorUsuario(usuarioId, { incluirArquivadas = false } = {}) {
