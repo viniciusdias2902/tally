@@ -1,6 +1,6 @@
 import { ErroApp } from "../../lib/ErroApp.js";
 
-export function criarAtividadeService(atividadeRepository) {
+export function criarAtividadeService(atividadeRepository, pastaService) {
   async function buscarAtividadeDoUsuario(id, usuarioId) {
     const atividade = await atividadeRepository.buscarPorId(id);
     if (!atividade || atividade.usuarioId !== usuarioId) {
@@ -9,10 +9,16 @@ export function criarAtividadeService(atividadeRepository) {
     return atividade;
   }
 
+  async function validarPasta(pastaId, usuarioId) {
+    if (pastaId == null) return;
+    await pastaService.buscar(pastaId, usuarioId);
+  }
+
   return {
-    async criar({ usuarioId, nome, tipoMedicao }) {
+    async criar({ usuarioId, nome, tipoMedicao, pastaId }) {
+      await validarPasta(pastaId, usuarioId);
       try {
-        return await atividadeRepository.criar({ usuarioId, nome, tipoMedicao });
+        return await atividadeRepository.criar({ usuarioId, nome, tipoMedicao, pastaId });
       } catch (erro) {
         if (erro.code === "P2002") throw new ErroApp("ATIVIDADE_JA_EXISTE", 409);
         throw erro;
@@ -29,6 +35,7 @@ export function criarAtividadeService(atividadeRepository) {
 
     async atualizar(id, usuarioId, dados) {
       await buscarAtividadeDoUsuario(id, usuarioId);
+      if ("pastaId" in dados) await validarPasta(dados.pastaId, usuarioId);
       try {
         return await atividadeRepository.atualizar(id, dados);
       } catch (erro) {

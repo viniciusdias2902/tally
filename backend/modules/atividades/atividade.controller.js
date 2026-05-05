@@ -5,6 +5,7 @@ export function criarAtividadeController(atividadeService) {
         usuarioId: req.usuarioId,
         nome: req.body.nome,
         tipoMedicao: req.body.tipoMedicao,
+        pastaId: req.body.pastaId,
       });
       res.status(201).json(atividade);
     },
