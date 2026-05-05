@@ -229,6 +229,36 @@ describe("dashboard.repository", () => {
     });
   });
 
+  describe("somarPorDiaDaSemana", () => {
+    it("deve mapear dia_semana e total_segundos para camelCase", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([
+        { dia_semana: 1, total_segundos: 7200 },
+        { dia_semana: 5, total_segundos: 3600 },
+      ]);
+
+      const resultado = await repositorio.somarPorDiaDaSemana({ usuarioId: "u1" });
+
+      expect(resultado).toEqual([
+        { diaSemana: 1, totalSegundos: 7200 },
+        { diaSemana: 5, totalSegundos: 3600 },
+      ]);
+    });
+
+    it("deve passar pastaId e atividadeId como filtros", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([]);
+
+      await repositorio.somarPorDiaDaSemana({
+        usuarioId: "u1",
+        pastaId: "p1",
+        atividadeId: "a1",
+      });
+
+      const [, ...valores] = prismaMock.$queryRaw.mock.calls[0];
+      expect(valores).toContain("p1");
+      expect(valores).toContain("a1");
+    });
+  });
+
   describe("calcularStreaks", () => {
     it("deve retornar zero quando não há sessões", async () => {
       prismaMock.$queryRaw.mockResolvedValue([]);
