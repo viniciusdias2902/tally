@@ -124,7 +124,7 @@ Implementação:
 - [x] `feat(dashboard.routes): registra GET /dashboard/heatmap`
 - [x] `feat(app): wireup do módulo dashboard em app.js`
 - [x] `test(dashboard.routes): cobre GET /dashboard/heatmap (integração)`
-- [ ] `docs(swagger): documenta GET /dashboard/heatmap`
+- [x] `docs(swagger): documenta GET /dashboard/heatmap`
 
 ### Fase 2 — Backend: KPIs
 
