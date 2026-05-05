@@ -57,6 +57,33 @@ function gerarSessoesCronometradas({
   return sessoes;
 }
 
+function gerarSessoesPomodoro({
+  atividade,
+  categorias,
+  config,
+  probabilidadeDiaria,
+  ciclos: [minCic, maxCic],
+}) {
+  const sessoes = [];
+  for (let i = 0; i < DIAS_SESSOES; i++) {
+    if (Math.random() > probabilidadeDiaria) continue;
+    const dia = diaAtras(i);
+    const ciclosPomodoro = aleatorioEntre(minCic, maxCic);
+    const iniciadoEm = comHora(dia, escolhaAleatoria(HORAS_DIA), aleatorioEntre(0, 59));
+    const duracaoSegundos = ciclosPomodoro * config.minutosFoco * 60;
+    const categoriaId = categorias.length ? escolhaAleatoria(categorias).id : null;
+    sessoes.push({
+      atividadeId: atividade.id,
+      categoriaId,
+      iniciadoEm,
+      duracaoSegundos,
+      modo: "pomodoro",
+      ciclosPomodoro,
+    });
+  }
+  return sessoes;
+}
+
 async function main() {
   console.log("🌱 Limpando banco...");
   await prisma.$executeRaw`TRUNCATE TABLE sessoes, config_pomodoro, categorias, atividades, pastas, usuarios CASCADE`;
@@ -284,6 +311,30 @@ async function main() {
       },
     ],
   });
+
+  console.log("🍅 Criando sessões pomodoro...");
+  const configsPomodoro = await prisma.configPomodoro.findMany();
+  const configPorAtividade = Object.fromEntries(
+    configsPomodoro.map((c) => [c.atividadeId, c]),
+  );
+  const sessoesPomodoro = [];
+  for (const atividade of cronometradas) {
+    const config = configPorAtividade[atividade.id];
+    if (!config) continue;
+    const cats = categoriasPorAtividade[atividade.id] || [];
+    sessoesPomodoro.push(
+      ...gerarSessoesPomodoro({
+        atividade,
+        categorias: cats,
+        config,
+        probabilidadeDiaria: 0.45,
+        ciclos: [2, 5],
+      }),
+    );
+  }
+  if (sessoesPomodoro.length) {
+    await prisma.sessao.createMany({ data: sessoesPomodoro });
+  }
 
   console.log("\n✅ Seed concluído!");
   console.log("─────────────────────────────────────────");
