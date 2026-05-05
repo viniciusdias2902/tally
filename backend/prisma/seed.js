@@ -4,6 +4,59 @@ import prisma from "../lib/prisma.js";
 
 const SENHA_HASH = await bcrypt.hash("senha1234", 12);
 
+const DIAS_SESSOES = 30;
+const HORAS_DIA = [7, 8, 9, 10, 11, 14, 15, 16, 17, 19, 20, 21];
+
+function aleatorioEntre(min, max) {
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function escolhaAleatoria(array) {
+  return array[Math.floor(Math.random() * array.length)];
+}
+
+function diaAtras(diasAtras) {
+  const d = new Date();
+  d.setDate(d.getDate() - diasAtras);
+  d.setHours(0, 0, 0, 0);
+  return d;
+}
+
+function comHora(data, hora, minuto = 0) {
+  const d = new Date(data);
+  d.setHours(hora, minuto, aleatorioEntre(0, 59), 0);
+  return d;
+}
+
+function gerarSessoesCronometradas({
+  atividade,
+  categorias,
+  modo,
+  probabilidadeDiaria,
+  sessoesPorDia: [minSes, maxSes],
+  duracaoMinutos: [minDur, maxDur],
+}) {
+  const sessoes = [];
+  for (let i = 0; i < DIAS_SESSOES; i++) {
+    if (Math.random() > probabilidadeDiaria) continue;
+    const dia = diaAtras(i);
+    const qtd = aleatorioEntre(minSes, maxSes);
+    for (let j = 0; j < qtd; j++) {
+      const iniciadoEm = comHora(dia, escolhaAleatoria(HORAS_DIA), aleatorioEntre(0, 59));
+      const duracaoSegundos = aleatorioEntre(minDur, maxDur) * 60;
+      const categoriaId = categorias.length ? escolhaAleatoria(categorias).id : null;
+      sessoes.push({
+        atividadeId: atividade.id,
+        categoriaId,
+        iniciadoEm,
+        duracaoSegundos,
+        modo,
+      });
+    }
+  }
+  return sessoes;
+}
+
 async function main() {
   console.log("🌱 Limpando banco...");
   await prisma.$executeRaw`TRUNCATE TABLE sessoes, config_pomodoro, categorias, atividades, pastas, usuarios CASCADE`;
@@ -150,6 +203,53 @@ async function main() {
       { atividadeId: tcc.id, nome: "Revisão", cor: "#10B981", ordem: 2 },
     ],
   });
+
+  console.log("⏱️  Carregando categorias para vincular sessões...");
+  const todasCategorias = await prisma.categoria.findMany({
+    where: { atividade: { usuarioId: usuario.id } },
+  });
+  const categoriasPorAtividade = todasCategorias.reduce((acc, cat) => {
+    (acc[cat.atividadeId] ??= []).push(cat);
+    return acc;
+  }, {});
+
+  const cronometradas = [
+    faculdade,
+    programacao,
+    idiomas,
+    concurso,
+    exercicio,
+    leitura,
+    muzica,
+    cursinho,
+    tcc,
+    inglesBasico,
+  ];
+
+  console.log("⏱️  Criando sessões timer e manual...");
+  const sessoesTimerManual = [];
+  for (const atividade of cronometradas) {
+    const cats = categoriasPorAtividade[atividade.id] || [];
+    sessoesTimerManual.push(
+      ...gerarSessoesCronometradas({
+        atividade,
+        categorias: cats,
+        modo: "timer",
+        probabilidadeDiaria: 0.55,
+        sessoesPorDia: [1, 2],
+        duracaoMinutos: [20, 90],
+      }),
+      ...gerarSessoesCronometradas({
+        atividade,
+        categorias: cats,
+        modo: "manual",
+        probabilidadeDiaria: 0.2,
+        sessoesPorDia: [1, 1],
+        duracaoMinutos: [15, 60],
+      }),
+    );
+  }
+  await prisma.sessao.createMany({ data: sessoesTimerManual });
 
   console.log("⚙️  Criando configs de pomodoro...");
   await prisma.configPomodoro.createMany({
