@@ -113,7 +113,7 @@ Implementação:
 
 - [x] `feat(dashboard.repository): adiciona somarSegundosPorDia (raw SQL)`
 - [x] `test(dashboard.repository): cobre somarSegundosPorDia geral`
-- [ ] `feat(dashboard.repository): aceita filtro pastaId em somarSegundosPorDia`
+- [x] `feat(dashboard.repository): aceita filtro pastaId em somarSegundosPorDia`
 - [ ] `test(dashboard.repository): cobre filtro por pasta em somarSegundosPorDia`
 - [ ] `feat(dashboard.repository): aceita filtro atividadeId em somarSegundosPorDia`
 - [ ] `test(dashboard.repository): cobre filtro por atividade em somarSegundosPorDia`
