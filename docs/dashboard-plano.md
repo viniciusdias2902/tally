@@ -105,7 +105,7 @@ Implementação:
 
 ### Fase 0 — Setup
 
-- [ ] `chore(frontend): instala recharts e react-activity-calendar`
+- [x] `chore(frontend): instala recharts e react-activity-calendar`
 - [ ] `chore(frontend): cria diretório components/dashboard com index vazio`
 - [ ] `chore(backend): cria estrutura do módulo dashboard (arquivos vazios)`
 
