@@ -43,9 +43,9 @@ model Atividade {
   sessoes        Sessao[]
   configPomodoro ConfigPomodoro?
 
+  @@unique([usuarioId, nome], map: "idx_atividades_nome_unico")
   @@index([usuarioId])
   @@index([pastaId])
-  @@unique([usuarioId, nome], map: "idx_atividades_nome_unico")
   @@map("atividades")
 }
 
@@ -60,8 +60,8 @@ model Pasta {
   usuario    Usuario     @relation(fields: [usuarioId], references: [id], onDelete: Cascade)
   atividades Atividade[]
 
-  @@index([usuarioId])
   @@unique([usuarioId, nome], map: "idx_pastas_nome_unico")
+  @@index([usuarioId])
   @@map("pastas")
 }
 
@@ -78,8 +78,8 @@ model Categoria {
   atividade Atividade @relation(fields: [atividadeId], references: [id], onDelete: Cascade)
   sessoes   Sessao[]
 
-  @@index([atividadeId])
   @@unique([atividadeId, nome], map: "idx_categorias_nome_unico")
+  @@index([atividadeId])
   @@map("categorias")
 }
 
