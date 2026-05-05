@@ -202,7 +202,7 @@ Implementação:
 ### Fase 8 — Frontend: tema dos gráficos (Recharts + Catppuccin)
 
 - [x] `feat(components/dashboard): adiciona useTemaGrafico (lê CSS vars do tema)`
-- [ ] `feat(components/dashboard): adiciona paleta de cores categóricas (8 mauves/blues/etc para fatias)`
+- [x] `feat(components/dashboard): adiciona paleta de cores categóricas (8 mauves/blues/etc para fatias)`
 
 ### Fase 9 — Frontend: heatmap
 
