@@ -158,9 +158,9 @@ Implementação:
 
 ### Fase 4 — Backend: evolução temporal
 
-- [ ] `feat(dashboard.repository): adiciona somarSegundosPorDiaRecentes (limite N dias)`
-- [ ] `test(dashboard.repository): cobre somarSegundosPorDiaRecentes`
-- [ ] `feat(dashboard.service): adiciona obterEvolucao`
+- [~] `feat(dashboard.repository): adiciona somarSegundosPorDiaRecentes (limite N dias)` — absorvido por `somarSegundosPorDia` (já recebe `dataInicio/dataFim`); o service calcula as datas a partir do parâmetro `dias`.
+- [~] `test(dashboard.repository): cobre somarSegundosPorDiaRecentes` — absorvido pelos testes existentes de `somarSegundosPorDia`.
+- [x] `feat(dashboard.service): adiciona obterEvolucao`
 - [ ] `test(dashboard.service): cobre obterEvolucao`
 - [ ] `feat(dashboard.controller): adiciona handler evolucao`
 - [ ] `feat(dashboard.routes): registra GET /dashboard/evolucao`

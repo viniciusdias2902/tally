@@ -57,6 +57,45 @@ export function criarDashboardService(dashboardRepository) {
       return { ...totais, ...streaks };
     },
 
+    async obterEvolucao({
+      usuarioId,
+      pastaId = null,
+      atividadeId = null,
+      dias = 30,
+      agora = new Date(),
+    }) {
+      const hoje = new Date(agora);
+      hoje.setUTCHours(0, 0, 0, 0);
+
+      const dataFim = new Date(hoje);
+      dataFim.setUTCDate(dataFim.getUTCDate() + 1);
+
+      const dataInicio = new Date(hoje);
+      dataInicio.setUTCDate(dataInicio.getUTCDate() - (dias - 1));
+
+      const linhas = await dashboardRepository.somarSegundosPorDia({
+        usuarioId,
+        pastaId,
+        atividadeId,
+        dataInicio,
+        dataFim,
+      });
+
+      const mapa = new Map();
+      for (const linha of linhas) {
+        mapa.set(formatarData(linha.dia), linha.totalSegundos);
+      }
+
+      const resultado = [];
+      const cursor = new Date(dataInicio);
+      for (let i = 0; i < dias; i++) {
+        const chave = formatarData(cursor);
+        resultado.push({ data: chave, totalSegundos: mapa.get(chave) ?? 0 });
+        cursor.setUTCDate(cursor.getUTCDate() + 1);
+      }
+      return resultado;
+    },
+
     async obterDistribuicao({ usuarioId, pastaId = null, atividadeId = null }) {
       if (atividadeId) {
         const itens = await dashboardRepository.somarPorCategoriaNaAtividade({
