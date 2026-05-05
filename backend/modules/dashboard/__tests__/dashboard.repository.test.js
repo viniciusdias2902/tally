@@ -74,5 +74,19 @@ describe("dashboard.repository", () => {
       const [, ...valores] = prismaMock.$queryRaw.mock.calls[0];
       expect(valores).toContain(null);
     });
+
+    it("deve passar atividadeId como parâmetro do filtro quando fornecido", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([]);
+
+      await repositorio.somarSegundosPorDia({
+        usuarioId: "u1",
+        atividadeId: "a1",
+        dataInicio: new Date("2026-04-01"),
+        dataFim: new Date("2026-05-01"),
+      });
+
+      const [, ...valores] = prismaMock.$queryRaw.mock.calls[0];
+      expect(valores).toContain("a1");
+    });
   });
 });

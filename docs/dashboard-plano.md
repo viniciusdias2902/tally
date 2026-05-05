@@ -116,7 +116,7 @@ Implementação:
 - [x] `feat(dashboard.repository): aceita filtro pastaId em somarSegundosPorDia`
 - [x] `test(dashboard.repository): cobre filtro por pasta em somarSegundosPorDia`
 - [x] `feat(dashboard.repository): aceita filtro atividadeId em somarSegundosPorDia`
-- [ ] `test(dashboard.repository): cobre filtro por atividade em somarSegundosPorDia`
+- [x] `test(dashboard.repository): cobre filtro por atividade em somarSegundosPorDia`
 - [ ] `feat(dashboard.service): adiciona gerarHeatmap`
 - [ ] `test(dashboard.service): cobre gerarHeatmap (preenchimento de dias zerados)`
 - [ ] `feat(dashboard.schemas): adiciona heatmapQuerySchema (Zod)`
