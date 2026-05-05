@@ -30,6 +30,10 @@ import { criarPastaRepository } from "./modules/pastas/pasta.repository.js";
 import { criarPastaService } from "./modules/pastas/pasta.service.js";
 import { criarPastaController } from "./modules/pastas/pasta.controller.js";
 import { criarPastaRoutes } from "./modules/pastas/pasta.routes.js";
+import { criarDashboardRepository } from "./modules/dashboard/dashboard.repository.js";
+import { criarDashboardService } from "./modules/dashboard/dashboard.service.js";
+import { criarDashboardController } from "./modules/dashboard/dashboard.controller.js";
+import { criarDashboardRoutes } from "./modules/dashboard/dashboard.routes.js";
 
 // --- Auth ---
 const usuarioRepository = criarUsuarioRepository(prisma);
@@ -67,6 +71,12 @@ const configPomodoroService = criarConfigPomodoroService(configPomodoroRepositor
 const configPomodoroController = criarConfigPomodoroController(configPomodoroService);
 const configPomodoroRoutes = criarConfigPomodoroRoutes(configPomodoroController);
 
+// --- Dashboard ---
+const dashboardRepository = criarDashboardRepository(prisma);
+const dashboardService = criarDashboardService(dashboardRepository);
+const dashboardController = criarDashboardController(dashboardService);
+const dashboardRoutes = criarDashboardRoutes(dashboardController);
+
 const app = express();
 
 app.use(cors());
@@ -79,6 +89,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/auth", authRoutes);
 app.use(autenticar);
 
+app.use("/dashboard", dashboardRoutes);
 app.use("/pastas", pastaRoutes);
 app.use("/atividades", atividadeRoutes);
 app.use("/atividades/:atividadeId/categorias", categoriaRoutes);
