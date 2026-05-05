@@ -394,6 +394,14 @@ async function main() {
   console.log("    • TCC               — 3 categorias");
   console.log("    • Inglês básico");
   console.log("─────────────────────────────────────────");
+  console.log(`  Sessões (${DIAS_SESSOES} dias):`);
+  console.log(`    • Timer/manual:    ${sessoesTimerManual.length}`);
+  console.log(`    • Pomodoro:        ${sessoesPomodoro.length}`);
+  console.log(`    • Check binário:   ${checksBinarios.length}`);
+  console.log(
+    `    • Total:           ${sessoesTimerManual.length + sessoesPomodoro.length + checksBinarios.length}`,
+  );
+  console.log("─────────────────────────────────────────");
 }
 
 main()
