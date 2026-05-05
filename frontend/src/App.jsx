@@ -7,6 +7,7 @@ import Login from "./pages/Login.jsx";
 import Registro from "./pages/Registro.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
 import DashboardPasta from "./pages/DashboardPasta.jsx";
+import DashboardAtividade from "./pages/DashboardAtividade.jsx";
 import Atividades from "./pages/Atividades.jsx";
 import Categorias from "./pages/Categorias.jsx";
 import RegistrarSessao from "./pages/RegistrarSessao.jsx";
@@ -46,6 +47,10 @@ export default function App() {
               <Route
                 path="/atividades/:atividadeId/sessoes"
                 element={<Sessoes />}
+              />
+              <Route
+                path="/atividades/:atividadeId/dashboard"
+                element={<DashboardAtividade />}
               />
             </Route>
 
