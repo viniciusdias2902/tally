@@ -136,7 +136,7 @@ Implementação:
 - [x] `test(dashboard.service): cobre obterKpis nos 3 escopos`
 - [x] `feat(dashboard.schemas): adiciona kpisQuerySchema`
 - [x] `feat(dashboard.controller): adiciona handler kpis`
-- [ ] `feat(dashboard.routes): registra GET /dashboard/kpis`
+- [x] `feat(dashboard.routes): registra GET /dashboard/kpis`
 - [ ] `test(dashboard.routes): cobre GET /dashboard/kpis`
 - [ ] `docs(swagger): documenta GET /dashboard/kpis`
 
