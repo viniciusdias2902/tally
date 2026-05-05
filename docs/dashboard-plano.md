@@ -111,7 +111,7 @@ Implementação:
 
 ### Fase 1 — Backend: heatmap
 
-- [ ] `feat(dashboard.repository): adiciona somarSegundosPorDia (raw SQL)`
+- [x] `feat(dashboard.repository): adiciona somarSegundosPorDia (raw SQL)`
 - [ ] `test(dashboard.repository): cobre somarSegundosPorDia geral`
 - [ ] `feat(dashboard.repository): aceita filtro pastaId em somarSegundosPorDia`
 - [ ] `test(dashboard.repository): cobre filtro por pasta em somarSegundosPorDia`
