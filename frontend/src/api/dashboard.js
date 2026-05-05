@@ -24,3 +24,12 @@ export function distribuicao({ pastaId, atividadeId } = {}) {
   const query = params.toString();
   return api(`/dashboard/distribuicao${query ? `?${query}` : ""}`);
 }
+
+export function evolucao({ pastaId, atividadeId, dias } = {}) {
+  const params = new URLSearchParams();
+  if (pastaId) params.set("pastaId", pastaId);
+  if (atividadeId) params.set("atividadeId", atividadeId);
+  if (dias) params.set("dias", String(dias));
+  const query = params.toString();
+  return api(`/dashboard/evolucao${query ? `?${query}` : ""}`);
+}
