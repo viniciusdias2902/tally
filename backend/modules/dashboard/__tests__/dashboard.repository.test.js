@@ -289,6 +289,40 @@ describe("dashboard.repository", () => {
     });
   });
 
+  describe("topAtividadesDoUsuario", () => {
+    it("deve mapear atividade_id, pasta_nome e total_segundos para camelCase", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([
+        { atividade_id: "a1", nome: "Inglês", pasta_nome: "Estudos", total_segundos: 7200 },
+        { atividade_id: "a2", nome: "Avulso", pasta_nome: null, total_segundos: 1800 },
+      ]);
+
+      const resultado = await repositorio.topAtividadesDoUsuario({ usuarioId: "u1" });
+
+      expect(resultado).toEqual([
+        { atividadeId: "a1", nome: "Inglês", pastaNome: "Estudos", totalSegundos: 7200 },
+        { atividadeId: "a2", nome: "Avulso", pastaNome: null, totalSegundos: 1800 },
+      ]);
+    });
+
+    it("deve passar limite como parâmetro do filtro", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([]);
+
+      await repositorio.topAtividadesDoUsuario({ usuarioId: "u1", limite: 3 });
+
+      const [, ...valores] = prismaMock.$queryRaw.mock.calls[0];
+      expect(valores).toContain(3);
+    });
+
+    it("deve usar limite 8 por padrão", async () => {
+      prismaMock.$queryRaw.mockResolvedValue([]);
+
+      await repositorio.topAtividadesDoUsuario({ usuarioId: "u1" });
+
+      const [, ...valores] = prismaMock.$queryRaw.mock.calls[0];
+      expect(valores).toContain(8);
+    });
+  });
+
   describe("calcularStreaks", () => {
     it("deve retornar zero quando não há sessões", async () => {
       prismaMock.$queryRaw.mockResolvedValue([]);
