@@ -213,7 +213,7 @@ Implementação:
 ### Fase 10 — Frontend: KPI cards
 
 - [x] `feat(components/dashboard): cria CardKpi (props: titulo, valor, sufixo)`
-- [ ] `feat(components/dashboard): cria GradeKpis com os 4 KPIs`
+- [x] `feat(components/dashboard): cria GradeKpis com os 4 KPIs`
 - [ ] `feat(components/dashboard): formata duração humanizada (h/min) no CardKpi`
 
 ### Fase 11 — Frontend: distribuição (donut)
