@@ -57,6 +57,49 @@ import { heatmapQuerySchema, kpisQuerySchema } from "./dashboard.schemas.js";
  *         $ref: '#/components/responses/NaoAutorizado'
  */
 
+/**
+ * @swagger
+ * /dashboard/kpis:
+ *   get:
+ *     summary: Retorna KPIs agregados (totais e streaks) do escopo informado
+ *     tags: [Dashboard]
+ *     parameters:
+ *       - in: query
+ *         name: pastaId
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: Filtra sessões pela pasta informada
+ *       - in: query
+ *         name: atividadeId
+ *         schema:
+ *           type: string
+ *           format: uuid
+ *         description: Filtra sessões pela atividade informada
+ *     responses:
+ *       200:
+ *         description: Totais de tempo, sessões e streaks
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 totalSegundos:
+ *                   type: integer
+ *                   example: 7200
+ *                 totalSessoes:
+ *                   type: integer
+ *                   example: 5
+ *                 streakAtual:
+ *                   type: integer
+ *                   example: 3
+ *                 melhorStreak:
+ *                   type: integer
+ *                   example: 7
+ *       401:
+ *         $ref: '#/components/responses/NaoAutorizado'
+ */
+
 export function criarDashboardRoutes(dashboardController) {
   const router = Router();
 

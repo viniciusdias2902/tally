@@ -138,7 +138,7 @@ Implementação:
 - [x] `feat(dashboard.controller): adiciona handler kpis`
 - [x] `feat(dashboard.routes): registra GET /dashboard/kpis`
 - [x] `test(dashboard.routes): cobre GET /dashboard/kpis`
-- [ ] `docs(swagger): documenta GET /dashboard/kpis`
+- [x] `docs(swagger): documenta GET /dashboard/kpis`
 
 ### Fase 3 — Backend: distribuição (donut)
 
