@@ -33,9 +33,21 @@ const options = {
           properties: {
             id: { type: "string", format: "uuid" },
             usuarioId: { type: "string", format: "uuid" },
+            pastaId: { type: "string", format: "uuid", nullable: true },
             nome: { type: "string", example: "Leitura" },
             tipoMedicao: { $ref: "#/components/schemas/TipoMedicao" },
             arquivada: { type: "boolean" },
+            criadoEm: { type: "string", format: "date-time" },
+            atualizadoEm: { type: "string", format: "date-time" },
+          },
+        },
+        Pasta: {
+          type: "object",
+          properties: {
+            id: { type: "string", format: "uuid" },
+            usuarioId: { type: "string", format: "uuid" },
+            nome: { type: "string", example: "Faculdade" },
+            ordem: { type: "integer", example: 0 },
             criadoEm: { type: "string", format: "date-time" },
             atualizadoEm: { type: "string", format: "date-time" },
           },
@@ -111,6 +123,7 @@ const options = {
     "./backend/modules/auth/auth.routes.js",
     "./backend/modules/atividades/atividade.routes.js",
     "./backend/modules/categorias/categoria.routes.js",
+    "./backend/modules/pastas/pasta.routes.js",
   ],
 };
 
