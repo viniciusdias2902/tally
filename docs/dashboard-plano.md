@@ -233,7 +233,7 @@ Implementação:
 
 ### Fase 13 — Frontend: layout do Dashboard geral
 
-- [ ] `refactor(pages/Dashboard): substitui placeholder por layout em grid (KPI + heatmap + donut)`
+- [x] `refactor(pages/Dashboard): substitui placeholder por layout em grid (KPI + heatmap + donut)`
 - [ ] `feat(pages/Dashboard): conecta com API (loading/erro)`
 - [ ] `feat(pages/Dashboard): adiciona sessão "Evolução + Top atividades"`
 - [ ] `feat(pages/Dashboard): adiciona sessão "Por hora / Por dia / Por modo"`
