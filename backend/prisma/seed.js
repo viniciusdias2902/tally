@@ -57,6 +57,23 @@ function gerarSessoesCronometradas({
   return sessoes;
 }
 
+function gerarChecksBinarios({ atividade, probabilidadeDiaria }) {
+  const sessoes = [];
+  for (let i = 0; i < DIAS_SESSOES; i++) {
+    if (Math.random() > probabilidadeDiaria) continue;
+    const dia = diaAtras(i);
+    const iniciadoEm = comHora(dia, escolhaAleatoria(HORAS_DIA), aleatorioEntre(0, 59));
+    sessoes.push({
+      atividadeId: atividade.id,
+      categoriaId: null,
+      iniciadoEm,
+      duracaoSegundos: 0,
+      modo: "check_binario",
+    });
+  }
+  return sessoes;
+}
+
 function gerarSessoesPomodoro({
   atividade,
   categorias,
@@ -334,6 +351,21 @@ async function main() {
   }
   if (sessoesPomodoro.length) {
     await prisma.sessao.createMany({ data: sessoesPomodoro });
+  }
+
+  console.log("✅ Criando check-ins binários...");
+  const binarias = [
+    { atividade: meditacao, probabilidadeDiaria: 0.6 },
+    { atividade: alimentacao, probabilidadeDiaria: 0.7 },
+    { atividade: sono, probabilidadeDiaria: 0.75 },
+    { atividade: agua, probabilidadeDiaria: 0.65 },
+    { atividade: journaling, probabilidadeDiaria: 0.4 },
+  ];
+  const checksBinarios = binarias.flatMap(({ atividade, probabilidadeDiaria }) =>
+    gerarChecksBinarios({ atividade, probabilidadeDiaria }),
+  );
+  if (checksBinarios.length) {
+    await prisma.sessao.createMany({ data: checksBinarios });
   }
 
   console.log("\n✅ Seed concluído!");
