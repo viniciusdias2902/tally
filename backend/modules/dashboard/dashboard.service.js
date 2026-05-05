@@ -56,5 +56,24 @@ export function criarDashboardService(dashboardRepository) {
       ]);
       return { ...totais, ...streaks };
     },
+
+    async obterDistribuicao({ usuarioId, pastaId = null, atividadeId = null }) {
+      if (atividadeId) {
+        const itens = await dashboardRepository.somarPorCategoriaNaAtividade({
+          usuarioId,
+          atividadeId,
+        });
+        return { nivel: "categoria", itens };
+      }
+      if (pastaId) {
+        const itens = await dashboardRepository.somarPorAtividadeNaPasta({
+          usuarioId,
+          pastaId,
+        });
+        return { nivel: "atividade", itens };
+      }
+      const itens = await dashboardRepository.somarPorPastaDoUsuario({ usuarioId });
+      return { nivel: "pasta", itens };
+    },
   };
 }
