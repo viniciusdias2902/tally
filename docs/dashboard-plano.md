@@ -241,7 +241,7 @@ Implementação:
 ### Fase 14 — Frontend: dashboard por pasta
 
 - [x] `feat(pages/DashboardPasta): cria página vazia com lookup do nome da pasta`
-- [ ] `feat(App): registra rota /pastas/:pastaId/dashboard`
+- [x] `feat(App): registra rota /pastas/:pastaId/dashboard`
 - [ ] `feat(pages/DashboardPasta): reusa componentes do geral filtrando por pastaId`
 - [ ] `feat(components/atividades): adiciona link "Ver dashboard" no header da pasta`
 

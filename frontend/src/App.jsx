@@ -6,6 +6,7 @@ import AppShell from "./components/layout/AppShell.jsx";
 import Login from "./pages/Login.jsx";
 import Registro from "./pages/Registro.jsx";
 import Dashboard from "./pages/Dashboard.jsx";
+import DashboardPasta from "./pages/DashboardPasta.jsx";
 import Atividades from "./pages/Atividades.jsx";
 import Categorias from "./pages/Categorias.jsx";
 import RegistrarSessao from "./pages/RegistrarSessao.jsx";
@@ -29,6 +30,10 @@ export default function App() {
               }
             >
               <Route path="/" element={<Dashboard />} />
+              <Route
+                path="/pastas/:pastaId/dashboard"
+                element={<DashboardPasta />}
+              />
               <Route path="/atividades" element={<Atividades />} />
               <Route
                 path="/atividades/:atividadeId/categorias"
