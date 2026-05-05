@@ -118,7 +118,7 @@ Implementação:
 - [x] `feat(dashboard.repository): aceita filtro atividadeId em somarSegundosPorDia`
 - [x] `test(dashboard.repository): cobre filtro por atividade em somarSegundosPorDia`
 - [x] `feat(dashboard.service): adiciona gerarHeatmap`
-- [ ] `test(dashboard.service): cobre gerarHeatmap (preenchimento de dias zerados)`
+- [x] `test(dashboard.service): cobre gerarHeatmap (preenchimento de dias zerados)`
 - [ ] `feat(dashboard.schemas): adiciona heatmapQuerySchema (Zod)`
 - [ ] `feat(dashboard.controller): adiciona handler heatmap`
 - [ ] `feat(dashboard.routes): registra GET /dashboard/heatmap`
