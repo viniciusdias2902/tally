@@ -172,7 +172,7 @@ Implementação:
 
 - [x] `feat(dashboard.repository): adiciona somarPorHoraDoDia`
 - [x] `test(dashboard.repository): cobre somarPorHoraDoDia`
-- [ ] `feat(dashboard.repository): adiciona somarPorDiaDaSemana`
+- [x] `feat(dashboard.repository): adiciona somarPorDiaDaSemana`
 - [ ] `test(dashboard.repository): cobre somarPorDiaDaSemana`
 - [ ] `feat(dashboard.repository): adiciona somarPorModo`
 - [ ] `test(dashboard.repository): cobre somarPorModo`

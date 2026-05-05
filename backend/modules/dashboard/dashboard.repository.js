@@ -135,6 +135,25 @@ export function criarDashboardRepository(prisma) {
       }));
     },
 
+    async somarPorDiaDaSemana({ usuarioId, pastaId = null, atividadeId = null }) {
+      const linhas = await prisma.$queryRaw`
+        SELECT
+          EXTRACT(DOW FROM (s.iniciado_em AT TIME ZONE 'America/Sao_Paulo'))::int AS dia_semana,
+          SUM(s.duracao_segundos)::int AS total_segundos
+        FROM sessoes s
+        JOIN atividades a ON a.id = s.atividade_id
+        WHERE a.usuario_id = ${usuarioId}::uuid
+          AND (${pastaId}::uuid IS NULL OR a.pasta_id = ${pastaId}::uuid)
+          AND (${atividadeId}::uuid IS NULL OR s.atividade_id = ${atividadeId}::uuid)
+        GROUP BY dia_semana
+        ORDER BY dia_semana ASC
+      `;
+      return linhas.map((linha) => ({
+        diaSemana: linha.dia_semana,
+        totalSegundos: linha.total_segundos,
+      }));
+    },
+
     async calcularStreaks({
       usuarioId,
       pastaId = null,
