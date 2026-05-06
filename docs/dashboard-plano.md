@@ -256,7 +256,7 @@ Implementação:
 
 - [~] `feat(pages/Dashboard): clique no donut leva para /pastas/:id/dashboard` — absorvido pela Fase 13 (`feat(pages/Dashboard): conecta com API`), o `rotaParaItem` já foi passado no commit do layout conectado.
 - [~] `feat(pages/DashboardPasta): clique no donut leva para /atividades/:id/dashboard` — absorvido pela Fase 14 (`feat(pages/DashboardPasta): reusa componentes`), o `rotaParaItem` já foi passado no commit que reusou os componentes.
-- [ ] `feat(components/dashboard): tooltip "clique para detalhar" no donut quando navegável`
+- [x] `feat(components/dashboard): tooltip "clique para detalhar" no donut quando navegável`
 
 ### Fase 17 — Polish
 

@@ -7,6 +7,7 @@ import { formatarDuracaoHumana } from "../../utils/formatarDuracaoHumana.js";
 function ConteudoTooltip({ active, payload }) {
   if (!active || !payload || payload.length === 0) return null;
   const item = payload[0];
+  const navegavel = item.payload.__navegavel;
   return (
     <div className="rounded-lg border border-border bg-bg-popover px-3 py-2 text-sm shadow-md">
       <p className="flex items-center gap-2 font-medium text-text-primary">
@@ -20,6 +21,9 @@ function ConteudoTooltip({ active, payload }) {
       <p className="mt-0.5 tabular-nums text-text-secondary">
         {formatarDuracaoHumana(item.value)}
       </p>
+      {navegavel ? (
+        <p className="mt-1 text-xs text-text-muted">Clique para detalhar →</p>
+      ) : null}
     </div>
   );
 }
@@ -28,6 +32,10 @@ export function DonutDistribuicao({ itens, rotaParaItem }) {
   const { theme } = useTheme();
   const navigate = useNavigate();
   const cores = itens.map((item, indice) => item.cor ?? corCategorica(indice, theme));
+  const itensComMeta = itens.map((item) => ({
+    ...item,
+    __navegavel: rotaParaItem ? Boolean(rotaParaItem(item)) : false,
+  }));
 
   function navegarPara(item) {
     if (!rotaParaItem) return;
@@ -41,7 +49,7 @@ export function DonutDistribuicao({ itens, rotaParaItem }) {
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
-              data={itens}
+              data={itensComMeta}
               dataKey="totalSegundos"
               nameKey="nome"
               cx="50%"
