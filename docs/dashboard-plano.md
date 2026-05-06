@@ -249,7 +249,7 @@ Implementação:
 
 - [x] `feat(pages/DashboardAtividade): cria página com header (nome da atividade + pasta)`
 - [x] `feat(App): registra rota /atividades/:atividadeId/dashboard`
-- [ ] `feat(pages/DashboardAtividade): reusa componentes filtrando por atividadeId`
+- [x] `feat(pages/DashboardAtividade): reusa componentes filtrando por atividadeId`
 - [ ] `feat(pages/Sessoes ou CardAtividade): adiciona link "Ver dashboard" da atividade`
 
 ### Fase 16 — Frontend: drill-down
