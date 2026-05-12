@@ -45,7 +45,7 @@ export function PorModoDonut({ dados }) {
 
   return (
     <div className="grid grid-cols-1 gap-3 sm:grid-cols-[minmax(0,1fr)_auto] sm:items-center">
-      <div className="h-44 w-full">
+      <div className="h-64 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
