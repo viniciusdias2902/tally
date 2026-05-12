@@ -26,9 +26,21 @@ export function criarSessaoService(sessaoRepository, atividadeService, categoria
       return sessaoRepository.criar({ atividadeId, categoriaId, iniciadoEm, duracaoSegundos, modo, ciclosPomodoro, observacoes });
     },
 
-    async listar(atividadeId, usuarioId, opcoes) {
+    async listar(atividadeId, usuarioId, opcoes = {}) {
       await verificarAcessoAtividade(atividadeId, usuarioId);
-      return sessaoRepository.listarPorAtividade(atividadeId, opcoes);
+      const pagina = opcoes.pagina ?? 1;
+      const limite = opcoes.limite ?? 20;
+      const { items, total } = await sessaoRepository.listarPorAtividade(
+        atividadeId,
+        { ...opcoes, pagina, limite },
+      );
+      return {
+        items,
+        total,
+        pagina,
+        limite,
+        totalPaginas: Math.max(1, Math.ceil(total / limite)),
+      };
     },
 
     buscar(id, usuarioId) {
