@@ -34,7 +34,13 @@ describe("GET /atividades/:atividadeId/sessoes", () => {
       .set("Authorization", `Bearer ${accessToken}`);
 
     expect(res.status).toBe(200);
-    expect(res.body).toEqual([]);
+    expect(res.body).toEqual({
+      items: [],
+      total: 0,
+      pagina: 1,
+      limite: 20,
+      totalPaginas: 1,
+    });
   });
 
   it("deve listar sessões da atividade", async () => {
@@ -62,7 +68,8 @@ describe("GET /atividades/:atividadeId/sessoes", () => {
       .set("Authorization", `Bearer ${accessToken}`);
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(2);
+    expect(res.body.items).toHaveLength(2);
+    expect(res.body.total).toBe(2);
   });
 
   it("deve filtrar sessões por categoria", async () => {
@@ -91,8 +98,9 @@ describe("GET /atividades/:atividadeId/sessoes", () => {
       .set("Authorization", `Bearer ${accessToken}`);
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(1);
-    expect(res.body[0].categoriaId).toBe(categoriaId);
+    expect(res.body.items).toHaveLength(1);
+    expect(res.body.items[0].categoriaId).toBe(categoriaId);
+    expect(res.body.total).toBe(1);
   });
 
   it("deve respeitar o limite de resultados", async () => {
@@ -113,7 +121,33 @@ describe("GET /atividades/:atividadeId/sessoes", () => {
       .set("Authorization", `Bearer ${accessToken}`);
 
     expect(res.status).toBe(200);
-    expect(res.body).toHaveLength(2);
+    expect(res.body.items).toHaveLength(2);
+    expect(res.body.total).toBe(3);
+    expect(res.body.totalPaginas).toBe(2);
+  });
+
+  it("deve retornar página específica usando skip", async () => {
+    for (let i = 0; i < 5; i++) {
+      await request(app)
+        .post(`/atividades/${atividadeId}/sessoes`)
+        .set("Authorization", `Bearer ${accessToken}`)
+        .send({
+          iniciadoEm: `2026-04-0${i + 1}T10:00:00Z`,
+          duracaoSegundos: 1500,
+          modo: "timer",
+        });
+    }
+
+    const res = await request(app)
+      .get(`/atividades/${atividadeId}/sessoes`)
+      .query({ limite: 2, pagina: 2 })
+      .set("Authorization", `Bearer ${accessToken}`);
+
+    expect(res.status).toBe(200);
+    expect(res.body.items).toHaveLength(2);
+    expect(res.body.pagina).toBe(2);
+    expect(res.body.total).toBe(5);
+    expect(res.body.totalPaginas).toBe(3);
   });
 
   it("deve retornar 404 para atividade inexistente", async () => {
