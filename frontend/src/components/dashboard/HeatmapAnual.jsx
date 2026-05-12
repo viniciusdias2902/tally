@@ -1,6 +1,12 @@
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { ActivityCalendar } from "react-activity-calendar";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
+
+const BLOCK_MARGIN = 3;
+const LARGURA_RESERVADA_LABELS = 36;
+const SEMANAS = 53;
+const BLOCK_MIN = 9;
+const BLOCK_MAX = 18;
 
 const TEMA_HEATMAP = {
   light: ["#ccd0da", "#8839ef"],
@@ -61,6 +67,8 @@ function calcularLevel(count, maximo) {
 
 export function HeatmapAnual({ dados }) {
   const { theme } = useTheme();
+  const containerRef = useRef(null);
+  const [blockSize, setBlockSize] = useState(12);
   const data = useMemo(() => {
     if (!dados || dados.length === 0) return [];
     const maximo = Math.max(...dados.map((d) => d.count));
@@ -71,19 +79,37 @@ export function HeatmapAnual({ dados }) {
     }));
   }, [dados]);
 
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const calcular = (largura) => {
+      const disponivel = largura - LARGURA_RESERVADA_LABELS;
+      const tamanho = Math.floor(disponivel / SEMANAS) - BLOCK_MARGIN;
+      return Math.max(BLOCK_MIN, Math.min(BLOCK_MAX, tamanho));
+    };
+    setBlockSize(calcular(el.clientWidth));
+    const obs = new ResizeObserver(([entry]) => {
+      setBlockSize(calcular(entry.contentRect.width));
+    });
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+
   return (
-    <ActivityCalendar
-      data={data}
-      maxLevel={4}
-      weekStart={0}
-      showWeekdayLabels
-      blockSize={12}
-      blockMargin={3}
-      blockRadius={2}
-      colorScheme={theme}
-      theme={TEMA_HEATMAP}
-      labels={LABELS}
-      tooltips={{ activity: { text: textoTooltip } }}
-    />
+    <div ref={containerRef} className="w-full">
+      <ActivityCalendar
+        data={data}
+        maxLevel={4}
+        weekStart={0}
+        showWeekdayLabels
+        blockSize={blockSize}
+        blockMargin={BLOCK_MARGIN}
+        blockRadius={2}
+        colorScheme={theme}
+        theme={TEMA_HEATMAP}
+        labels={LABELS}
+        tooltips={{ activity: { text: textoTooltip } }}
+      />
+    </div>
   );
 }
