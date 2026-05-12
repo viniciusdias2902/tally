@@ -55,7 +55,8 @@ export function TopAtividadesBar({ dados }) {
             tick={{ fill: tema.textoSecundario, fontSize: 12 }}
             tickLine={false}
             axisLine={false}
-            width={120}
+            width={96}
+            tickFormatter={(v) => (v.length > 12 ? `${v.slice(0, 12)}…` : v)}
           />
           <Tooltip cursor={{ fill: tema.grid, opacity: 0.4 }} content={<ConteudoTooltip />} />
           <Bar dataKey="totalSegundos" fill={tema.accent} radius={[0, 4, 4, 0]} />
