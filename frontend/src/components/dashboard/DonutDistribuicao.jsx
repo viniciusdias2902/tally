@@ -44,8 +44,8 @@ export function DonutDistribuicao({ itens, rotaParaItem }) {
   }
 
   return (
-    <div className="@container grid grid-cols-1 gap-4 @md:grid-cols-[minmax(0,1fr)_auto] @md:items-center">
-      <div className="h-60 w-full">
+    <div className="flex items-center gap-4">
+      <div className="aspect-square w-40 shrink-0">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
@@ -69,7 +69,7 @@ export function DonutDistribuicao({ itens, rotaParaItem }) {
           </PieChart>
         </ResponsiveContainer>
       </div>
-      <ul className="space-y-1.5 text-sm @md:min-w-44">
+      <ul className="min-w-0 flex-1 space-y-1.5 text-sm">
         {itens.map((item, indice) => {
           const rota = rotaParaItem ? rotaParaItem(item) : null;
           const conteudo = (
