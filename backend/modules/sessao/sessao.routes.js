@@ -90,11 +90,12 @@ import {
  *           format: uuid
  *         description: Filtrar por categoria
  *       - in: query
- *         name: cursor
+ *         name: pagina
  *         schema:
- *           type: string
- *           format: uuid
- *         description: Cursor para paginação
+ *           type: integer
+ *           minimum: 1
+ *           default: 1
+ *         description: Página (1-indexada)
  *       - in: query
  *         name: limite
  *         schema:
@@ -105,13 +106,28 @@ import {
  *         description: Número de resultados por página
  *     responses:
  *       200:
- *         description: Lista de sessões
+ *         description: Lista paginada de sessões
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 $ref: '#/components/schemas/Sessao'
+ *               type: object
+ *               properties:
+ *                 items:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Sessao'
+ *                 total:
+ *                   type: integer
+ *                   example: 145
+ *                 pagina:
+ *                   type: integer
+ *                   example: 1
+ *                 limite:
+ *                   type: integer
+ *                   example: 20
+ *                 totalPaginas:
+ *                   type: integer
+ *                   example: 8
  *       401:
  *         $ref: '#/components/responses/NaoAutorizado'
  *       404:
