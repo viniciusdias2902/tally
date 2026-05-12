@@ -19,10 +19,34 @@ export default function Atividades() {
   const [ocultarPastas, setOcultarPastas] = useState(
     () => localStorage.getItem("ocultarPastas") === "true",
   );
+  const [pastasOcultas, setPastasOcultas] = useState(() => {
+    try {
+      const bruto = localStorage.getItem("pastasOcultas");
+      return new Set(bruto ? JSON.parse(bruto) : []);
+    } catch {
+      return new Set();
+    }
+  });
 
   useEffect(() => {
     localStorage.setItem("ocultarPastas", String(ocultarPastas));
   }, [ocultarPastas]);
+
+  useEffect(() => {
+    localStorage.setItem("pastasOcultas", JSON.stringify([...pastasOcultas]));
+  }, [pastasOcultas]);
+
+  function ocultarPasta(id) {
+    setPastasOcultas((prev) => {
+      const novo = new Set(prev);
+      novo.add(id);
+      return novo;
+    });
+  }
+
+  function mostrarTodasPastas() {
+    setPastasOcultas(new Set());
+  }
 
   const nomePorPastaId = useMemo(
     () => Object.fromEntries(pastas.map((p) => [p.id, p.nome])),
