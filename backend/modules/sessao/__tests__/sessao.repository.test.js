@@ -43,12 +43,13 @@ describe("sessao.repository", () => {
     expect(resultado).toEqual(sessaoCriada);
   });
 
-  it("deve listar sessões por atividade", async () => {
+  it("deve listar sessões por atividade com paginação", async () => {
     const sessoes = [
       { id: "s1", atividadeId: "a1", categoriaId: "c1", iniciadoEm: new Date(), duracaoSegundos: 3600 },
       { id: "s2", atividadeId: "a1", categoriaId: "c2", iniciadoEm: new Date(), duracaoSegundos: 1800 },
     ];
     prismaMock.sessao.findMany.mockResolvedValue(sessoes);
+    prismaMock.sessao.count.mockResolvedValue(2);
 
     const resultado = await repositorio.listarPorAtividade("a1", { categoriaId: "c1" });
 
@@ -56,9 +57,13 @@ describe("sessao.repository", () => {
       where: { atividadeId: "a1", categoriaId: "c1" },
       orderBy: { iniciadoEm: "desc" },
       take: 20,
+      skip: 0,
       include: { categoria: true },
     });
-    expect(resultado).toEqual(sessoes);
+    expect(prismaMock.sessao.count).toHaveBeenCalledWith({
+      where: { atividadeId: "a1", categoriaId: "c1" },
+    });
+    expect(resultado).toEqual({ items: sessoes, total: 2 });
   });
 
   it("deve buscar uma sessão pelo seu id", async () => {

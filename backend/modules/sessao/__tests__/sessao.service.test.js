@@ -160,16 +160,37 @@ describe("sessao.service", () => {
   });
 
   describe("listar", () => {
-    it("deve retornar as sessões da atividade", async () => {
+    it("deve retornar as sessões paginadas da atividade", async () => {
       const sessoes = [sessaoBase];
       atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
-      repositorio.listarPorAtividade.mockResolvedValue(sessoes);
+      repositorio.listarPorAtividade.mockResolvedValue({ items: sessoes, total: 1 });
 
       const resultado = await servico.listar("atividade1", "usuario1", { categoriaId: "categoria1" });
 
       expect(atividadeServiceMock.buscar).toHaveBeenCalledWith("atividade1", "usuario1");
-      expect(repositorio.listarPorAtividade).toHaveBeenCalledWith("atividade1", { categoriaId: "categoria1" });
-      expect(resultado).toEqual(sessoes);
+      expect(repositorio.listarPorAtividade).toHaveBeenCalledWith("atividade1", {
+        categoriaId: "categoria1",
+        pagina: 1,
+        limite: 20,
+      });
+      expect(resultado).toEqual({
+        items: sessoes,
+        total: 1,
+        pagina: 1,
+        limite: 20,
+        totalPaginas: 1,
+      });
+    });
+
+    it("deve calcular totalPaginas a partir do total e do limite", async () => {
+      atividadeServiceMock.buscar.mockResolvedValue(atividadeBase);
+      repositorio.listarPorAtividade.mockResolvedValue({ items: [], total: 25 });
+
+      const resultado = await servico.listar("atividade1", "usuario1", { pagina: 2, limite: 10 });
+
+      expect(resultado.totalPaginas).toBe(3);
+      expect(resultado.pagina).toBe(2);
+      expect(resultado.limite).toBe(10);
     });
 
     it("deve lançar ErroApp 404 se a atividade não pertence ao usuário", async () => {
