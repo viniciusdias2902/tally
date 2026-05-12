@@ -45,7 +45,7 @@ export function DonutDistribuicao({ itens, rotaParaItem }) {
 
   return (
     <div className="@container grid grid-cols-1 gap-4 @md:grid-cols-[minmax(0,1fr)_auto] @md:items-center">
-      <div className="h-72 w-full">
+      <div className="h-60 w-full">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
             <Pie
