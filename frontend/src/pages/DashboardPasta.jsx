@@ -103,7 +103,7 @@ export default function DashboardPasta() {
 
       <GradeKpis kpis={kpis} />
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[2fr_1fr]">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[2fr_1fr] lg:items-start">
         <Cartao titulo="Atividade no último ano">
           {heatmap.length > 0 ? (
             <HeatmapAnual dados={heatmap} />
@@ -135,7 +135,7 @@ export default function DashboardPasta() {
         )}
       </Cartao>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 lg:grid-cols-3 lg:items-start">
         <Cartao titulo="Por hora do dia">
           {porHora.length > 0 ? (
             <PorHoraBar dados={porHora} />
