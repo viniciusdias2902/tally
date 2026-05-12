@@ -1,9 +1,9 @@
 import { api } from "./client.js";
 
-export function listar(atividadeId, { categoriaId, cursor, limite } = {}) {
+export function listar(atividadeId, { categoriaId, pagina, limite } = {}) {
   const params = new URLSearchParams();
   if (categoriaId) params.set("categoriaId", categoriaId);
-  if (cursor) params.set("cursor", cursor);
+  if (pagina) params.set("pagina", String(pagina));
   if (limite) params.set("limite", String(limite));
   const query = params.toString();
   return api(
