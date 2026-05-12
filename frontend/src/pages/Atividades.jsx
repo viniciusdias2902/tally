@@ -166,8 +166,20 @@ export default function Atividades() {
         </div>
       ) : !ocultarPastas && grupos.porPasta.some((g) => g.atividades.length > 0) ? (
         <div className="space-y-8">
+          {pastasOcultas.size > 0 && (
+            <p className="text-xs text-text-muted">
+              {pastasOcultas.size} pasta(s) oculta(s).{" "}
+              <button
+                type="button"
+                onClick={mostrarTodasPastas}
+                className="text-accent hover:underline"
+              >
+                Mostrar todas
+              </button>
+            </p>
+          )}
           {grupos.porPasta.map(({ pasta, atividades: itens }) =>
-            itens.length === 0 ? null : (
+            itens.length === 0 || pastasOcultas.has(pasta.id) ? null : (
               <SecaoPasta
                 key={pasta.id}
                 titulo={pasta.nome}
@@ -177,6 +189,7 @@ export default function Atividades() {
                 onEditar={abrirEdicao}
                 onArquivar={handleArquivar}
                 onDeletar={handleDeletar}
+                onOcultarPasta={() => ocultarPasta(pasta.id)}
               />
             ),
           )}
@@ -226,21 +239,33 @@ export default function Atividades() {
   );
 }
 
-function SecaoPasta({ titulo, pastaId, atividades, nomePorPastaId, onEditar, onArquivar, onDeletar }) {
+function SecaoPasta({ titulo, pastaId, atividades, nomePorPastaId, onEditar, onArquivar, onDeletar, onOcultarPasta }) {
   return (
     <section>
       <div className="mb-3 flex items-baseline justify-between gap-2">
         <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wide">
           {titulo}
         </h3>
-        {pastaId ? (
-          <Link
-            to={`/pastas/${pastaId}/dashboard`}
-            className="text-xs text-text-muted hover:text-accent"
-          >
-            Ver dashboard →
-          </Link>
-        ) : null}
+        <div className="flex items-center gap-3">
+          {pastaId ? (
+            <Link
+              to={`/pastas/${pastaId}/dashboard`}
+              className="text-xs text-text-muted hover:text-accent"
+            >
+              Ver dashboard →
+            </Link>
+          ) : null}
+          {onOcultarPasta ? (
+            <button
+              type="button"
+              onClick={onOcultarPasta}
+              title="Ocultar esta pasta"
+              className="text-xs text-text-muted hover:text-accent"
+            >
+              Ocultar
+            </button>
+          ) : null}
+        </div>
       </div>
       <GradeAtividades
         atividades={atividades}
