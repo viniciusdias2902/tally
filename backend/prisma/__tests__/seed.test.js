@@ -4,9 +4,11 @@ const prismaMock = {
   $executeRaw: vi.fn(),
   $disconnect: vi.fn(),
   usuario: { create: vi.fn() },
+  pasta: { create: vi.fn() },
   atividade: { create: vi.fn() },
-  categoria: { createMany: vi.fn() },
-  configPomodoro: { createMany: vi.fn() },
+  categoria: { createMany: vi.fn(), findMany: vi.fn() },
+  configPomodoro: { createMany: vi.fn(), findMany: vi.fn() },
+  sessao: { createMany: vi.fn() },
 };
 
 vi.mock("dotenv/config", () => ({}));
@@ -28,11 +30,17 @@ describe("seed", () => {
     prismaMock.$executeRaw.mockResolvedValue(undefined);
     prismaMock.$disconnect.mockResolvedValue(undefined);
     prismaMock.usuario.create.mockResolvedValue({ id: "u1" });
+    prismaMock.pasta.create.mockImplementation(({ data }) =>
+      Promise.resolve({ id: `pasta-${data.nome}`, ...data })
+    );
     prismaMock.atividade.create.mockImplementation(({ data }) =>
       Promise.resolve({ id: `id-${data.nome}`, ...data })
     );
     prismaMock.categoria.createMany.mockResolvedValue({ count: 1 });
+    prismaMock.categoria.findMany.mockResolvedValue([]);
     prismaMock.configPomodoro.createMany.mockResolvedValue({ count: 1 });
+    prismaMock.configPomodoro.findMany.mockResolvedValue([]);
+    prismaMock.sessao.createMany.mockResolvedValue({ count: 0 });
   });
 
   async function executarSeed() {
