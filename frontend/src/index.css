@@ -98,11 +98,11 @@
   --color-accent-hover: #b88ef3;
   --color-accent-subtle: rgba(203, 166, 247, 0.15);
 
-  /* Botão primário em estilo outline — bg em Surface1, accent em Mauve */
-  --color-button-primary-bg: #45475a;       /* Surface1 */
-  --color-button-primary-bg-hover: #585b70; /* Surface2 */
-  --color-button-primary-fg: #cba6f7;       /* Mauve */
-  --color-button-primary-border: #cba6f7;   /* Mauve */
+  /* Botão primário filled — Mauve preenchido sem borda destacada */
+  --color-button-primary-bg: #cba6f7;       /* Mauve */
+  --color-button-primary-bg-hover: #b88ef3;
+  --color-button-primary-fg: #1e1e2e;       /* Base — texto escuro sobre Mauve */
+  --color-button-primary-border: #cba6f7;   /* Mauve — invisível por igualar bg */
 
   --color-danger: #f38ba8;          /* Red */
   --color-danger-hover: #ec6d92;
