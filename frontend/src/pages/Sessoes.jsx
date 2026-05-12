@@ -11,8 +11,17 @@ import { formatarDuracao } from "../utils/formatarDuracao.js";
 export default function Sessoes() {
   const { atividadeId } = useParams();
   const [atividade, setAtividade] = useState(null);
-  const { sessoes, totalSegundos, carregando, erro, deletar } =
-    useSessoes(atividadeId);
+  const {
+    sessoes,
+    totalSegundos,
+    pagina,
+    setPagina,
+    totalPaginas,
+    total,
+    carregando,
+    erro,
+    deletar,
+  } = useSessoes(atividadeId);
   const [confirmandoDelete, setConfirmandoDelete] = useState(null);
   const [erroDelete, setErroDelete] = useState("");
 
@@ -96,15 +105,25 @@ export default function Sessoes() {
           </div>
         </div>
       ) : (
-        <div className="space-y-3">
-          {sessoes.map((sessao) => (
-            <CardSessao
-              key={sessao.id}
-              sessao={sessao}
-              onDeletar={setConfirmandoDelete}
+        <>
+          <div className="space-y-3">
+            {sessoes.map((sessao) => (
+              <CardSessao
+                key={sessao.id}
+                sessao={sessao}
+                onDeletar={setConfirmandoDelete}
+              />
+            ))}
+          </div>
+          {totalPaginas > 1 && (
+            <ControlesPaginacao
+              pagina={pagina}
+              totalPaginas={totalPaginas}
+              total={total}
+              onIr={setPagina}
             />
-          ))}
-        </div>
+          )}
+        </>
       )}
 
       <Modal
@@ -136,6 +155,34 @@ export default function Sessoes() {
           </Button>
         </div>
       </Modal>
+    </div>
+  );
+}
+
+function ControlesPaginacao({ pagina, totalPaginas, total, onIr }) {
+  return (
+    <div className="mt-6 flex items-center justify-between gap-3 text-sm">
+      <p className="text-xs text-text-muted tabular-nums">
+        Página {pagina} de {totalPaginas} · {total} sessões
+      </p>
+      <div className="flex gap-2">
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => onIr(pagina - 1)}
+          disabled={pagina <= 1}
+        >
+          Anterior
+        </Button>
+        <Button
+          variant="secondary"
+          size="sm"
+          onClick={() => onIr(pagina + 1)}
+          disabled={pagina >= totalPaginas}
+        >
+          Próxima
+        </Button>
+      </div>
     </div>
   );
 }
