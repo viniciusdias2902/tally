@@ -6,19 +6,22 @@ export function criarSessaoRepository(prisma) {
       });
     },
 
-    listarPorAtividade(atividadeId, { categoriaId, cursor, limite = 20 } = {}) {
-      return prisma.sessao.findMany({
-        where: {
-          atividadeId,
-          ...(categoriaId ? { categoriaId } : {}),
-        },
-        orderBy: { iniciadoEm: "desc" },
-        take: limite,
-        ...(cursor ? { cursor } : {}),
-        include: {
-          categoria: true,
-        },
-      });
+    async listarPorAtividade(atividadeId, { categoriaId, pagina = 1, limite = 20 } = {}) {
+      const where = {
+        atividadeId,
+        ...(categoriaId ? { categoriaId } : {}),
+      };
+      const [items, total] = await Promise.all([
+        prisma.sessao.findMany({
+          where,
+          orderBy: { iniciadoEm: "desc" },
+          take: limite,
+          skip: (pagina - 1) * limite,
+          include: { categoria: true },
+        }),
+        prisma.sessao.count({ where }),
+      ]);
+      return { items, total };
     },
 
     buscarPorId(id) {
