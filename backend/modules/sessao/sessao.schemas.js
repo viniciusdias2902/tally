@@ -33,7 +33,7 @@ export const listarSessoesSchema = {
   }),
   query: z.object({
     categoriaId: z.uuid().optional(),
-    cursor: z.uuid().optional(),
+    pagina: z.coerce.number().int().min(1).optional(),
     limite: z.coerce.number().int().min(1).max(100).optional(),
   }),
 };
