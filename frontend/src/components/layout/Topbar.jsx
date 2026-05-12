@@ -26,6 +26,7 @@ export default function Topbar() {
           <span className="text-accent">||||</span> Tally
         </h1>
 
+        <div className="flex-1" />
 
         <nav className="hidden md:flex items-center gap-1">
           {links.map(({ to, label, end }) => (
