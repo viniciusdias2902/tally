@@ -16,11 +16,10 @@ export default function CardAtividade({ atividade, nomePasta, onEditar, onArquiv
     <div className="flex flex-col rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-bg-elevated p-5 shadow-sm transition-all duration-150 hover:shadow-md">
       <div className="flex items-start justify-between mb-4">
         <div
-          className={`inline-flex items-center justify-center w-10 h-10 rounded-lg ${
-            ehCronometrada
+          className={`inline-flex items-center justify-center w-10 h-10 rounded-lg ${ehCronometrada
               ? "bg-accent/10 text-accent"
               : "bg-success/10 text-success"
-          }`}
+            }`}
           aria-hidden="true"
         >
           {ehCronometrada ? <ClockIcon /> : <CheckIcon />}
@@ -74,7 +73,7 @@ export default function CardAtividade({ atividade, nomePasta, onEditar, onArquiv
           {atividade.nome}
         </h3>
         <p className="text-xs text-text-muted mt-1">
-          {ehCronometrada ? "Cronometrada" : "Binária"}
+          {ehCronometrada ? "Concluído" : "Pendente"}
         </p>
         {nomePasta && (
           <span className="inline-flex items-center gap-1 mt-2 px-2 py-0.5 rounded-md bg-bg-secondary text-text-secondary text-xs font-medium max-w-full">
