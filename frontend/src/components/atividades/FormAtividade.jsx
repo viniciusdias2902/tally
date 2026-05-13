@@ -4,7 +4,7 @@ import Button from "../ui/Button.jsx";
 
 const TIPOS_MEDICAO = [
   { value: "cronometrada", label: "Cronometrada" },
-  { value: "binaria", label: "Binária" },
+  { value: "binaria", label: "Concluído/Pendente" },
 ];
 
 export default function FormAtividade({ atividade, pastas = [], onSalvar, onCancelar }) {

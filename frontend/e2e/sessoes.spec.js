@@ -35,7 +35,7 @@ test.describe("Sessões", () => {
     await expect(page.getByRole("heading", { name: "Atividades" })).toBeVisible();
 
     await criarSeNaoExiste(page, ATIVIDADE_TEMPO, "Cronometrada");
-    await criarSeNaoExiste(page, ATIVIDADE_BINARIA, "Binária");
+    await criarSeNaoExiste(page, ATIVIDADE_BINARIA, "Concluído/Pendente");
   });
 
   test("registra sessao binaria como feito", async ({ page }) => {
