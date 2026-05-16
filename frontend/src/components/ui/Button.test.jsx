@@ -19,4 +19,16 @@ describe("Button", () => {
 
         expect(onClickMock).toHaveBeenCalledTimes(1);
     });
+
+    test("fica desabilitado quando prop disabled está true", async () => {
+        const user = userEvent.setup();
+        const onClickMock = vi.fn();
+
+        render(<Button onClick={onClickMock} disabled>Salvar</Button>);
+
+        await user.click(screen.getByText("Salvar"));
+
+        expect(onClickMock).not.toHaveBeenCalled();
+        expect(screen.getByRole("button")).toBeDisabled();
+    });
 });
