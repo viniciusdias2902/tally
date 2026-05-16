@@ -31,4 +31,10 @@ describe("Button", () => {
         expect(onClickMock).not.toHaveBeenCalled();
         expect(screen.getByRole("button")).toBeDisabled();
     });
+
+    test("aplica variante primary por padrão", () => {
+        render(<Button>Primary</Button>);
+        const button = screen.getByRole("button");
+        expect(button.className).toContain("bg-button-primary-bg");
+    });
 });
