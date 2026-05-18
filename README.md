@@ -177,6 +177,10 @@ npm run test:unit        # Apenas unitários
 npm run test:integration # Apenas integração
 npx prisma studio        # Interface visual do banco
 
+# Prisma
+npx prisma migrate dev   # Criar migration
+npm run seed             # Popular com dados 
+
 # Docker
 docker-compose up -d          # Subir containers
 docker-compose down           # Derrubar containers
