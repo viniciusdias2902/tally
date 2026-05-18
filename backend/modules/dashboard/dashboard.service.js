@@ -8,17 +8,10 @@ export function criarDashboardService(dashboardRepository) {
       usuarioId,
       pastaId = null,
       atividadeId = null,
-      desdeDias = 365,
-      agora = new Date(),
     }) {
-      const hoje = new Date(agora);
-      hoje.setUTCHours(0, 0, 0, 0);
-
-      const dataFim = new Date(hoje);
-      dataFim.setUTCDate(dataFim.getUTCDate() + 1);
-
-      const dataInicio = new Date(hoje);
-      dataInicio.setUTCDate(dataInicio.getUTCDate() - (desdeDias - 1));
+      const anoAtual = new Date().getFullYear();
+      const dataInicio = new Date(Date.UTC(anoAtual, 0, 1));
+      const dataFim = new Date(Date.UTC(anoAtual + 1, 0, 1));
 
       const linhas = await dashboardRepository.somarSegundosPorDia({
         usuarioId,
@@ -36,7 +29,7 @@ export function criarDashboardService(dashboardRepository) {
 
       const resultado = [];
       const cursor = new Date(dataInicio);
-      for (let i = 0; i < desdeDias; i++) {
+      while (cursor < dataFim) {
         const chave = formatarData(cursor);
         resultado.push({ date: chave, count: mapaDias.get(chave) ?? 0 });
         cursor.setUTCDate(cursor.getUTCDate() + 1);
