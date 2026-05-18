@@ -93,6 +93,25 @@ test.describe("Dashboard e Histórico", () => {
     await expect(secaoHeatmap.locator("svg").first()).toBeVisible({ timeout: 10000 });
   });
 
+  test("exibe graficos e kpis no dashboard geral", async ({ page }) => {
+    await page.getByRole("link", { name: /dashboard/i }).first().click();
+    await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+
+    // Verificar KPIs
+    await expect(page.getByText("Tempo total")).toBeVisible();
+    await expect(page.getByText("Sessões")).toBeVisible();
+    await expect(page.getByText("Sequência atual")).toBeVisible();
+    await expect(page.getByText("Melhor sequência")).toBeVisible();
+
+    // Verificar seções de gráficos
+    await expect(page.getByRole("heading", { name: /distribuição/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /evolução/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /top atividades/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /por hora do dia/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /por dia da semana/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /por modo/i })).toBeVisible();
+  });
+
 });
 
 async function criarSeNaoExiste(page, nome, tipo) {
