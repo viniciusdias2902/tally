@@ -71,6 +71,28 @@ test.describe("Pomodoro e Registro Manual", () => {
     await page.getByRole("button", { name: /registrar sessão/i }).click();
     await expect(page.getByText(/sessão registrada com sucesso/i)).toBeVisible();
   });
+
+  test("registra sessao manual", async ({ page }) => {
+    await abrirRegistro(page, ATIVIDADE);
+
+    // Trocar para aba Manual
+    const abaManual = page.getByRole("tab", { name: /manual/i });
+    await abaManual.click();
+    await expect(abaManual).toHaveAttribute("aria-selected", "true");
+
+    // Verificar formulário manual
+    await expect(page.getByRole("heading", { name: /registro manual/i })).toBeVisible();
+
+    // Preencher duração
+    await page.getByLabel(/duração/i).fill("45");
+
+    // Preencher observações
+    await page.getByLabel(/observações/i).fill("Sessão de estudo E2E");
+
+    // Registrar
+    await page.getByRole("button", { name: /registrar sessão/i }).click();
+    await expect(page.getByText(/sessão registrada com sucesso/i)).toBeVisible();
+  });
 });
 
 async function abrirRegistro(page, atividadeNome) {
