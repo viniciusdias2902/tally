@@ -77,6 +77,22 @@ test.describe("Dashboard e Histórico", () => {
     await expect(page.getByText(/registrados/i)).toBeVisible();
   });
 
+  test("exibe heatmap no dashboard geral", async ({ page }) => {
+    await page.getByRole("link", { name: /dashboard/i }).first().click();
+    await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
+
+    // Verificar seção do heatmap
+    await expect(
+      page.getByRole("heading", { name: /atividade no último ano/i }),
+    ).toBeVisible();
+
+    // Verificar que o SVG do heatmap foi renderizado
+    const secaoHeatmap = page
+      .getByRole("heading", { name: /atividade no último ano/i })
+      .locator("xpath=..");
+    await expect(secaoHeatmap.locator("svg").first()).toBeVisible({ timeout: 10000 });
+  });
+
 });
 
 async function criarSeNaoExiste(page, nome, tipo) {
