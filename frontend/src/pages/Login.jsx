@@ -85,7 +85,7 @@ export default function Login() {
         </div>
 
         <p className="mt-6 text-center text-sm text-text-secondary">
-          Ainda no tem conta?{" "}
+          Ainda não tem conta?{" "}
           <Link to="/registro" className="text-accent hover:text-accent-hover font-medium transition-colors">
             Criar conta
           </Link>
