@@ -112,6 +112,29 @@ test.describe("Dashboard e Histórico", () => {
     await expect(page.getByRole("heading", { name: /por modo/i })).toBeVisible();
   });
 
+  test("exibe dashboard individual da atividade", async ({ page }) => {
+    await page.getByRole("link", { name: /atividades/i }).first().click();
+    await expect(page.getByRole("heading", { name: "Atividades" })).toBeVisible();
+
+    // Abrir dashboard da atividade via menu kebab
+    const card = page.getByRole("heading", { name: ATIVIDADE_TEMPO }).locator("xpath=../..");
+    await card.getByRole("button", { name: /mais ações/i }).click();
+    await page.getByRole("menu").getByRole("link", { name: /dashboard/i }).click();
+
+    // Verificar título da atividade
+    await expect(
+      page.getByRole("heading", { name: ATIVIDADE_TEMPO }),
+    ).toBeVisible();
+
+    // Verificar KPIs
+    await expect(page.getByText("Tempo total")).toBeVisible();
+    await expect(page.getByText("Sessões")).toBeVisible();
+
+    // Verificar seções de gráficos da atividade
+    await expect(page.getByRole("heading", { name: /atividade no último ano/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /por categoria/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /evolução/i })).toBeVisible();
+  });
 });
 
 async function criarSeNaoExiste(page, nome, tipo) {
