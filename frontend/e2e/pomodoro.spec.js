@@ -95,6 +95,7 @@ test.describe("Pomodoro e Registro Manual", () => {
   });
 });
 
+/** Navega até a tela de registro de sessão da atividade informada. */
 async function abrirRegistro(page, atividadeNome) {
   await page.getByRole("link", { name: /atividades/i }).first().click();
   await expect(page.getByRole("heading", { name: "Atividades" })).toBeVisible();

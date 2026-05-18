@@ -137,6 +137,7 @@ test.describe("Dashboard e Histórico", () => {
   });
 });
 
+/** Cria uma atividade caso ela ainda não exista na listagem. */
 async function criarSeNaoExiste(page, nome, tipo) {
   if (await page.getByRole("heading", { name: nome }).isVisible().catch(() => false)) {
     return;
