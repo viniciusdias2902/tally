@@ -29,7 +29,7 @@ const LABELS = {
     "dez",
   ],
   weekdays: ["dom", "seg", "ter", "qua", "qui", "sex", "sáb"],
-  totalCount: "{{count}} minutos rastreados em {{year}}",
+  totalCount: "{{count}} minutos rastreados no último ano",
   legend: { less: "menos", more: "mais" },
 };
 
