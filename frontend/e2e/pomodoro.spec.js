@@ -1,0 +1,43 @@
+import { test, expect } from "@playwright/test";
+
+const SUFIXO = `${Date.now()}-${Math.floor(Math.random() * 10000)}`;
+const USUARIO = {
+  nome: `Teste Pomodoro ${SUFIXO}`,
+  email: `pomodoro-${SUFIXO}@e2e.com`,
+  senha: "senha1234",
+};
+const ATIVIDADE = `Estudar ${SUFIXO}`;
+
+test.describe.configure({ mode: "serial" });
+
+test.describe("Pomodoro e Registro Manual", () => {
+  test.beforeEach(async ({ page }) => {
+    await page.goto("./login");
+    if (!(await page.getByLabel("E-mail").isVisible().catch(() => false))) {
+      return;
+    }
+    await page.getByLabel("E-mail").fill(USUARIO.email);
+    await page.getByLabel("Senha").fill(USUARIO.senha);
+    await page.getByRole("button", { name: /^entrar$/i }).click();
+    await page.waitForURL("/tally/app", { timeout: 10000 }).catch(async () => {
+      await page.goto("./registro");
+      await page.getByLabel("Nome").fill(USUARIO.nome);
+      await page.getByLabel("E-mail").fill(USUARIO.email);
+      await page.getByLabel("Senha").fill(USUARIO.senha);
+      await page.getByRole("button", { name: /criar conta/i }).click();
+      await page.waitForURL("/tally/app", { timeout: 10000 });
+    });
+  });
+
+  test("garante atividade base criada", async ({ page }) => {
+    await page.getByRole("link", { name: /atividades/i }).first().click();
+    await expect(page.getByRole("heading", { name: "Atividades" })).toBeVisible();
+
+    if (!(await page.getByRole("heading", { name: ATIVIDADE }).isVisible().catch(() => false))) {
+      await page.getByRole("button", { name: /nova atividade/i }).click();
+      await page.getByLabel("Nome").fill(ATIVIDADE);
+      await page.getByRole("button", { name: /^criar$/i }).click();
+      await expect(page.getByRole("heading", { name: ATIVIDADE })).toBeVisible();
+    }
+  });
+});
