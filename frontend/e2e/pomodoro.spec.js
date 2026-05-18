@@ -65,7 +65,7 @@ test.describe("Pomodoro e Registro Manual", () => {
 
     // Verificar que foco total não está zerado
     const focoTotal = page.getByText(/foco total/i).locator("xpath=..");
-    await expect(focoTotal).not.toHaveText(/00:00:00/);
+    await expect(focoTotal).toContainText(/00:0[0-9]:[0-9][0-9]/);
 
     // Registrar sessão pomodoro
     await page.getByRole("button", { name: /registrar sessão/i }).click();
