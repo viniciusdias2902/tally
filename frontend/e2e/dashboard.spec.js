@@ -34,10 +34,13 @@ test.describe("Dashboard e Histórico", () => {
     await page.getByRole("link", { name: /atividades/i }).first().click();
     await expect(page.getByRole("heading", { name: "Atividades" })).toBeVisible();
 
+    // Criar atividade cronometrada
     await criarSeNaoExiste(page, ATIVIDADE_TEMPO, "Cronometrada");
+
+    // Criar atividade binária
     await criarSeNaoExiste(page, ATIVIDADE_BINARIA, "Concluído/Pendente");
 
-    // Registrar sessão manual na atividade cronometrada
+    // Registrar sessão manual na atividade cronometrada (gera dados para dashboard)
     const cardTempo = page.getByRole("heading", { name: ATIVIDADE_TEMPO }).locator("xpath=../..");
     await cardTempo.getByRole("link", { name: /registrar/i }).click();
     await expect(page.getByRole("heading", { name: /registrar sessão/i })).toBeVisible();
@@ -58,6 +61,22 @@ test.describe("Dashboard e Histórico", () => {
     await page.getByRole("button", { name: /registrar como feito/i }).click();
     await expect(page.getByText(/sessão registrada com sucesso/i)).toBeVisible();
   });
+
+  test("exibe sessoes no historico da atividade", async ({ page }) => {
+    await page.getByRole("link", { name: /atividades/i }).first().click();
+    await expect(page.getByRole("heading", { name: "Atividades" })).toBeVisible();
+
+    // Abrir registro para acessar o link "Ver histórico"
+    const card = page.getByRole("heading", { name: ATIVIDADE_TEMPO }).locator("xpath=../..");
+    await card.getByRole("button", { name: /mais ações/i }).click();
+    await page.getByRole("menu").getByRole("link", { name: /histórico/i }).click();
+
+    // Verificar página de histórico
+    await expect(page.getByRole("heading", { name: /histórico/i })).toBeVisible();
+    await expect(page.getByText("Manual").first()).toBeVisible();
+    await expect(page.getByText(/registrados/i)).toBeVisible();
+  });
+
 });
 
 async function criarSeNaoExiste(page, nome, tipo) {
