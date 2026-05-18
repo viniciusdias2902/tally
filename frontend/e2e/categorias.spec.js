@@ -109,7 +109,8 @@ async function abrirCategorias(page) {
   await page.getByRole("link", { name: /atividades/i }).first().click();
   await expect(page.getByRole("heading", { name: "Atividades" })).toBeVisible();
   const card = cardDe(page, ATIVIDADE);
-  await card.getByTitle("Categorias").click();
+  await card.getByRole("button", { name: /mais ações/i }).click();
+  await page.getByRole("menu").getByRole("link", { name: /categorias/i }).click();
   await expect(page.getByRole("heading", { name: "Categorias" })).toBeVisible();
 }
 
