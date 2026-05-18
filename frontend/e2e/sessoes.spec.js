@@ -104,7 +104,8 @@ async function garantirCategoria(page, atividadeNome, nomeCategoria) {
   const card = page
     .getByRole("heading", { name: atividadeNome })
     .locator("xpath=../..");
-  await card.getByTitle("Categorias").click();
+  await card.getByRole("button", { name: /mais ações/i }).click();
+  await page.getByRole("menu").getByRole("link", { name: /categorias/i }).click();
   await expect(page.getByRole("heading", { name: "Categorias" })).toBeVisible();
 
   if (
@@ -129,9 +130,9 @@ async function abrirRegistro(page, atividadeNome) {
   const card = page
     .getByRole("heading", { name: atividadeNome })
     .locator("xpath=../..");
-  await card.getByTitle("Registrar sessão").click();
+  await card.getByRole("link", { name: /registrar/i }).click();
   await expect(
-    page.getByRole("heading", { name: /registrar sessão/i }),
+    page.getByRole("heading", { name: /registrar sessão|registrar conclusão/i }).first(),
   ).toBeVisible();
 }
 
