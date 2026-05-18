@@ -40,4 +40,43 @@ test.describe("Pomodoro e Registro Manual", () => {
       await expect(page.getByRole("heading", { name: ATIVIDADE })).toBeVisible();
     }
   });
+
+  test("usa pomodoro e registra sessao", async ({ page }) => {
+    await abrirRegistro(page, ATIVIDADE);
+
+    // Trocar para aba Pomodoro
+    const abaPomodoro = page.getByRole("tab", { name: /pomodoro/i });
+    await abaPomodoro.click();
+    await expect(abaPomodoro).toHaveAttribute("aria-selected", "true");
+
+    // Verificar estado inicial
+    await expect(page.getByText("Pronto")).toBeVisible();
+
+    // Iniciar foco
+    await page.getByRole("button", { name: /iniciar foco/i }).click();
+    await expect(page.getByText("Em foco")).toBeVisible();
+
+    // Esperar tempo mínimo para acumular foco
+    await page.waitForTimeout(2500);
+
+    // Pausar
+    await page.getByRole("button", { name: /^pausar$/i }).click();
+    await expect(page.getByText(/pausado/i)).toBeVisible();
+
+    // Verificar que foco total não está zerado
+    const focoTotal = page.getByText(/foco total/i).locator("xpath=..");
+    await expect(focoTotal).not.toHaveText(/00:00:00/);
+
+    // Registrar sessão pomodoro
+    await page.getByRole("button", { name: /registrar sessão/i }).click();
+    await expect(page.getByText(/sessão registrada com sucesso/i)).toBeVisible();
+  });
 });
+
+async function abrirRegistro(page, atividadeNome) {
+  await page.getByRole("link", { name: /atividades/i }).first().click();
+  await expect(page.getByRole("heading", { name: "Atividades" })).toBeVisible();
+  const card = page.getByRole("heading", { name: atividadeNome }).locator("xpath=../..");
+  await card.getByRole("link", { name: /registrar/i }).click();
+  await expect(page.getByRole("heading", { name: /registrar sessão/i })).toBeVisible();
+}
