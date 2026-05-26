@@ -142,10 +142,14 @@ export default function Atividades() {
             {ocultarPastas ? <EyeIcon /> : <EyeOffIcon />}
             {ocultarPastas ? "Mostrar pastas" : "Ocultar pastas"}
           </Button>
-          <Button variant="secondary" onClick={() => setModalPastasAberto(true)}>
+          <Button
+            data-tour="gerenciar-pastas"
+            variant="secondary"
+            onClick={() => setModalPastasAberto(true)}
+          >
             <FolderIcon /> Gerenciar pastas
           </Button>
-          <Button onClick={abrirCriacao}>
+          <Button data-tour="nova-atividade" onClick={abrirCriacao}>
             <PlusIcon /> Nova atividade
           </Button>
         </div>
