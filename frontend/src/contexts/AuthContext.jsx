@@ -1,6 +1,7 @@
 import { createContext, useContext, useState, useEffect, useCallback } from "react";
 import { setAccessToken, setOnAuthFailure } from "../api/client.js";
 import * as authApi from "../api/auth.js";
+import { CHAVE_PENDENTE } from "../onboarding/armazenamento.js";
 
 const AuthContext = createContext();
 
@@ -58,6 +59,8 @@ export function AuthProvider({ children }) {
     setAccessToken(data.accessToken);
     localStorage.setItem("tally-refresh-token", data.refreshToken);
     localStorage.setItem("tally-usuario", JSON.stringify(data.usuario));
+    // Sinaliza que é uma conta nova para o tutorial disparar automaticamente.
+    localStorage.setItem(CHAVE_PENDENTE, "1");
     setUsuario(data.usuario);
   }
 
