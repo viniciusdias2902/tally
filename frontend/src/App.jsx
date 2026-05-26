@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { ThemeProvider } from "./contexts/ThemeContext.jsx";
 import { AuthProvider } from "./contexts/AuthContext.jsx";
+import { OnboardingProvider } from "./onboarding/OnboardingContext.jsx";
 import ProtectedRoute from "./components/layout/ProtectedRoute.jsx";
 import AppShell from "./components/layout/AppShell.jsx";
 import Login from "./pages/Login.jsx";
@@ -19,43 +20,45 @@ export default function App() {
     <BrowserRouter basename="/tally/app">
       <ThemeProvider>
         <AuthProvider>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/registro" element={<Registro />} />
+          <OnboardingProvider>
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/registro" element={<Registro />} />
 
-            <Route
-              element={
-                <ProtectedRoute>
-                  <AppShell />
-                </ProtectedRoute>
-              }
-            >
-              <Route path="/" element={<Dashboard />} />
               <Route
-                path="/pastas/:pastaId/dashboard"
-                element={<DashboardPasta />}
-              />
-              <Route path="/atividades" element={<Atividades />} />
-              <Route
-                path="/atividades/:atividadeId/categorias"
-                element={<Categorias />}
-              />
-              <Route
-                path="/atividades/:atividadeId/registrar"
-                element={<RegistrarSessao />}
-              />
-              <Route
-                path="/atividades/:atividadeId/sessoes"
-                element={<Sessoes />}
-              />
-              <Route
-                path="/atividades/:atividadeId/dashboard"
-                element={<DashboardAtividade />}
-              />
-            </Route>
+                element={
+                  <ProtectedRoute>
+                    <AppShell />
+                  </ProtectedRoute>
+                }
+              >
+                <Route path="/" element={<Dashboard />} />
+                <Route
+                  path="/pastas/:pastaId/dashboard"
+                  element={<DashboardPasta />}
+                />
+                <Route path="/atividades" element={<Atividades />} />
+                <Route
+                  path="/atividades/:atividadeId/categorias"
+                  element={<Categorias />}
+                />
+                <Route
+                  path="/atividades/:atividadeId/registrar"
+                  element={<RegistrarSessao />}
+                />
+                <Route
+                  path="/atividades/:atividadeId/sessoes"
+                  element={<Sessoes />}
+                />
+                <Route
+                  path="/atividades/:atividadeId/dashboard"
+                  element={<DashboardAtividade />}
+                />
+              </Route>
 
-            <Route path="*" element={<NaoEncontrada />} />
-          </Routes>
+              <Route path="*" element={<NaoEncontrada />} />
+            </Routes>
+          </OnboardingProvider>
         </AuthProvider>
       </ThemeProvider>
     </BrowserRouter>
