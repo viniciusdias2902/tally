@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { NavLink, useLocation } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext.jsx";
 import { useTheme } from "../../contexts/ThemeContext.jsx";
+import { useOnboarding } from "../../onboarding/OnboardingContext.jsx";
 
 const links = [
   { to: "/", label: "Dashboard", end: true },
@@ -11,6 +12,7 @@ const links = [
 export default function Topbar() {
   const { theme, toggleTheme } = useTheme();
   const { sair, usuario } = useAuth();
+  const { iniciar: iniciarTour } = useOnboarding();
   const [menuOpen, setMenuOpen] = useState(false);
   const location = useLocation();
 
@@ -19,7 +21,7 @@ export default function Topbar() {
   }, [location.pathname]);
 
   return (
-    <header className="sticky top-0 z-30 bg-bg-primary/80 backdrop-blur-md">
+    <header data-tour="topbar" className="sticky top-0 z-30 bg-bg-primary/80 backdrop-blur-md">
 
       <div className="flex items-center gap-4 px-4 py-3 lg:gap-6 lg:px-6">
         <h1 className="text-xl font-bold tracking-tight text-text-primary">
@@ -48,6 +50,15 @@ export default function Topbar() {
 
         <div className="flex-1" />
 
+
+        <button
+          onClick={iniciarTour}
+          aria-label="Rever tutorial"
+          title="Rever tutorial"
+          className="p-2 rounded-xl text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-all duration-150"
+        >
+          <HelpIcon />
+        </button>
 
         <button
           onClick={toggleTheme}
@@ -114,6 +125,14 @@ export default function Topbar() {
             )}
 
             <button
+              onClick={iniciarTour}
+              className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-text-secondary hover:bg-bg-secondary hover:text-text-primary transition-all duration-150"
+            >
+              <HelpIcon />
+              Rever tutorial
+            </button>
+
+            <button
               onClick={sair}
               className="flex items-center gap-2 px-3 py-2.5 rounded-xl text-sm font-medium text-danger hover:bg-bg-secondary transition-all duration-150"
             >
@@ -124,6 +143,14 @@ export default function Topbar() {
         </div>
       )}
     </header>
+  );
+}
+
+function HelpIcon() {
+  return (
+    <svg className="w-[18px] h-[18px]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={1.5}>
+      <path strokeLinecap="round" strokeLinejoin="round" d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z" />
+    </svg>
   );
 }
 
