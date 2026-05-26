@@ -94,9 +94,14 @@ export default function Dashboard() {
     <div className="mx-auto max-w-6xl space-y-6">
       <h2 className="text-lg font-semibold">Dashboard</h2>
 
-      <GradeKpis kpis={kpis} />
+      <div data-tour="dashboard-kpis">
+        <GradeKpis kpis={kpis} />
+      </div>
 
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-[2fr_1fr] lg:items-start">
+      <div
+        data-tour="dashboard-graficos"
+        className="grid grid-cols-1 gap-4 lg:grid-cols-[2fr_1fr] lg:items-start"
+      >
         <Cartao titulo="Atividade no último ano">
           {heatmap.length > 0 ? (
             <HeatmapAnual dados={heatmap} />
