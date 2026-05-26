@@ -104,10 +104,12 @@ export const PASSOS = [
         <p style={{ marginTop: 10 }}>Ela pode ser de dois tipos:</p>
         <ul style={estiloLista}>
           <li>
-            <strong>Cronometrada</strong> — usa timer (estudar, treinar, ler)
+            <strong>Cronometrada</strong> — medida por tempo: timer, pomodoro
+            ou manual (estudar, treinar, ler)
           </li>
           <li>
-            <strong>Binária</strong> — só marca fez/não fez (meditar, beber água)
+            <strong>Concluído/Pendente</strong> — medida por conclusão: só marca
+            feito ou não feito (meditar, beber água)
           </li>
         </ul>
       </>
