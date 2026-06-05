@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "../ui/Button.jsx";
 import Modal from "../ui/Modal.jsx";
 import TimerRing from "./TimerRing.jsx";
@@ -6,6 +6,7 @@ import FormConfigPomodoro from "./FormConfigPomodoro.jsx";
 import { usePomodoro } from "../../hooks/usePomodoro.js";
 import { useConfigPomodoro } from "../../hooks/useConfigPomodoro.js";
 import { formatarDuracao } from "../../utils/formatarDuracao.js";
+import { tocarSomSucesso } from "../../utils/somSucesso.js";
 
 const ROTULOS_FASE = {
   foco: "Foco",
@@ -30,6 +31,15 @@ export default function RegistroPomodoro({ chave, onRegistrar, enviando }) {
   } = usePomodoro(chave, config);
   const [confirmacao, setConfirmacao] = useState(null);
   const [configAberta, setConfigAberta] = useState(false);
+
+  // Detecta transição automática de fase para tocar som
+  const faseAnteriorRef = useRef(fase);
+  useEffect(() => {
+    if (faseAnteriorRef.current && fase && fase !== faseAnteriorRef.current) {
+      tocarSomSucesso();
+    }
+    faseAnteriorRef.current = fase;
+  }, [fase]);
 
   async function handleSalvarConfig(dados) {
     await atualizar(dados);
