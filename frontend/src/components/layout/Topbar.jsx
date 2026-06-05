@@ -6,7 +6,7 @@ import { useTheme } from "../../contexts/ThemeContext.jsx";
 const URL_DO_MEU_FORMS = "https://docs.google.com/forms/d/e/1FAIpQLSeDsK0V77LDKw9ZzABhiPLeuL1J6_jPlY_Eq75WyifYT-gMVA/viewform?usp=dialog";
 
 const links = [
-  { to: "/", label: "Dashboard", end: true },
+  { to: "/dashboard", label: "Dashboard", end: true },
   { to: "/atividades", label: "Atividades" },
   { to: "/tutoriais", label: "Tutoriais" },
 ];
