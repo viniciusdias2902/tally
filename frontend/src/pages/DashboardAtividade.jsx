@@ -109,7 +109,7 @@ export default function DashboardAtividade() {
             ← {pasta.nome}
           </Link>
         ) : (
-          <Link to="/" className="text-sm text-text-muted hover:text-accent">
+          <Link to="/dashboard" className="text-sm text-text-muted hover:text-accent">
             ← Dashboard geral
           </Link>
         )}

@@ -95,7 +95,7 @@ export default function DashboardPasta() {
   return (
     <div className="mx-auto max-w-6xl space-y-6">
       <div className="flex flex-wrap items-center gap-2">
-        <Link to="/" className="text-sm text-text-muted hover:text-accent">
+        <Link to="/dashboard" className="text-sm text-text-muted hover:text-accent">
           ← Dashboard geral
         </Link>
       </div>
