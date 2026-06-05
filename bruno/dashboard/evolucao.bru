@@ -5,17 +5,17 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/dashboard/evolucao
+  url: {{baseUrl}}/dashboard/evolucao?dias=3
   body: none
   auth: bearer
 }
 
-auth:bearer {
-  token: {{accessToken}}
+params:query {
+  dias: 3
+  ~pastaId: 
+  ~atividadeId: 
 }
 
-params:query {
-  ~pastaId:
-  ~atividadeId:
-  ~dias: 30
+auth:bearer {
+  token: {{accessToken}}
 }

@@ -5,16 +5,16 @@ meta {
 }
 
 get {
-  url: {{baseUrl}}/dashboard/distribuicao
+  url: {{baseUrl}}/dashboard/distribuicao?pastaId=98a5b602-2e12-4b4e-b5a2-6f41a8d24980
   body: none
   auth: bearer
 }
 
-auth:bearer {
-  token: {{accessToken}}
+params:query {
+  pastaId: 98a5b602-2e12-4b4e-b5a2-6f41a8d24980
+  ~atividadeId: 
 }
 
-params:query {
-  ~pastaId:
-  ~atividadeId:
+auth:bearer {
+  token: {{accessToken}}
 }
