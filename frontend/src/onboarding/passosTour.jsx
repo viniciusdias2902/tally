@@ -15,7 +15,7 @@ const estiloLista = { margin: "8px 0 0", paddingLeft: 18, lineHeight: 1.6 };
 
 export const PASSOS = [
   {
-    rota: "/",
+    rota: "/dashboard",
     target: "body",
     placement: "center",
     title: "Bem-vindo ao Tally",
@@ -41,7 +41,7 @@ export const PASSOS = [
     ),
   },
   {
-    rota: "/",
+    rota: "/dashboard",
     target: '[data-tour="topbar"]',
     placement: "bottom",
     title: "Sua navegação",
@@ -59,7 +59,7 @@ export const PASSOS = [
     ),
   },
   {
-    rota: "/",
+    rota: "/dashboard",
     target: '[data-tour="dashboard-kpis"]',
     placement: "bottom",
     title: "Seus números",
@@ -77,7 +77,7 @@ export const PASSOS = [
     ),
   },
   {
-    rota: "/",
+    rota: "/dashboard",
     target: '[data-tour="dashboard-graficos"]',
     placement: "top",
     title: "Seus gráficos",
