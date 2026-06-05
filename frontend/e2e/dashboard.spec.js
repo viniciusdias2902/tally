@@ -20,13 +20,13 @@ test.describe("Dashboard e Histórico", () => {
     await page.getByLabel("E-mail").fill(USUARIO.email);
     await page.getByLabel("Senha").fill(USUARIO.senha);
     await page.getByRole("button", { name: /^entrar$/i }).click();
-    await page.waitForURL("/tally/app", { timeout: 10000 }).catch(async () => {
+    await page.waitForURL("/tally/app/dashboard", { timeout: 10000 }).catch(async () => {
       await page.goto("./registro");
       await page.getByLabel("Nome").fill(USUARIO.nome);
       await page.getByLabel("E-mail").fill(USUARIO.email);
       await page.getByLabel("Senha").fill(USUARIO.senha);
       await page.getByRole("button", { name: /criar conta/i }).click();
-      await page.waitForURL("/tally/app", { timeout: 10000 });
+      await page.waitForURL("/tally/app/dashboard", { timeout: 10000 });
     });
   });
 

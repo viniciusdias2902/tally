@@ -23,9 +23,10 @@ test.describe("Autenticação", () => {
     await expect(page).toHaveURL("/tally/app/login");
   });
 
-  test("deve redirecionar para login quando não autenticado", async ({ page }) => {
+  test("deve exibir a landing quando não autenticado", async ({ page }) => {
     await page.goto("./");
-    await expect(page).toHaveURL("/tally/app/login");
+    await expect(page).toHaveURL("/tally/app/");
+    await expect(page.getByRole("link", { name: /começar/i })).toBeVisible();
   });
 
   test("deve exibir erro com credenciais inválidas", async ({ page }) => {
@@ -44,7 +45,7 @@ test.describe("Autenticação", () => {
     await page.getByLabel("Senha").fill(USUARIO.senha);
     await page.getByRole("button", { name: /criar conta/i }).click();
 
-    await expect(page).toHaveURL("/tally/app", { timeout: 5000 });
+    await expect(page).toHaveURL("/tally/app/dashboard", { timeout: 5000 });
     await expect(page.getByRole("heading", { name: "Dashboard" })).toBeVisible();
   });
 });
