@@ -12,7 +12,7 @@ export default function Login() {
   const [enviando, setEnviando] = useState(false);
 
   if (carregando) return null;
-  if (autenticado) return <Navigate to="/" replace />;
+  if (autenticado) return <Navigate to="/dashboard" replace />;
 
   async function handleSubmit(e) {
     e.preventDefault();
