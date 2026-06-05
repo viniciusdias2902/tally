@@ -24,6 +24,11 @@ export function useRegistroSessao(atividadeId) {
         ciclosPomodoro,
         observacoes,
       });
+      window.dispatchEvent(
+        new CustomEvent("tally:sessao-criada", {
+          detail: { atividadeId, sessao },
+        }),
+      );
       return sessao;
     } catch (err) {
       setErro(err.message);
