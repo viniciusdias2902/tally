@@ -26,6 +26,9 @@ export function useAtividades() {
   async function criar(dados) {
     const nova = await atividadesApi.criar(dados);
     setAtividades((prev) => [...prev, nova]);
+    window.dispatchEvent(
+      new CustomEvent("tally:atividade-criada", { detail: { atividade: nova } }),
+    );
     return nova;
   }
 
