@@ -8,7 +8,12 @@ const opcoes = [
 
 export default function SeletorModoCronometrado({ modo, onMudar }) {
   return (
-    <div role="tablist" aria-label="Modo de cronômetro" className="flex gap-2">
+    <div
+      role="tablist"
+      aria-label="Modo de cronômetro"
+      data-tour="seletor-modo"
+      className="flex gap-2"
+    >
       {opcoes.map(({ id, label, Icon }) => {
         const ativo = modo === id;
         return (
