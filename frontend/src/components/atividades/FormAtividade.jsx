@@ -39,7 +39,11 @@ export default function FormAtividade({ atividade, pastas = [], onSalvar, onCanc
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form
+      onSubmit={handleSubmit}
+      className="space-y-4"
+      data-tour="form-atividade"
+    >
       <Input
         id="nome-atividade"
         label="Nome"
@@ -105,7 +109,11 @@ export default function FormAtividade({ atividade, pastas = [], onSalvar, onCanc
         <Button type="button" variant="ghost" onClick={onCancelar}>
           Cancelar
         </Button>
-        <Button type="submit" disabled={enviando || !nome.trim()}>
+        <Button
+          type="submit"
+          disabled={enviando || !nome.trim()}
+          data-tour="botao-criar-atividade"
+        >
           {enviando ? "Salvando..." : editando ? "Salvar" : "Criar"}
         </Button>
       </div>
