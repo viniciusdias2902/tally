@@ -13,7 +13,11 @@ export default function CardAtividade({ atividade, nomePasta, onEditar, onArquiv
   }
 
   return (
-    <div className="flex flex-col rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-bg-elevated p-5 shadow-sm transition-all duration-150 hover:shadow-md">
+    <div
+      data-tour="card-atividade"
+      data-atividade-id={atividade.id}
+      className="flex flex-col rounded-xl border border-black/[0.06] dark:border-white/[0.08] bg-bg-elevated p-5 shadow-sm transition-all duration-150 hover:shadow-md"
+    >
       <div className="flex items-start justify-between mb-4">
         <div
           className={`inline-flex items-center justify-center w-10 h-10 rounded-lg ${ehCronometrada
@@ -84,6 +88,7 @@ export default function CardAtividade({ atividade, nomePasta, onEditar, onArquiv
       </div>
 
       <Link
+        data-tour="botao-registrar"
         to={`/atividades/${atividade.id}/registrar`}
         className="inline-flex items-center justify-center gap-2 rounded-xl font-medium transition-all duration-150 ease-in-out cursor-pointer bg-button-primary-bg text-button-primary-fg border border-button-primary-border shadow-sm hover:bg-button-primary-bg-hover px-4 py-2 text-sm w-full"
       >
