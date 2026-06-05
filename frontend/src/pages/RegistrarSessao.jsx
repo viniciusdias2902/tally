@@ -93,9 +93,11 @@ export default function RegistrarSessao() {
         />
 
         {ehBinaria ? (
-          <RegistroBinario onRegistrar={handleRegistrar} enviando={enviando} />
+          <div data-tour="painel-registro">
+            <RegistroBinario onRegistrar={handleRegistrar} enviando={enviando} />
+          </div>
         ) : (
-          <>
+          <div data-tour="painel-registro" className="space-y-6">
             <SeletorModoCronometrado modo={modo} onMudar={setModo} />
             <div key={modo} className="animate-fade-slide-in">
               {modo === "pomodoro" && (
@@ -119,7 +121,7 @@ export default function RegistrarSessao() {
                 />
               )}
             </div>
-          </>
+          </div>
         )}
       </div>
     </div>
