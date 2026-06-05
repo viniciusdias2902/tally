@@ -18,7 +18,7 @@ export const PASSOS = [
     rota: "/",
     target: "body",
     placement: "center",
-    title: "Bem-vindo ao Tally 👋",
+    title: "Bem-vindo ao Tally",
     content: (
       <>
         <p>
@@ -181,7 +181,7 @@ export const PASSOS = [
     rota: "/atividades",
     target: '[data-tour="nova-atividade"]',
     placement: "bottom",
-    title: "É com você agora 🎉",
+    title: "É com você agora",
     content: (
       <p>
         Crie sua primeira atividade e comece a registrar — em poucos dias o
