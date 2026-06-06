@@ -87,7 +87,7 @@ export default function Tutoriais() {
             </li>
           </ul>
           <ImagemTutorial
-            src="/tutoriais/atividades-visao-geral.png"
+            src="atividades-visao-geral.png"
             alt="Tela de Atividades com cards dos dois tipos"
             descricao="Página /atividades mostrando os cards de atividade. O ícone do relógio marca as cronometradas (Faculdade, Programação...) e o tique verde marca as concluído/pendente (Meditação, Beber 2L de água...)."
           />
@@ -124,7 +124,7 @@ export default function Tutoriais() {
             daquela atividade.
           </p>
           <ImagemTutorial
-            src="/tutoriais/categorias-faculdade.png"
+            src="categorias-faculdade.png"
             alt="Tela de categorias de uma atividade"
             descricao="Vá no menu (três pontinhos) do card 'Faculdade', clique em 'Categorias'. Tire o print da página /atividades/<id>/categorias mostrando as 6 categorias coloridas (Cálculo, Álgebra Linear, Física, Estruturas de Dados, Banco de Dados, Redes)."
           />
