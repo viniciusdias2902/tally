@@ -43,9 +43,9 @@ export default function Tutoriais() {
     <div className="max-w-4xl mx-auto pb-16">
       <section>
         <header className="mb-6">
-          <h2 className="text-lg font-semibold">Tutoriais</h2>
+          <h2 className="text-lg font-semibold">Aprenda a usar o Tally</h2>
           <p className="text-sm text-text-muted mt-1">
-            Escolha um tour pra ver a qualquer momento.
+            Escolha um tour para começar a usar o Tally.
           </p>
         </header>
 
